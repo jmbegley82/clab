@@ -28,6 +28,7 @@ namespace jmb {
 		String::String(std::string const& name) : Object(name) {
 			_data = static_cast<void*>(new std::string(""));
 			_type = type;
+			mapThrough = false;
 		}
 		
 		String::~String() {
@@ -36,6 +37,10 @@ namespace jmb {
 		}
 		
 		int String::Command(std::string const& cmd) {
+			if(cmd == "") {
+				_Procedure();
+				return 0;
+			}
 			Sentence sent(cmd);
 			if(sent.subject == "") {
 				// it's for us
@@ -71,7 +76,8 @@ namespace jmb {
 			if(t == Integer::type) {
 				// Integer handler
 				char buf[32] = "";
-				sprintf(buf, "%d", (int)obj->GetValue());
+				int* in = static_cast<int*>(obj->GetValue());
+				sprintf(buf, "%d", *in);
 				retval = std::string(buf);
 			} else if(t == Float::type) {
 				char buf[32] = "";

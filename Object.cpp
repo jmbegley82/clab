@@ -30,6 +30,7 @@ namespace jmb {
 			}
 			_data = NULL;
 			_type = type;
+			mapThrough = true;
 		}
 		
 		Object::~Object() {
@@ -39,6 +40,13 @@ namespace jmb {
 		Object* Object::Dereference(std::string const& name) {
 			// ex. ""
 			if(name == "") return this;
+			
+			if(!mapThrough) {
+				// attempting to reach through this object,
+				//  but it isn't one that supports owned objects
+				std::cout << std::endl << "BLOCK" << std::endl;
+				return NULL;
+			}
 			
 			CommandSplit CSSlash(name, "/");
 			if(CSSlash.left == "" && CSSlash.right == "") {
@@ -54,6 +62,7 @@ namespace jmb {
 		
 		void Object::AddOwnedObject(Object* obj) {
 			// todo: check for existing name!
+			if(!mapThrough) return; // don't create objects you can't address!
 			if(_ownedObjectCount < MAXOBJS && _GetOwnedObject(obj->identity) == NULL) {
 				if(obj->owner != NULL) {
 					obj->LeaveOwner();
@@ -66,6 +75,7 @@ namespace jmb {
 		
 		void Object::DelOwnedObject(std::string const& name) {
 			// todo: everything
+			if(!mapThrough) return; // should be empty
 			int idx = _GetOwnedObjectIndex(name);
 			if(idx < MAXOBJS) {
 				_DeleteByIndex(idx);
@@ -74,6 +84,7 @@ namespace jmb {
 		}
 		
 		void Object::GiveAway(Object* obj) {
+			if(!mapThrough) return; // nothing to give away
 			int idx = _GetOwnedObjectIndex(obj);
 			if(idx < MAXOBJS) {
 				_ownedObjects[idx] = NULL;
@@ -94,6 +105,15 @@ namespace jmb {
 			}
 			
 			Sentence sent(cmd);
+			if(sent.op == "") {
+				// cmd is a path to a procedure
+				Object* obj = Dereference(cmd);
+				if(obj != NULL) {
+					obj->Command("");
+					return 0;
+				}
+				return -1;
+			}
 			Object* subject = Dereference(sent.subject);
 			if(subject != NULL) {
 				if(sent.target[0] == '\'' && sent.target[sent.target.length()-1] == '\'') {
@@ -209,6 +229,16 @@ namespace jmb {
 			//}
 		}
 		
+		std::string Object::_GetPath() {
+			std::string retval = identity;
+			Object* nextUp = owner;
+			while(nextUp != NULL) {
+				retval = nextUp->identity + "/" + retval;
+				nextUp = nextUp->owner;
+			}
+			return retval;
+		}
+		
 		void Object::_Purge() {
 			// this should be more thorough?
 			_MakeContiguous();
@@ -218,7 +248,7 @@ namespace jmb {
 		}
 		
 		int Object::_Procedure() {
-			std::cout << __FUNCTION__ << " Stub.\n";
+			std::cout << _GetPath() << " Stub.\n";
 			return 0;
 		}
 		

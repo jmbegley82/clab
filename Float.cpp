@@ -35,13 +35,17 @@ namespace jmb {
 		}
 		
 		int Float::Command(std::string const& cmd) {
+			if(cmd == "") {
+				_Procedure();
+				return 0;
+			}
 			Sentence sent(cmd);
 			if (sent.subject == "") {
 				if(sent.op == "=") {
 					double* dub = static_cast<double*>(_data);
 					*dub = strtod(sent.target.c_str(), NULL);
 				} else {
-					assert(0); // do all other operators
+					//assert(0); // do all other operators
 				}
 				return 0;
 			}
@@ -58,6 +62,7 @@ namespace jmb {
 		
 		int Float::_Procedure() {
 			return Object::_Procedure();
+			mapThrough = false;
 		}
 		
 		double Float::_Interpret(Object* obj) {
@@ -68,7 +73,9 @@ namespace jmb {
 				std::string* str = static_cast<std::string*>(obj->GetValue());
 				retval = strtod((*str).c_str(), NULL);
 			} else if(t == Integer::type) {
-				retval = (double)(int)obj->GetValue();
+				//retval = (double)(int)obj->GetValue();
+				int* in = static_cast<int*>(obj->GetValue());
+				retval = (double)*in;
 			} else {
 				// default handler
 				double* dub = static_cast<double*>(obj->GetValue());

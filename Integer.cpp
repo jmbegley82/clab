@@ -24,18 +24,27 @@ namespace jmb {
 		}
 		
 		Integer::Integer(std::string const& name) : Object(name) {
+			_data = static_cast<void*>(new int);
 			_type = type;
+			mapThrough = false;
 		}
 		
 		Integer::~Integer() {
 			_Purge();
+			delete static_cast<int*>(_data);
 		}
 		
 		int Integer::Command(std::string const& cmd) {
+			if(cmd == "") {
+				_Procedure();
+				return 0;
+			}
 			Sentence sent(cmd);
 			if (sent.subject == "") {
 				if(sent.op == "=") {
-					_data = (void*)(int)strtod(sent.target.c_str(), NULL);
+					int* data = static_cast<int*>(_data);
+					*data = (int)strtod(sent.target.c_str(), NULL);
+							//(void*)(int)strtod(sent.target.c_str(), NULL);
 				} else {
 					assert(0); // do all other operators
 				}
@@ -68,43 +77,57 @@ namespace jmb {
 				retval = round(*dub);
 			} else {
 				// default handler
-				retval = (int)obj->GetValue();
+				int* data = static_cast<int*>(obj->GetValue());
+				retval = *data;
+				//retval = (int)obj->GetValue();
 			}
 			return retval;
 		}
 		
 		int Integer::OperatorEqu(Object* obj) {
-			_data = (void*)_Interpret(obj); //obj->GetValue();
+			//_data = (void*)_Interpret(obj); //obj->GetValue();
+			int* data = static_cast<int*>(_data);
+			*data = _Interpret(obj);
 			return 0;
 		}
 		
 		int Integer::OperatorAdd(Object* obj) {
 			//return Object::_OperatorAdd(obj);
-			_data = (void*)((int)_data + _Interpret(obj));
+			//_data = (void*)((int)_data + _Interpret(obj));
+			int* data = static_cast<int*>(_data);
+			*data = *data + _Interpret(obj);
 			return 0;
 		}
 		
 		int Integer::OperatorSub(Object* obj) {
 			//return Object::_OperatorSub(obj);
-			_data = (void*)((int)_data - _Interpret(obj));
+			//_data = (void*)((int)_data - _Interpret(obj));
+			int* data = static_cast<int*>(_data);
+			*data = *data - _Interpret(obj);
 			return 0;
 		}
 		
 		int Integer::OperatorMul(Object* obj) {
 			//return Object::_OperatorMul(obj);
-			_data = (void*)((int)_data * _Interpret(obj));
+			//_data = (void*)((int)_data * _Interpret(obj));
+			int* data = static_cast<int*>(_data);
+			*data = *data * _Interpret(obj);
 			return 0;
 		}
 		
 		int Integer::OperatorDiv(Object* obj) {
 			//return Object::_OperatorDiv(obj);
-			_data = (void*)((int)_data / _Interpret(obj));
+			//_data = (void*)((int)_data / _Interpret(obj));
+			int* data = static_cast<int*>(_data);
+			*data = *data / _Interpret(obj);
 			return 0;
 		}
 		
 		int Integer::OperatorPow(Object* obj) {
 			//return Object::_OperatorPow(obj);
-			_data = (void*)(int)(double)pow((double)(int)_data, (double)_Interpret(obj));
+			//_data = (void*)(int)(double)pow((double)(int)_data, (double)_Interpret(obj));
+			int* data = static_cast<int*>(_data);
+			*data = (int)pow((double)*data, (double)_Interpret(obj));
 			return 0;
 		}
 		

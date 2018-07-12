@@ -14,6 +14,20 @@ using jmb::common::Float;
 using jmb::common::String;
 using jmb::common::Sentence;
 
+double GetValueOfFloat(Float* flt) {
+	double retval = 0.0;
+	double* dub = static_cast<double*>(flt->GetValue());
+	retval = *dub;
+	return retval;
+}
+
+int GetValueOfInteger(Integer* in) {
+	int retval = 0;
+	int* inref = static_cast<int*>(in->GetValue());
+	retval = *inref;
+	return retval;
+}
+
 void test1() {
 	cout << "Test #1 - Hierarchy" << endl;
 	Object root("root");
@@ -38,6 +52,8 @@ void test1() {
 	std::cout << "sent.op      = " << sent.op << "\n";
 	std::cout << "sent.target  = " << sent.target << "\n";
 	
+	root.Command("obj2/obj5");
+	
 	root.Command("obj1=obj2");
 	cout <<endl;
 }
@@ -47,51 +63,47 @@ void test2() {
 	Object root("root");
 	Integer* n1 = new Integer("n1");
 	Integer* n2 = new Integer("n2");
-	n2->SetValue((void*)(int)6000);
+
 	root.AddOwnedObject(n1);
 	root.AddOwnedObject(n2);
+	root.Command("n2=6000");
 	root.Command("n1=n2");
-	cout << (int)n1->GetValue() << endl;
-	
-	n1->SetValue((void*)(int)100);
-	n2->SetValue((void*)(int)10);
-	root.Command("n1+=n2");
-	cout << (int)n1->GetValue() << " should be '110'" << endl;
-	
-	n1->SetValue((void*)(int)100);
-	n2->SetValue((void*)(int)10);
-	root.Command("n1-=n2");
-	cout << (int)n1->GetValue() << " should be '90'" << endl;
-	
-	n1->SetValue((void*)(int)0);
-	n2->SetValue((void*)(int)10);
-	root.Command("n1-=n2");
-	cout << (int)n1->GetValue() << " should be '-10'" << endl;
+	cout << GetValueOfInteger(n1) << endl;
 
-	n1->SetValue((void*)(int)100);
-	n2->SetValue((void*)(int)10);
+	root.Command("n1=100");
+	root.Command("n2=10");
+	root.Command("n1+=n2");
+	cout << GetValueOfInteger(n1) << " should be '110'" << endl;
+
+	root.Command("n1=100");
+	root.Command("n2=10");
+	root.Command("n1-=n2");
+	cout << GetValueOfInteger(n1) << " should be '90'" << endl;
+
+	root.Command("n1=0");
+	root.Command("n2=10");
+	root.Command("n1-=n2");
+	cout << GetValueOfInteger(n1) << " should be '-10'" << endl;
+
+	root.Command("n1=100");
+	root.Command("n2=10");
 	root.Command("n1*=n2");
-	cout << (int)n1->GetValue() << " should be '1000'" << endl;
+	cout << GetValueOfInteger(n1) << " should be '1000'" << endl;
 	
-	n1->SetValue((void*)(int)100);
-	n2->SetValue((void*)(int)-10);
+	root.Command("n1=100");
+	root.Command("n2=-10");
 	root.Command("n1*=n2");
-	cout << (int)n1->GetValue() << " should be '-1000'" << endl;
+	cout << GetValueOfInteger(n1) << " should be '-1000'" << endl;
 	
-	n1->SetValue((void*)(int)100);
-	n2->SetValue((void*)(int)10);
+	root.Command("n1=100");
+	root.Command("n2=10");
 	root.Command("n1/=n2");
-	cout << (int)n1->GetValue() << " should be '10'" << endl;
+	cout << GetValueOfInteger(n1) << " should be '10'" << endl;
 	
-	//n1->SetValue((void*)(int)100);
-	//n2->SetValue((void*)(int)0);
-	//root.Command("n1/=n2");
-	//cout << (int)n1->GetValue() << " divided by zero and survived" << endl;
-	
-	n1->SetValue((void*)(int)2);
-	n2->SetValue((void*)(int)8);
+	root.Command("n1=2");
+	root.Command("n2=8");
 	root.Command("n1^=n2");
-	cout << (int)n1->GetValue() << " should be '256'" << endl;
+	cout << GetValueOfInteger(n1) << " should be '256'" << endl;
 	
 	root.Debug();
 	cout << endl;
@@ -102,8 +114,7 @@ void test3() {
 	Object root("root");
 	String* s1 = new String("s1");
 	String* s2 = new String("s2");
-	//s1->SetValue(static_cast<std::string*> (new std::string("testABC")));
-	//s2->SetValue((void*)(std::string*)"test123");
+
 	s1->Command("=Test123");
 	s2->Command("=Test456");
 	root.AddOwnedObject(s1);
@@ -143,17 +154,10 @@ void test4() {
 	r2.Command("v3=31415");
 	r2.Command("v4=66667");
 	r2.Command("v3=v4");
-	cout << (int)(v3->GetValue()) << " should be '66667'" << endl;
+	cout << GetValueOfInteger(v3) << " should be '66667'" << endl;
 	r2.Command("v3+=v4");
-	cout << (int)(v3->GetValue()) << " should be '133334'" << endl;
+	cout << GetValueOfInteger(v3) << " should be '133334'" << endl;
 	cout << endl;
-}
-
-double GetValueOfFloat(Float* flt) {
-	double retval = 0.0;
-	double* dub = static_cast<double*>(flt->GetValue());
-	retval = *dub;
-	return retval;
 }
 
 void test5() {
@@ -177,17 +181,19 @@ void test5() {
 	root.Command("i1=400");
 	root.Command("i1*=f2");
 	// sinnce f2 gets rounded down before multiplication, the end result is zero
-	cout << (int)i1->GetValue() << " should be 0" << endl;
+	cout << GetValueOfInteger(i1) << " should be 0" << endl;
 	
 	root.Command("i1=400");
 	root.Command("f2=0.92345");
 	root.Command("i1*=f2");
-	cout << (int)i1->GetValue() << " should be 400" << endl;
+	cout << GetValueOfInteger(i1) << " should be 400" << endl;
 	
 	root.Command("i1=400");
 	root.Command("f2=0.92345");
 	root.Command("f2+=i1");
 	cout << GetValueOfFloat(f2) << " should be 400.92345 (unless truncated)" << endl;
+	
+	root.Command("f2");
 	
 	cout << endl;
 }

@@ -42,6 +42,7 @@ namespace jmb {
 			//std::string identity;
 			//Object* owner;
 		protected:
+			//std::string _GetPath();
 			// void _Purge();
 			int _Procedure();
 			int _Interpret(Object* obj);
@@ -57,6 +58,7 @@ namespace jmb {
 			
 			//void* _data;
 			//char _type;
+			//bool mapThrough;
 		};
 	}
 }

@@ -42,6 +42,7 @@ namespace jmb {
 			//std::string identity;
 			//Object* owner;
 		protected:
+			//std::string _GetPath();
 			//void _Purge();
 			int _Procedure();
 			std::string _Interpret(Object* obj);
@@ -56,6 +57,7 @@ namespace jmb {
 			
 			//Object* _ownedObjects[MAXOBJS];
 			//int _ownedObjectCount;
+			//bool mapThrough;
 		};
 		
 	}
