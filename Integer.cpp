@@ -42,9 +42,9 @@ namespace jmb {
 			Sentence sent(cmd);
 			if (sent.subject == "") {
 				if(sent.op == "=") {
-					int* data = static_cast<int*>(_data);
-					*data = (int)strtod(sent.target.c_str(), NULL);
-							//(void*)(int)strtod(sent.target.c_str(), NULL);
+					//int* data = static_cast<int*>(_data);
+					//*data = (int)strtod(sent.target.c_str(), NULL);
+					SetValue(sent.target);
 				} else {
 					assert(0); // do all other operators
 				}
@@ -55,6 +55,18 @@ namespace jmb {
 		
 		void Integer::Tick(unsigned int ms) {
 			Object::Tick(ms);
+		}
+		
+		std::string Integer::GetValueAsStdString() {
+			char out[32] = "";
+			sprintf(out, "%d", _Interpret(this));
+			return std::string(out);
+			//return std::string(_Interpret(this));
+		}
+		
+		void Integer::SetValue(std::string const& val) {
+			int* data = static_cast<int*>(_data);
+			*data = (int)strtod(val.c_str(), NULL);
 		}
 		
 		void Integer::Debug() {

@@ -45,9 +45,7 @@ namespace jmb {
 			if(sent.subject == "") {
 				// it's for us
 				if(sent.op == "=") {
-					//
-					std::string* str = static_cast<std::string*>(_data);
-					*str = sent.target;
+					SetValue(sent.target);
 					return 0;
 				} else if(sent.op == "+=") {
 					//
@@ -60,6 +58,15 @@ namespace jmb {
 		
 		void String::Tick(unsigned int ms) {
 			Object::Tick(ms);
+		}
+		
+		std::string String::GetValueAsStdString() {
+			return _Interpret(this);
+		}
+		
+		void String::SetValue(std::string const& val) {
+			std::string* data = static_cast<std::string*>(_data);
+			*data = val;
 		}
 		
 		void String::Debug() {

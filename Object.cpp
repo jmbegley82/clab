@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <assert.h>
 #include "Object.h"
 #include "StrSplit.h"
 
@@ -63,6 +64,11 @@ namespace jmb {
 		void Object::AddOwnedObject(Object* obj) {
 			// todo: check for existing name!
 			if(!mapThrough) return; // don't create objects you can't address!
+			std::string existingObj = Search(obj);
+			if(existingObj != "") {
+				std::cout << "Recursion prevented: " << existingObj << std::endl;
+				return;
+			}
 			if(_ownedObjectCount < MAXOBJS && _GetOwnedObject(obj->identity) == NULL) {
 				if(obj->owner != NULL) {
 					obj->LeaveOwner();
@@ -152,6 +158,12 @@ namespace jmb {
 			}
 		}
 		
+		std::string Object::GetValueAsStdString() {
+			// don't call this from classes derived from this one
+			if(GetType() != Object::type) assert(0);
+			return "";
+		}
+		
 		void* Object::GetValue() {
 			return _data;
 		}
@@ -160,8 +172,22 @@ namespace jmb {
 			_data = val;
 		}
 		
+		void Object::SetValue(std::string const& val) {
+			// NI
+			assert(0);
+		}
+		
 		char Object::GetType() {
 			return _type;
+		}
+		
+		std::string Object::Search(Object* obj) {
+			std::string retval = "";
+			if(obj == this) retval = _GetPath();
+			for(int i=0; i<_ownedObjectCount && retval == ""; i++) {
+				retval = _ownedObjects[i]->Search(obj);
+			}
+			return retval;
 		}
 		
 		void Object::_MakeContiguous() {

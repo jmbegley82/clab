@@ -32,9 +32,11 @@ namespace jmb {
 			//void LeaveOwner();
 			int Command(std::string const& cmd);
 			void Tick(unsigned int ms);
+			std::string GetValueAsStdString();
 			void Debug();
 			//void* GetValue();
 			//void SetValue(void* val);
+			void SetValue(std::string const& val);
 			//char GetType();
 			int OperatorEqu(Object* obj); //  =
 			int OperatorAdd(Object* obj); // +=

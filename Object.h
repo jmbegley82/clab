@@ -31,10 +31,13 @@ namespace jmb {
 			void LeaveOwner();
 			virtual int Command(std::string const& cmd);
 			virtual void Tick(unsigned int ms);
+			virtual std::string GetValueAsStdString();
 			virtual void Debug();
 			void* GetValue();
 			void SetValue(void* val);
+			virtual void SetValue(std::string const& val);
 			char GetType();
+			std::string Search(Object* obj);
 			virtual int OperatorEqu(Object* obj); //  =
 			virtual int OperatorAdd(Object* obj); // +=
 			virtual int OperatorSub(Object* obj); // -=

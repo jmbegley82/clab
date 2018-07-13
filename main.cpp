@@ -157,6 +157,13 @@ void test4() {
 	cout << GetValueOfInteger(v3) << " should be '66667'" << endl;
 	r2.Command("v3+=v4");
 	cout << GetValueOfInteger(v3) << " should be '133334'" << endl;
+	
+	// Recursion Test:
+	Object* lol = new Object("lol");
+	r2.AddOwnedObject(lol);
+	lol->AddOwnedObject(&r2);
+	
+	r2.Debug();
 	cout << endl;
 }
 
@@ -203,11 +210,29 @@ void test5() {
 	cout << endl;
 }
 
+void test6() {
+	cout << endl << "Test 6 - GetValueAsStdString" <<  endl;
+	Object root("root");
+	Integer* v1 = new Integer("v1");
+	Float* v2 = new Float("v2");
+	String* v3 = new String("v3");
+	root.AddOwnedObject(v1);
+	root.AddOwnedObject(v2);
+	root.AddOwnedObject(v3);
+	root.Command("v1=100");
+	root.Command("v2=200");
+	root.Command("v3=300");
+	cout << "v1=" << v1->GetValueAsStdString() << " should be 100" << endl;
+	cout << "v2=" << v2->GetValueAsStdString() << " should be 200.000..." << endl;
+	cout << "v3=" << v3->GetValueAsStdString() << " should be 300" << endl;
+}
+
 int main (int argc, char * const argv[]) {
 	test1();
 	test2();
 	test3();
 	test4();
 	test5();
+	test6();
     return 0;
 }

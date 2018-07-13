@@ -42,8 +42,7 @@ namespace jmb {
 			Sentence sent(cmd);
 			if (sent.subject == "") {
 				if(sent.op == "=") {
-					double* dub = static_cast<double*>(_data);
-					*dub = strtod(sent.target.c_str(), NULL);
+					SetValue(sent.target);
 				} else {
 					//assert(0); // do all other operators
 				}
@@ -54,6 +53,17 @@ namespace jmb {
 		
 		void Float::Tick(unsigned int ms) {
 			Object::Tick(ms);
+		}
+		
+		std::string Float::GetValueAsStdString() {
+			char out[32] = "";
+			sprintf(out, "%f", _Interpret(this));
+			return std::string(out);
+		}
+		
+		void Float::SetValue(std::string const& val) {
+			double* data = static_cast<double*>(_data);
+			*data = strtod(val.c_str(), NULL);
 		}
 		
 		void Float::Debug() {
