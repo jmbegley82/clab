@@ -177,13 +177,12 @@ namespace jmb {
 		
 		void Object::Debug() {
 			_MakeContiguous();
-			std::cout << "Debug(): " << __FILE__ << " at " << __LINE__ << " identity=" <<
-			identity << "\n";
-			std::cout << "Debug(): Owned objects:";
-			for(int i=0; i<_ownedObjectCount; i++) {
-				std::cout << " " << _ownedObjects[i]->identity;
-			}
-			std::cout << "\n";
+			std::cout << __FUNCTION__ << " identity=" << _GetPath() << "\n";
+			//std::cout << __FUNCTION__ << " Owned objects:";
+			//for(int i=0; i<_ownedObjectCount; i++) {
+			//	std::cout << " " << _ownedObjects[i]->identity;
+			//}
+			//std::cout << std::endl;
 			for(int i=0; i<_ownedObjectCount; i++) {
 				_ownedObjects[i]->Debug();
 			}

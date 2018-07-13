@@ -194,6 +194,11 @@ void test5() {
 	cout << GetValueOfFloat(f2) << " should be 400.92345 (unless truncated)" << endl;
 	
 	root.Command("f2");
+	Object* bob = new Object("bob");
+	i1->AddOwnedObject(bob);
+	root.Command("i1/bob");
+	root.Debug();
+	bob->Debug();
 	
 	cout << endl;
 }
