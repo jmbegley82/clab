@@ -22,15 +22,15 @@ namespace jmb {
 			Object("");
 		}
 		
-		Object::Object(std::string const& name) {
-			identity = name;
-			owner = NULL;
+		Object::Object(std::string const& name) : Atom(name) {
+			//identity = name;
+			//owner = NULL;
 			_ownedObjectCount = 0;
 			for(int i=0; i<MAXOBJS; i++) {
 				_ownedObjects[i] = NULL;
 			}
 			_data = NULL;
-			_type = type;
+			//_type = type;
 			mapThrough = true;
 		}
 		
@@ -38,9 +38,9 @@ namespace jmb {
 			_Purge();
 		}
 		
-		Object* Object::Dereference(std::string const& name) {
-			// ex. ""
-			if(name == "") return this;
+		Atom* Object::Dereference(std::string const& name) {
+			Atom* retval = Atom::Dereference("");
+			if(retval != NULL) return retval;
 			
 			if(!mapThrough) {
 				// attempting to reach through this object,
@@ -113,14 +113,14 @@ namespace jmb {
 			Sentence sent(cmd);
 			if(sent.op == "") {
 				// cmd is a path to a procedure
-				Object* obj = Dereference(cmd);
+				Atom* obj = Dereference(cmd);
 				if(obj != NULL) {
 					obj->Command("");
 					return 0;
 				}
 				return -1;
 			}
-			Object* subject = Dereference(sent.subject);
+			Atom* subject = Dereference(sent.subject);
 			if(subject != NULL) {
 				if(sent.target[0] == '\'' && sent.target[sent.target.length()-1] == '\'') {
 					// don't  dereference a target within single quotes,
@@ -128,7 +128,7 @@ namespace jmb {
 					std::string fixedTarget = sent.target.substr(1, sent.target.length()-2);
 					return subject->Command(sent.op + fixedTarget);
 				}
-				Object* target = Dereference(sent.target);
+				Atom* target = Dereference(sent.target);
 				if(target != NULL) {
 					if(sent.op == "=") {
 						return subject->OperatorEqu(target);
@@ -254,6 +254,7 @@ namespace jmb {
 			//}
 		}
 		
+		/*
 		std::string Object::_GetPath() {
 			std::string retval = identity;
 			Object* nextUp = owner;
@@ -263,6 +264,7 @@ namespace jmb {
 			}
 			return retval;
 		}
+		 */
 		
 		void Object::_Purge() {
 			// this should be more thorough?

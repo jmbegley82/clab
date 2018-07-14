@@ -11,6 +11,7 @@
 #define OBJECT_H
 
 #include <string>
+#include "Atom.h"
 
 #define MAXOBJS 32
 
@@ -18,13 +19,13 @@ namespace jmb {
 	
 	namespace common {
 		
-		class Object {
+		class Object : public Atom {
 		public:
 			Object();
 			Object(std::string const& name);
 			virtual ~Object();
 			static const char type;
-			Object* Dereference(std::string const& name);
+			Atom* Dereference(std::string const& name);
 			void AddOwnedObject(Object* obj);
 			void DelOwnedObject(std::string const& name);
 			void GiveAway(Object* obj);
@@ -36,7 +37,7 @@ namespace jmb {
 			void* GetValue();
 			void SetValue(void* val);
 			virtual void SetValue(std::string const& val);
-			char GetType();
+			//char GetType();
 			std::string Search(Object* obj);
 			virtual int OperatorEqu(Object* obj); //  =
 			virtual int OperatorAdd(Object* obj); // +=
@@ -44,14 +45,14 @@ namespace jmb {
 			virtual int OperatorMul(Object* obj); // *=
 			virtual int OperatorDiv(Object* obj); // /=
 			virtual int OperatorPow(Object* obj); // ^=
-			std::string identity;
-			Object* owner;
+			//std::string identity;
+			//Object* owner;
 		protected:
-			std::string _GetPath();
+			//std::string _GetPath();
 			void _Purge();
 			virtual int _Procedure();
 			void* _data;
-			char _type;
+			//char _type;
 		//private:
 			unsigned int _GetOwnedObjectIndex(std::string const& name);
 			unsigned int _GetOwnedObjectIndex(Object* obj);
