@@ -19,6 +19,8 @@
 namespace jmb {
 	
 	namespace common {
+
+		class Node;
 		
 		class Atom {
 		public:
@@ -28,9 +30,11 @@ namespace jmb {
 			static const char type;
 			
 			std::string GetPath();
+			Atom* GetRoot();
 			char GetType();
+			void LeaveParent();
 			std::string identity;
-			Atom* parent;
+			Node* parent;
 			
 			virtual Atom* Dereference(std::string const& name);
 			virtual int Command(std::string const& cmd);

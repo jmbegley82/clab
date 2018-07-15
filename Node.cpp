@@ -7,6 +7,7 @@
  *
  */
 
+#include "StrSplit.h"
 #include "Node.h"
 
 namespace jmb {
@@ -15,17 +16,92 @@ namespace jmb {
 
 		const char Node::type = 0x01;
 		
+		Node::Node() {
+			Node("");
+		}
+		
+		Node::Node(std::string const& name) : Atom(name) {
+			for(int i=0; i<MAXOBJS; i++) {
+				_children[i] = NULL;
+			}
+			_childCount = 0;
+			_mapThrough = true;
+		}
+		
+		Node::~Node() {
+			_Purge();
+		}
+		
 		Atom* Node::Dereference(std::string const& name) {
-			Atom* retval = Atom::Dereference(name);  // checks if it's us
+			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
 			if(retval == NULL) {
-				for(int i=0; i<_childCount; i++) {
+				/*
+				std::string dname;
+				if(name[0] == '/') {
+					// absolute path
+					dname = name.substr(1);
+					retval = GetRoot()->Dereference(dname);
+				} else {
+					dname = name;
+					StrSplit CSSlash(dname, "/");
+					if(CSSlash.left != "")
 				}
+				 */
 			}
 			return retval;
 		}
 		
 		int Node::Command(std::string const& cmd) {
-			return -1;
+			if(cmd == "")
+				return Atom::Command(cmd);
+			Sentence s(cmd);
+			Atom* sub = Dereference(s.subject);
+			if(sub == NULL) return -1;
+			return sub->Command(s.op + s.target);
+		}
+		
+		int Node::AddChild(Atom* atm) {
+			if(_childCount >= MAXOBJS)
+				return -1;  // we're full
+			if(_GetChild(atm->identity) != NULL)
+				return -2; // name exists within this node
+			if(atm->parent != NULL) {
+				atm->LeaveParent();
+			}
+			atm->parent = this;
+			_children[_childCount] = atm;
+			_childCount++;
+			return 0;
+		}
+		
+		int Node::DelChild(Atom* atm) {
+			int idx = _GetChildIndex(atm);
+			if(idx == MAXOBJS) return -1;  // not found
+			_DeleteByIndex(idx);
+			return 0;
+		}
+		
+		int Node::DelChild(std::string const& name) {
+			unsigned int idx = _GetChildIndex(name);
+			if(idx == MAXOBJS) return -1; // not found
+			_DeleteByIndex(idx);
+			return 0;
+		}
+		
+		int Node::FreeChild(Atom* atm) {
+			int idx = _GetChildIndex(atm);
+			if(idx == MAXOBJS) return -1; // not found
+			_children[idx] = NULL;
+			_MakeContiguous();
+			return 0;
+		}
+		
+		int Node::_Procedure() {
+			Atom::_Procedure();
+			for(int i=0; i<_childCount; i++) {
+				_children[i]->Command("");
+			}
+			return 0;
 		}
 		
 		unsigned int Node::_GetChildIndex(std::string const& name) {
@@ -63,7 +139,8 @@ namespace jmb {
 			// unsafe!  assumes all critical checks have been performed
 			delete _children[idx];
 			_children[idx] = NULL;
-			//}
+			//_childCount--;  // taken care of in next line
+			_MakeContiguous();
 		}
 		
 		void Node::_MakeContiguous() {

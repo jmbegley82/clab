@@ -7,7 +7,9 @@
  *
  */
 
+#include <iostream>
 #include "Atom.h"
+#include "Node.h"
 
 namespace jmb {
 
@@ -37,7 +39,7 @@ namespace jmb {
 				// get top level Atom
 				Atom* root = this;
 				while(root->parent != NULL) {
-					root = root->parent;
+					root = (Atom*)root->parent;
 				}
 				// pass noSlash to the root
 				return root->Dereference(noSlash);
@@ -61,6 +63,13 @@ namespace jmb {
 		
 		char Atom::GetType() {
 			return _type;
+		}
+		
+		void Atom::LeaveParent() {
+			if(parent != NULL) {
+				parent->FreeChild(this);
+				parent = NULL;
+			}
 		}
 		
 		int Atom::OperatorEqu(Atom* atm) {
@@ -89,17 +98,26 @@ namespace jmb {
 		
 		std::string Atom::GetPath() {
 			std::string retval = identity;
-			Atom* nextUp = parent;
+			Atom* nextUp = (Atom*)parent;
 			while(nextUp != NULL) {
 				retval = nextUp->identity + "/" + retval;
-				nextUp = nextUp->parent;
+				nextUp = (Atom*)nextUp->parent;
 			}
 			retval = "/" + retval;
 			return retval;
 		}
 		
+		Atom* Atom::GetRoot() {
+			Atom* retval = (Atom*)parent;
+			while(retval != NULL) {
+				retval = (Atom*)retval->parent;
+			}
+			return retval;
+		}
+		
 		int Atom::_Procedure() {
-			return -1;
+			std::cout << GetPath() << std::endl;
+			return 0;
 		}
 		
 	}

@@ -55,6 +55,10 @@ namespace jmb {
 			static const char type;
 			virtual Atom* Dereference(std::string const& name);
 			virtual int Command(std::string const& cmd);
+			virtual int AddChild(Atom* atm);
+			virtual int DelChild(Atom* atm);
+			virtual int DelChild(std::string const& name);
+			virtual int FreeChild(Atom* atm);
 		protected:
 			virtual int _Procedure();
 
