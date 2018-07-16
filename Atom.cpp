@@ -8,8 +8,10 @@
  */
 
 #include <iostream>
+#include <assert.h>
 #include "Atom.h"
 #include "Node.h"
+#include "StrSplit.h"
 
 namespace jmb {
 
@@ -57,6 +59,36 @@ namespace jmb {
 			return retval;
 		}
 		
+		std::string Atom::GetAbsolutePath() {
+			std::string retval = "";
+			/*
+			retval = identity;
+			Atom* nextUp = (Atom*)parent;
+			while(nextUp != NULL) {
+				retval = nextUp->identity + "/" + retval;
+				nextUp = (Atom*)nextUp->parent;
+			}
+			CommandSplit CSSlash(retval, "/");
+			if(CSSlash.left != "")
+				retval = CSSlash.right;
+			retval = "/" + retval;
+			*/
+			Atom* root = GetRoot();
+			if(root != this) {
+				retval = identity;
+				Atom* nextUp = (Atom*)parent;
+				while(nextUp != NULL) {
+					retval = nextUp->identity + "/" + retval;
+					nextUp = (Atom*)nextUp->parent;
+				}
+				CommandSplit CSSlash(retval, "/");
+				if(CSSlash.left != "")
+					retval = CSSlash.right;
+				retval = "/" + retval;
+			}
+			return retval;
+		}
+		
 		void Atom::Debug() {}
 		
 		void Atom::SetValue(std::string const& val) {}
@@ -96,27 +128,18 @@ namespace jmb {
 			return -1;
 		}
 		
-		std::string Atom::GetPath() {
-			std::string retval = identity;
-			Atom* nextUp = (Atom*)parent;
-			while(nextUp != NULL) {
-				retval = nextUp->identity + "/" + retval;
-				nextUp = (Atom*)nextUp->parent;
-			}
-			retval = "/" + retval;
-			return retval;
-		}
-		
 		Atom* Atom::GetRoot() {
+			//assert(0); //// BROKEN
 			Atom* retval = (Atom*)parent;
-			while(retval != NULL) {
+			if(retval == NULL) return this;
+			while(retval->parent != NULL) {
 				retval = (Atom*)retval->parent;
 			}
 			return retval;
 		}
 		
 		int Atom::_Procedure() {
-			std::cout << GetPath() << std::endl;
+			std::cout << GetAbsolutePath() << std::endl;
 			return 0;
 		}
 		

@@ -29,7 +29,6 @@ namespace jmb {
 			virtual ~Atom();
 			static const char type;
 			
-			std::string GetPath();
 			Atom* GetRoot();
 			char GetType();
 			void LeaveParent();
@@ -40,6 +39,7 @@ namespace jmb {
 			virtual int Command(std::string const& cmd);
 			virtual void SetValue(std::string const& val);
 			virtual std::string GetValueAsStdString();
+			virtual std::string GetAbsolutePath();
 			virtual void Debug();
 			virtual int OperatorEqu(Atom* atm); //  =
 			virtual int OperatorAdd(Atom* atm); // +=

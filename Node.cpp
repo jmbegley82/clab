@@ -159,6 +159,9 @@ namespace jmb {
 					_childCount++;
 				}
 			}
+			for(int i=_childCount; i<MAXOBJS; i++) {
+				_children[i] = NULL;
+			}
 		}
 		
 		void Node::_Purge() {
@@ -166,6 +169,8 @@ namespace jmb {
 			_MakeContiguous();
 			for(int i=0; i<_childCount; i++) {
 				_DeleteByIndex(i);
+				//delete _children[i];
+				//_children[i] = NULL;
 			}
 		}
 		

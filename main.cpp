@@ -21,7 +21,7 @@ using std::endl;
 void test1() {
 	cout << ":::Atom test:::" << endl;
 	Atom a1("a1");
-	cout << a1.GetPath() << " should be \'/a1\'" << endl;
+	cout << a1.GetAbsolutePath() << " should be \'\' (empty)" << endl;
 	cout << (int)a1.GetType() << " should be \'-1\'" << endl;
 	if(a1.Dereference("") == &a1)
 		cout << "Dereference test passed" << endl;
@@ -66,6 +66,20 @@ void test2() {
 	cout << "Now just a3:" << endl;
 	//a3->Command("");
 	root2->Command("/root1/a3");
+	delete root2;
+	cout << endl;
+}
+
+void test3() {
+	cout << ":::Node path test:::" << endl;
+	Node* root = new Node("root");
+	Node* a1 = new Node("a1");
+	Node* b1 = new Node("b1");
+	a1->AddChild(b1);
+	root->AddChild(a1);
+	if(b1->GetRoot()->Dereference(b1->GetAbsolutePath()) == b1)
+		cout << "Dereference test pass" << endl;
+	else cout << "Dereference test fail" << endl;
 	cout << endl;
 }
 
@@ -73,5 +87,6 @@ int main(int argc, char** argv) {
 	cout << "The test begins...  now." << endl;
 	test1();
 	test2();
+	test3();
 	return 0;
 }
