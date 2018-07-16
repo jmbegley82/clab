@@ -35,7 +35,6 @@ namespace jmb {
 		Atom* Node::Dereference(std::string const& name) {
 			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
 			if(retval == NULL) {
-				/*
 				std::string dname;
 				if(name[0] == '/') {
 					// absolute path
@@ -43,10 +42,17 @@ namespace jmb {
 					retval = GetRoot()->Dereference(dname);
 				} else {
 					dname = name;
-					StrSplit CSSlash(dname, "/");
-					if(CSSlash.left != "")
+					CommandSplit CSSlash(dname, "/");
+					if(CSSlash.left != "") {
+						Atom* nextUp = _GetChild(CSSlash.left);
+						if(nextUp != NULL) {
+							retval = nextUp->Dereference(CSSlash.right);
+						}
+					} else {
+						Atom* nextUp = _GetChild(dname);
+						retval = nextUp;
+					}
 				}
-				 */
 			}
 			return retval;
 		}
@@ -55,6 +61,8 @@ namespace jmb {
 			if(cmd == "")
 				return Atom::Command(cmd);
 			Sentence s(cmd);
+//			if(s.op == "") {
+//			}
 			Atom* sub = Dereference(s.subject);
 			if(sub == NULL) return -1;
 			return sub->Command(s.op + s.target);

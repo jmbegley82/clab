@@ -65,7 +65,7 @@ void test2() {
 	cout << endl;
 	cout << "Now just a3:" << endl;
 	//a3->Command("");
-	root2->Command("root1/a3");
+	root2->Command("/root1/a3");
 	cout << endl;
 }
 

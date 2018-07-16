@@ -76,6 +76,10 @@ namespace jmb
 				target = ncmd.substr(offset, length);
 			}
 			
+			if(op == "") {
+				target = ""; // for good measure
+				subject = cmd;
+			}
 		}
 	}
 }
