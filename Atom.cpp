@@ -51,7 +51,21 @@ namespace jmb {
 		
 		int Atom::Command(std::string const& cmd) {
 			if(cmd == "") return _Procedure();
-			else return -1;
+			Sentence s(cmd);
+			Atom* sub = Dereference(s.subject);
+			if(sub == NULL) return -1;
+			if(sub == this) {
+				if(s.op == "=") return OperatorEqu(Dereference(s.target));
+				if(s.op == "+=") return OperatorAdd(Dereference(s.target));
+				if(s.op == "-=") return OperatorSub(Dereference(s.target));
+				if(s.op == "*=") return OperatorMul(Dereference(s.target));
+				if(s.op == "/=") return OperatorDiv(Dereference(s.target));
+				if(s.op == "^=") return OperatorPow(Dereference(s.target));
+				return -1;
+			}
+			
+			return sub->Command(s.op + s.target);
+			//else return -1;
 		}
 		
 		std::string Atom::GetValueAsStdString() {
@@ -61,18 +75,6 @@ namespace jmb {
 		
 		std::string Atom::GetAbsolutePath() {
 			std::string retval = "";
-			/*
-			retval = identity;
-			Atom* nextUp = (Atom*)parent;
-			while(nextUp != NULL) {
-				retval = nextUp->identity + "/" + retval;
-				nextUp = (Atom*)nextUp->parent;
-			}
-			CommandSplit CSSlash(retval, "/");
-			if(CSSlash.left != "")
-				retval = CSSlash.right;
-			retval = "/" + retval;
-			*/
 			Atom* root = GetRoot();
 			if(root != this) {
 				retval = identity;
@@ -129,7 +131,6 @@ namespace jmb {
 		}
 		
 		Atom* Atom::GetRoot() {
-			//assert(0); //// BROKEN
 			Atom* retval = (Atom*)parent;
 			if(retval == NULL) return this;
 			while(retval->parent != NULL) {

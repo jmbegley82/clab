@@ -54,11 +54,12 @@ namespace jmb {
 			virtual ~Node();
 			static const char type;
 			virtual Atom* Dereference(std::string const& name);
-			virtual int Command(std::string const& cmd);
+			//virtual int Command(std::string const& cmd);
 			virtual int AddChild(Atom* atm);
 			virtual int DelChild(Atom* atm);
 			virtual int DelChild(std::string const& name);
 			virtual int FreeChild(Atom* atm);
+			virtual int OperatorEqu(Atom* atm);
 		protected:
 			virtual int _Procedure();
 			unsigned int _GetChildIndex(std::string const& name);

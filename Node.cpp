@@ -11,10 +11,10 @@
 #include "Node.h"
 
 namespace jmb {
-
+	
 	namespace common {
-
-		const char Node::type = 0x01;
+		
+		const char Node::type = 0x00;
 		
 		Node::Node() {
 			Node("");
@@ -34,39 +34,43 @@ namespace jmb {
 		
 		Atom* Node::Dereference(std::string const& name) {
 			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
-			if(retval == NULL) {
-				std::string dname;
-				if(name[0] == '/') {
-					// absolute path
-					dname = name.substr(1);
-					retval = GetRoot()->Dereference(dname);
-				} else {
-					dname = name;
-					CommandSplit CSSlash(dname, "/");
-					if(CSSlash.left != "") {
-						Atom* nextUp = _GetChild(CSSlash.left);
-						if(nextUp != NULL) {
-							retval = nextUp->Dereference(CSSlash.right);
-						}
+			if(_mapThrough) {
+				// in case we want to create a node-derived object with private children
+				if(retval == NULL) {
+					std::string dname;
+					if(name[0] == '/') {
+						// absolute path
+						dname = name.substr(1);
+						retval = GetRoot()->Dereference(dname);
 					} else {
-						Atom* nextUp = _GetChild(dname);
-						retval = nextUp;
+						dname = name;
+						CommandSplit CSSlash(dname, "/");
+						if(CSSlash.left != "") {
+							Atom* nextUp = _GetChild(CSSlash.left);
+							if(nextUp != NULL) {
+								retval = nextUp->Dereference(CSSlash.right);
+							}
+						} else {
+							Atom* nextUp = _GetChild(dname);
+							retval = nextUp;
+						}
 					}
 				}
 			}
 			return retval;
 		}
 		
+		/*
 		int Node::Command(std::string const& cmd) {
-			if(cmd == "")
+			//if(cmd == "")
 				return Atom::Command(cmd);
-			Sentence s(cmd);
-//			if(s.op == "") {
-//			}
-			Atom* sub = Dereference(s.subject);
-			if(sub == NULL) return -1;
-			return sub->Command(s.op + s.target);
+			//Sentence s(cmd);
+			//Atom* sub = Dereference(s.subject);
+			//if(sub == NULL) return -1;
+
+			//return sub->Command(s.op + s.target);
 		}
+		*/
 		
 		int Node::AddChild(Atom* atm) {
 			if(_childCount >= MAXOBJS)
@@ -102,6 +106,10 @@ namespace jmb {
 			_children[idx] = NULL;
 			_MakeContiguous();
 			return 0;
+		}
+		
+		int Node::OperatorEqu(Atom* atm) {
+			return -1; //NI
 		}
 		
 		int Node::_Procedure() {
@@ -175,5 +183,5 @@ namespace jmb {
 		}
 		
 	}
-
+	
 }

@@ -78,8 +78,23 @@ void test3() {
 	a1->AddChild(b1);
 	root->AddChild(a1);
 	if(b1->GetRoot()->Dereference(b1->GetAbsolutePath()) == b1)
-		cout << "Dereference test pass" << endl;
-	else cout << "Dereference test fail" << endl;
+		cout << "Dereference test #1 pass" << endl;
+	else cout << "Dereference test #1 fail" << endl;
+	if(root->GetRoot() == root && root == root->Dereference(""))
+		cout << "Dereference test #2 pass" << endl;
+	else cout << "Dereference test #2 fail" << endl;
+	delete root;
+	cout << endl;
+}
+
+void test4() {
+	cout << ":::Operator Test:::" << endl;
+	Node* root = new Node("root");
+	Node* a1 = new Node("a1");
+	Node* a2 = new Node("a2");
+	root->AddChild(a1);
+	root->AddChild(a2);
+	root->Command("a1=a2");
 	cout << endl;
 }
 
@@ -88,5 +103,6 @@ int main(int argc, char** argv) {
 	test1();
 	test2();
 	test3();
+	test4();
 	return 0;
 }
