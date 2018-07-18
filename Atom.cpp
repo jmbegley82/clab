@@ -33,6 +33,9 @@ namespace jmb {
 		}
 		
 		Atom* Atom::Dereference(std::string const& name) {
+			// Applied to command string subjects and targets to convert them
+			//   into Atom*s
+			
 			if(name == "") return this;
 			else if(name[0] == '/') {
 				// remove the leading slash
@@ -50,22 +53,25 @@ namespace jmb {
 
 		
 		int Atom::Command(std::string const& cmd) {
+			// Splits cmd into subject, op(erator), and target, Dereferences subject,
+			//   sends op + target to it; given one addressed to us, Dereference target and
+			//   send it to the appropriate Operator function
+			
 			if(cmd == "") return _Procedure();
 			Sentence s(cmd);
 			Atom* sub = Dereference(s.subject);
 			if(sub == NULL) return -1;
 			if(sub == this) {
-				if(s.op == "=") return OperatorEqu(Dereference(s.target));
-				if(s.op == "+=") return OperatorAdd(Dereference(s.target));
-				if(s.op == "-=") return OperatorSub(Dereference(s.target));
-				if(s.op == "*=") return OperatorMul(Dereference(s.target));
-				if(s.op == "/=") return OperatorDiv(Dereference(s.target));
-				if(s.op == "^=") return OperatorPow(Dereference(s.target));
+				Atom* atm = _Interpret(Dereference(s.target));
+				if(s.op == "=") return OperatorEqu(atm); //Dereference(s.target));
+				if(s.op == "+=") return OperatorAdd(atm); //Dereference(s.target));
+				if(s.op == "-=") return OperatorSub(atm); //Dereference(s.target));
+				if(s.op == "*=") return OperatorMul(atm); //Dereference(s.target));
+				if(s.op == "/=") return OperatorDiv(atm); //Dereference(s.target));
+				if(s.op == "^=") return OperatorPow(atm); //Dereference(s.target));
 				return -1;
 			}
-			
 			return sub->Command(s.op + s.target);
-			//else return -1;
 		}
 		
 		std::string Atom::GetValueAsStdString() {
@@ -143,6 +149,11 @@ namespace jmb {
 		int Atom::_Procedure() {
 			std::cout << GetAbsolutePath() << std::endl;
 			return 0;
+		}
+		
+		Atom* Atom::_Interpret(Atom* atm) {
+			// default
+			return atm;
 		}
 		
 	}

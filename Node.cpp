@@ -110,6 +110,10 @@ namespace jmb {
 			return 0;
 		}
 		
+		Atom* Node::_Interpret(Atom* atm) {
+			return Atom::_Interpret(atm);
+		}
+		
 		unsigned int Node::_GetChildIndex(std::string const& name) {
 			// return MAXOBJS if not found
 			unsigned int retval;

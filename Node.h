@@ -62,6 +62,7 @@ namespace jmb {
 			virtual int OperatorEqu(Atom* atm);
 		protected:
 			virtual int _Procedure();
+			virtual Atom* _Interpret(Atom* atm);
 			unsigned int _GetChildIndex(std::string const& name);
 			unsigned int _GetChildIndex(Atom* atm);
 			Atom* _GetChild(std::string const& name);

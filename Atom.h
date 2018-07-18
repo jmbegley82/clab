@@ -49,6 +49,7 @@ namespace jmb {
 			virtual int OperatorPow(Atom* atm); // ^=
 		protected:
 			virtual int _Procedure();
+			virtual Atom* _Interpret(Atom* atm);
 			char _type;
 		};
 	}
