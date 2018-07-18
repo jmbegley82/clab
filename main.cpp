@@ -12,9 +12,11 @@
 #include <string>
 #include "Atom.h"
 #include "Node.h"
+#include "Notype.h"
 
 using jmb::common::Atom;
 using jmb::common::Node;
+using jmb::common::Notype;
 using std::cout;
 using std::endl;
 
@@ -29,8 +31,11 @@ void test1() {
 	if(a1.Dereference("/") == &a1)
 		cout << "Dereference root test passed" << endl;
 	else cout << "Dereference root test failed" << endl;
-	if(a1.Dereference("badvalue") == NULL)
+	Atom* nt = a1.Dereference("badvalue");
+	if(nt->GetType() == Notype::type) {
 		cout << "Dereference badvalue test passed" << endl;
+		delete nt;
+	}
 	else cout << "Dereference badvalue test failed" << endl;
 	cout << endl;
 }

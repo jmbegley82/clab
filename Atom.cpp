@@ -11,6 +11,7 @@
 #include <assert.h>
 #include "Atom.h"
 #include "Node.h"
+#include "Notype.h"
 #include "StrSplit.h"
 
 namespace jmb {
@@ -48,7 +49,10 @@ namespace jmb {
 				}
 				// pass noSlash to the root
 				return root->Dereference(noSlash);
-			} else return NULL;
+			} else //return NULL;
+			{
+				return new Notype(name);  // is it wise to put that into identity?
+			}
 		}
 
 		
@@ -61,6 +65,9 @@ namespace jmb {
 			Sentence s(cmd);
 			Atom* sub = Dereference(s.subject);
 			if(sub == NULL) return -1;
+			if(sub->GetType() == Notype::type) {
+				
+			}
 			if(sub == this) {
 				Atom* atm = _Interpret(Dereference(s.target));
 				if(s.op == "=") return OperatorEqu(atm); //Dereference(s.target));

@@ -10,6 +10,7 @@
 #include <iostream>
 #include "StrSplit.h"
 #include "Node.h"
+#include "Notype.h"
 
 namespace jmb {
 	
@@ -27,6 +28,7 @@ namespace jmb {
 			}
 			_childCount = 0;
 			_mapThrough = true;
+			_type = type;
 		}
 		
 		Node::~Node() {
@@ -35,6 +37,10 @@ namespace jmb {
 		
 		Atom* Node::Dereference(std::string const& name) {
 			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
+			if(retval->GetType() == Notype::type) {
+				delete retval;
+				retval = NULL;
+			}
 			if(_mapThrough) {
 				// in case we want to create a node-derived object with private children
 				if(retval == NULL) {
