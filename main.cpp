@@ -37,6 +37,7 @@ void test1() {
 
 void test2() {
 	cout << ":::Node test:::" << endl;
+	
 	Node* root1 = new Node("root1");
 	Atom* a1 = new Atom("a1");
 	Atom* a2 = new Atom("a2");
@@ -51,18 +52,27 @@ void test2() {
 	root2->AddChild(b1);
 	root2->AddChild(b2);
 	root2->AddChild(b3);
+	
+	cout << "root1:" << endl;
 	root1->Command("");
+	cout << endl << "root2:" << endl;
 	root2->Command("");
 	cout << endl;
+	
 	cout << "Move a2 from root1 to root2:" << endl;
 	root2->AddChild(a2);
+	cout << "root1:" << endl;
 	root1->Command("");
+	cout << endl << "root2:" << endl;
 	root2->Command("");
 	cout << endl;
+	
 	cout << "Move root1 into root2:" << endl;
 	root2->AddChild(root1);
+	cout << "root2:" << endl;
 	root2->Command("");
 	cout << endl;
+	
 	cout << "Now just a3:" << endl;
 	//a3->Command("");
 	root2->Command("/root1/a3");
@@ -94,6 +104,7 @@ void test4() {
 	Node* a2 = new Node("a2");
 	root->AddChild(a1);
 	root->AddChild(a2);
+	cout << "The next line should begin with Node::" << endl;
 	root->Command("a1=a2");
 	cout << endl;
 }

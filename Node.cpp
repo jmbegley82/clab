@@ -7,6 +7,7 @@
  *
  */
 
+#include <iostream>
 #include "StrSplit.h"
 #include "Node.h"
 
@@ -60,18 +61,6 @@ namespace jmb {
 			return retval;
 		}
 		
-		/*
-		int Node::Command(std::string const& cmd) {
-			//if(cmd == "")
-				return Atom::Command(cmd);
-			//Sentence s(cmd);
-			//Atom* sub = Dereference(s.subject);
-			//if(sub == NULL) return -1;
-
-			//return sub->Command(s.op + s.target);
-		}
-		*/
-		
 		int Node::AddChild(Atom* atm) {
 			if(_childCount >= MAXOBJS)
 				return -1;  // we're full
@@ -109,6 +98,7 @@ namespace jmb {
 		}
 		
 		int Node::OperatorEqu(Atom* atm) {
+			std::cout << "Node::" << __FUNCTION__ << ": stub" << std::endl;
 			return -1; //NI
 		}
 		

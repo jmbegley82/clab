@@ -107,6 +107,7 @@ namespace jmb {
 		}
 		
 		int Atom::OperatorEqu(Atom* atm) {
+			std::cout << "Atom::" << __FUNCTION__ << ": stub" << std::endl;
 			return -1;
 		}
 		
