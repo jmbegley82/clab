@@ -23,7 +23,6 @@ namespace jmb {
 			Notype(std::string const& name);
 			~Notype();
 			static const char type;
-			
 		};
 	}
 }

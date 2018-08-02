@@ -42,7 +42,7 @@ namespace jmb {
 				retval = NULL;
 			}
 			if(_mapThrough) {
-				// in case we want to create a node-derived object with private children
+				// in case we want to create a Node-derived object with private children
 				if(retval == NULL) {
 					std::string dname;
 					if(name[0] == '/') {
@@ -104,7 +104,7 @@ namespace jmb {
 		}
 		
 		int Node::OperatorEqu(Atom* atm) {
-			std::cout << "Node::" << __FUNCTION__ << ": stub" << std::endl;
+			std::cout << "Node::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
 			return -1; //NI
 		}
 		

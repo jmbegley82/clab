@@ -81,6 +81,8 @@ void test2() {
 	cout << "Now just a3:" << endl;
 	//a3->Command("");
 	root2->Command("/root1/a3");
+	cout << "And again:" << endl;
+	root2->Command("root1/a3");
 	delete root2;
 	cout << endl;
 }

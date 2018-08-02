@@ -37,6 +37,7 @@ namespace jmb {
 			
 			virtual Atom* Dereference(std::string const& name);
 			virtual int Command(std::string const& cmd);
+			virtual int Command(std::string const& op, Atom* target);
 			virtual void SetValue(std::string const& val);
 			virtual std::string GetValueAsStdString();
 			virtual std::string GetAbsolutePath();

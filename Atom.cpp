@@ -66,8 +66,9 @@ namespace jmb {
 			Atom* sub = Dereference(s.subject);
 			if(sub == NULL) return -1;
 			if(sub->GetType() == Notype::type) {
-				
+				assert(0);
 			}
+			/*
 			if(sub == this) {
 				Atom* atm = _Interpret(Dereference(s.target));
 				if(s.op == "=") return OperatorEqu(atm); //Dereference(s.target));
@@ -78,7 +79,22 @@ namespace jmb {
 				if(s.op == "^=") return OperatorPow(atm); //Dereference(s.target));
 				return -1;
 			}
-			return sub->Command(s.op + s.target);
+			 */
+			//return sub->Command(s.op + s.target);
+			return sub->Command(s.op, Dereference(s.target));
+		}
+		
+		int Atom::Command(std::string const& op, Atom* target) {
+			Atom* trg = _Interpret(target);
+			if(op == "") return _Procedure();
+			if(op == "=") return OperatorEqu(trg);
+			if(op == "+=") return OperatorAdd(trg);
+			if(op == "-=") return OperatorSub(trg);
+			if(op == "*=") return OperatorMul(trg);
+			if(op == "/=") return OperatorDiv(trg);
+			if(op == "^=") return OperatorPow(trg);
+			if(trg->GetType() == Notype::type) delete trg;
+			return -1;
 		}
 		
 		std::string Atom::GetValueAsStdString() {
