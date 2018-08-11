@@ -63,7 +63,12 @@ namespace jmb {
 			
 			if(cmd == "") return _Procedure();
 			Sentence s(cmd);
-			Atom* sub = Dereference(s.subject);
+			std::string sj = "";
+			if(s.target == "" && s.op == "") {
+				sj = cmd;
+			} else sj = s.subject;
+			
+			Atom* sub = Dereference(sj);
 			if(sub == NULL) return -1;
 			if(sub->GetType() == Notype::type) {
 				assert(0);
@@ -85,16 +90,18 @@ namespace jmb {
 		}
 		
 		int Atom::Command(std::string const& op, Atom* target) {
+			int retval = -1;
+			if(op == "") retval = _Procedure();
 			Atom* trg = _Interpret(target);
-			if(op == "") return _Procedure();
-			if(op == "=") return OperatorEqu(trg);
-			if(op == "+=") return OperatorAdd(trg);
-			if(op == "-=") return OperatorSub(trg);
-			if(op == "*=") return OperatorMul(trg);
-			if(op == "/=") return OperatorDiv(trg);
-			if(op == "^=") return OperatorPow(trg);
-			if(trg->GetType() == Notype::type) delete trg;
-			return -1;
+			if(op == "=") retval = OperatorEqu(trg);
+			if(op == "+=") retval = OperatorAdd(trg);
+			if(op == "-=") retval = OperatorSub(trg);
+			if(op == "*=") retval = OperatorMul(trg);
+			if(op == "/=") retval = OperatorDiv(trg);
+			if(op == "^=") retval = OperatorPow(trg);
+			if(trg->GetType() == Notype::type)
+				delete trg;
+			return retval;
 		}
 		
 		std::string Atom::GetValueAsStdString() {

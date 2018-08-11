@@ -113,6 +113,8 @@ void test4() {
 	root->AddChild(a2);
 	cout << "The next line should begin with Node::" << endl;
 	root->Command("a1=a2");
+	cout << "Now let's annoy it..." << endl;
+	root->Command("a1=a9er");
 	cout << endl;
 }
 

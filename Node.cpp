@@ -64,6 +64,7 @@ namespace jmb {
 					}
 				}
 			}
+			if(retval == NULL) retval = new Notype(name);
 			return retval;
 		}
 		
