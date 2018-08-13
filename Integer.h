@@ -33,8 +33,8 @@ namespace jmb {
 			//virtual std::string GetAbsolutePath();
 			virtual void Debug();
 			virtual int OperatorEqu(Atom* atm); //  =
-			//virtual int OperatorAdd(Atom* atm); // +=
-			//virtual int OperatorSub(Atom* atm); // -=
+			virtual int OperatorAdd(Atom* atm); // +=
+			virtual int OperatorSub(Atom* atm); // -=
 			//virtual int OperatorMul(Atom* atm); // *=
 			//virtual int OperatorDiv(Atom* atm); // /=
 			//virtual int OperatorPow(Atom* atm); // ^=

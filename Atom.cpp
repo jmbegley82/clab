@@ -172,7 +172,7 @@ namespace jmb {
 		
 		Atom* Atom::_Interpret(Atom* atm) {
 			// default
-			std::cout << "Atom::_Interpret" << std::endl;
+			//std::cout << "Atom::_Interpret" << std::endl;
 			return atm;
 		}
 		

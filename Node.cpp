@@ -119,7 +119,7 @@ namespace jmb {
 		}
 		
 		Atom* Node::_Interpret(Atom* atm) {
-			std::cout << "Node::_Interpret" << std::endl;
+			//std::cout << "Node::_Interpret" << std::endl;
 			return Atom::_Interpret(atm);
 		}
 		

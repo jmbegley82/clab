@@ -8,7 +8,8 @@
  */
 
 #include <iostream>
-#include <sstream>
+#include <assert.h>
+#include <math.h>
 #include "Integer.h"
 #include "Notype.h"
 
@@ -31,7 +32,7 @@ namespace jmb {
 		}
 		
 		void Integer::SetValue(std::string const& val) {
-			_data = strtod(val.c_str(), NULL);
+			_data = (int)round(strtod(val.c_str(), NULL));
 			//std::cout << "If '" << val << "' = '" << _data <<
 			//	"' Integer::SetValue worked correctly on " <<
 			//	GetAbsolutePath() << std::endl;
@@ -54,7 +55,6 @@ namespace jmb {
 			if(atm->GetType() == Integer::type) {
 				std::cout << "an Integer";
 				std::string val = atm->GetValueAsStdString();
-				std::cout << " with value '" << val << "'";
 				SetValue(val);
 				retval = 0;
 			} else if(atm->GetType() == Notype::type) {
@@ -66,13 +66,35 @@ namespace jmb {
 			return retval;
 		}
 		
+		int Integer::OperatorAdd(Atom* atm) {
+			int retval = -1;
+			if(atm->GetType() == Integer::type) {
+				std::string vals = atm->GetValueAsStdString();
+				int vali = (int)round(strtod(vals.c_str(), NULL));
+				_data += vali;
+				retval = 0;
+			} else assert(0);
+			return retval;
+		}
+		
+		int Integer::OperatorSub(Atom* atm) {
+			int retval = -1;
+			if(atm->GetType() == Integer::type) {
+				std::string vals = atm->GetValueAsStdString();
+				int vali = (int)round(strtod(vals.c_str(), NULL));
+				_data -= vali;
+				retval = 0;
+			} else assert(0);
+			return retval;
+		}
+		
 		int Integer::_Procedure() {
 			int retval = -1;
 			return retval;
 		}
 		
 		Atom* Integer::_Interpret(Atom* atm) {
-			std::cout << "Integer::_Interpret: " << atm->identity << std::endl;
+			//std::cout << "Integer::_Interpret: " << atm->identity << std::endl;
 			if(atm->GetType() == Integer::type) return atm;
 			else return new Notype(atm->identity);
 		}

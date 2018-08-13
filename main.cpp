@@ -130,12 +130,24 @@ void test5() {
 	Integer* i2 = new Integer("i2");
 	root->AddChild(i1);
 	root->AddChild(i2);
+	cout << "Setting i1 to 12 manually." << endl;
 	i1->SetValue("12");
 	cout << "If '" << i1->GetValueAsStdString() <<
 		"' = '12' SetValue worked and also GetValueAsStdString worked" << endl;
+	cout << "Command i2=i1" << endl;
 	root->Command("i2=i1");
-	cout << "i2 = " << i2->GetValueAsStdString() <<
-		"; should be 12 if Integer::OperatorEqu is working" << endl;
+	cout << "i2 = '" << i2->GetValueAsStdString() <<
+		"'; should be 12 if Integer::OperatorEqu is working" << endl;
+	cout << "Command i1=42" << endl;
+	root->Command("i1=42");
+	cout << "i1 = '" << i1->GetValueAsStdString() <<
+		"'; should still be 12" << endl;
+	cout << "Setting i2 to 39 manually." << endl;
+	i2->SetValue("39");
+	cout << "Command i1-=i2" << endl;
+	root->Command("i1-=i2");
+	cout << "i1 = '" << i1->GetValueAsStdString() <<
+		"'; should be -27 now if OperatorSub is cooperating" << endl;
 	cout << endl;
 }
 
