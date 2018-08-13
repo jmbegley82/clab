@@ -131,8 +131,11 @@ void test5() {
 	root->AddChild(i1);
 	root->AddChild(i2);
 	i1->SetValue("12");
+	cout << "If '" << i1->GetValueAsStdString() <<
+		"' = '12' SetValue worked and also GetValueAsStdString worked" << endl;
 	root->Command("i2=i1");
-	cout << "i2 = " << i2->GetValueAsStdString() << "; should be 12" << endl;
+	cout << "i2 = " << i2->GetValueAsStdString() <<
+		"; should be 12 if Integer::OperatorEqu is working" << endl;
 	cout << endl;
 }
 

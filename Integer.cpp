@@ -32,15 +32,17 @@ namespace jmb {
 		
 		void Integer::SetValue(std::string const& val) {
 			_data = strtod(val.c_str(), NULL);
+			//std::cout << "If '" << val << "' = '" << _data <<
+			//	"' Integer::SetValue worked correctly on " <<
+			//	GetAbsolutePath() << std::endl;
 		}
 		
 		std::string Integer::GetValueAsStdString() {
-			Integer* i = this; //debug...
-			Integer* j = i;
-			std::stringstream tmpss;
-			tmpss << _data;
-			
-			return tmpss.str();			
+			std::string retval = "";
+			char tmpc[128] = {};
+			snprintf(tmpc, 128, "%d", _data);
+			retval += tmpc;
+			return retval;
 		}
 		
 		void Integer::Debug() {
