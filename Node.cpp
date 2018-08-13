@@ -32,6 +32,7 @@ namespace jmb {
 		}
 		
 		Node::~Node() {
+			//std::cout << "Node::~Atom" << std::endl;
 			_Purge();
 		}
 		
@@ -118,6 +119,7 @@ namespace jmb {
 		}
 		
 		Atom* Node::_Interpret(Atom* atm) {
+			std::cout << "Node::_Interpret" << std::endl;
 			return Atom::_Interpret(atm);
 		}
 		

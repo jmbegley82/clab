@@ -31,6 +31,7 @@ namespace jmb {
 		}
 		
 		Atom::~Atom() {
+			LeaveParent();
 		}
 		
 		Atom* Atom::Dereference(std::string const& name) {
@@ -73,19 +74,7 @@ namespace jmb {
 			if(sub->GetType() == Notype::type) {
 				assert(0);
 			}
-			/*
-			if(sub == this) {
-				Atom* atm = _Interpret(Dereference(s.target));
-				if(s.op == "=") return OperatorEqu(atm); //Dereference(s.target));
-				if(s.op == "+=") return OperatorAdd(atm); //Dereference(s.target));
-				if(s.op == "-=") return OperatorSub(atm); //Dereference(s.target));
-				if(s.op == "*=") return OperatorMul(atm); //Dereference(s.target));
-				if(s.op == "/=") return OperatorDiv(atm); //Dereference(s.target));
-				if(s.op == "^=") return OperatorPow(atm); //Dereference(s.target));
-				return -1;
-			}
-			 */
-			//return sub->Command(s.op + s.target);
+
 			return sub->Command(s.op, Dereference(s.target));
 		}
 		
@@ -183,6 +172,7 @@ namespace jmb {
 		
 		Atom* Atom::_Interpret(Atom* atm) {
 			// default
+			std::cout << "Atom::_Interpret" << std::endl;
 			return atm;
 		}
 		

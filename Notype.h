@@ -13,6 +13,9 @@
 #include <string>
 #include "Atom.h"
 
+// generic type best used temporarily
+// this is a great example of the simplest possible Atom-derived class
+
 namespace jmb {
 	
 	namespace common {

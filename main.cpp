@@ -12,10 +12,12 @@
 #include <string>
 #include "Atom.h"
 #include "Node.h"
+#include "Integer.h"
 #include "Notype.h"
 
 using jmb::common::Atom;
 using jmb::common::Node;
+using jmb::common::Integer;
 using jmb::common::Notype;
 using std::cout;
 using std::endl;
@@ -115,6 +117,22 @@ void test4() {
 	root->Command("a1=a2");
 	cout << "Now let's annoy it..." << endl;
 	root->Command("a1=a9er");
+	delete a1;
+	delete a2;
+	delete root;
+	cout << endl;
+}
+
+void test5() {
+	cout << ":::Integer Test:::" << endl;
+	Node* root = new Node("root");
+	Integer* i1 = new Integer("i1");
+	Integer* i2 = new Integer("i2");
+	root->AddChild(i1);
+	root->AddChild(i2);
+	i1->SetValue("12");
+	root->Command("i2=i1");
+	cout << "i2 = " << i2->GetValueAsStdString() << "; should be 12" << endl;
 	cout << endl;
 }
 
@@ -124,5 +142,6 @@ int main(int argc, char** argv) {
 	test2();
 	test3();
 	test4();
+	test5();
 	return 0;
 }
