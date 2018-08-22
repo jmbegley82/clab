@@ -148,6 +148,21 @@ void test5() {
 	root->Command("i1-=i2");
 	cout << "i1 = '" << i1->GetValueAsStdString() <<
 		"'; should be -27 now if OperatorSub is cooperating" << endl;
+
+	cout << "Setting i2 to -3 manually." << endl;
+	i2->SetValue("-3");
+	cout << "Command i1*=i2" << endl;
+	root->Command("i1*=i2");
+	cout << "i1 = '" << i1->GetValueAsStdString() <<
+		"'; should be 81 now if OperatorMul is cooperating" << endl;
+
+	cout << "Setting i2 to 9 manually." << endl;
+	i2->SetValue("9");
+	cout << "Command i1/=i2" << endl;
+	root->Command("i1/=i2");
+	cout << "i1 = '" << i1->GetValueAsStdString() <<
+		"'; should be 9 now if OperatorDiv is cooperating" << endl;
+
 	cout << endl;
 }
 

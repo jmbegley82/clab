@@ -87,7 +87,29 @@ namespace jmb {
 			} else assert(0);
 			return retval;
 		}
-		
+
+		int Integer::OperatorMul(Atom* atm) {
+			int retval = -1;
+			if(atm->GetType() == Integer::type) {
+				std::string vals = atm->GetValueAsStdString();
+				int vali = (int)round(strtod(vals.c_str(), NULL));
+				_data *= vali;
+				retval = 0;
+			} else assert(0);
+			return retval;
+		}
+
+		int Integer::OperatorDiv(Atom* atm) {
+			int retval = -1;
+			if(atm->GetType() == Integer::type) {
+				std::string vals = atm->GetValueAsStdString();
+				int vali = (int)round(strtod(vals.c_str(), NULL));
+				_data /= vali;
+				retval = 0;
+			} else assert(0);
+			return retval;
+		}
+
 		int Integer::_Procedure() {
 			int retval = -1;
 			return retval;
