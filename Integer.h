@@ -37,7 +37,7 @@ namespace jmb {
 			virtual int OperatorSub(Atom* atm); // -=
 			virtual int OperatorMul(Atom* atm); // *=
 			virtual int OperatorDiv(Atom* atm); // /=
-			//virtual int OperatorPow(Atom* atm); // ^=
+			virtual int OperatorPow(Atom* atm); // ^=
 		protected:
 			virtual int _Procedure();
 			virtual Atom* _Interpret(Atom* atm);

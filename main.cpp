@@ -163,6 +163,13 @@ void test5() {
 	cout << "i1 = '" << i1->GetValueAsStdString() <<
 		"'; should be 9 now if OperatorDiv is cooperating" << endl;
 
+	cout << "Setting i2 to 2 manually." << endl;
+	i2->SetValue("2");
+	cout << "Command i1^=i2" << endl;
+	root->Command("i1^=i2");
+	cout << "i1 = '" << i1->GetValueAsStdString() <<
+		"'; should be 81 again if OperatorPow is cooperating" << endl;
+
 	cout << endl;
 }
 

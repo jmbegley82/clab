@@ -76,4 +76,7 @@ i1 = '81'; should be 81 now if OperatorMul is cooperating
 Setting i2 to 9 manually.
 Command i1/=i2
 i1 = '9'; should be 9 now if OperatorDiv is cooperating
+Setting i2 to 2 manually.
+Command i1^=i2
+i1 = '81'; should be 81 again if OperatorPow is cooperating
 

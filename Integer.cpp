@@ -110,6 +110,17 @@ namespace jmb {
 			return retval;
 		}
 
+		int Integer::OperatorPow(Atom* atm) {
+			int retval = -1;
+			if(atm->GetType() == Integer::type) {
+				std::string vals = atm->GetValueAsStdString();
+				int vali = (int)round(strtod(vals.c_str(), NULL));
+				_data = pow(_data, vali);
+				retval = 0;
+			} else assert(0);
+			return retval;
+		}
+
 		int Integer::_Procedure() {
 			int retval = -1;
 			return retval;
