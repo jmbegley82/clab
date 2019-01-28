@@ -8,6 +8,8 @@
  */
 
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include <math.h>
 #include "Integer.h"

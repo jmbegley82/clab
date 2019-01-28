@@ -1,1 +1,1 @@
-c++ *.cpp -v -O0 -g -o test
+clang++ *.cpp -v -O0 -g -o test
