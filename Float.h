@@ -1,14 +1,14 @@
 /*
- *  Integer.h
+ *  Float.h
  *  Test
  *
- *  Created by james on 8/11/18.
- *  Copyright 2018 __MyCompanyName__. All rights reserved.
+ *  Created by james on 2/2/19.
+ *  Copyright 2019 __MyCompanyName__. All rights reserved.
  *
  */
 
-#ifndef INTEGER_H
-#define INTEGER_H
+#ifndef FLOAT_H
+#define FLOAT_H
 
 #include <string>
 #include "Atom.h"
@@ -18,12 +18,12 @@ namespace jmb {
 
 	namespace common {
 
-		class Integer : public Atom {
+		class Float : public Atom {
 		public:
-			Integer();
-			Integer(std::string const& name);
-			Integer(const Atom* atm);
-			~Integer();
+			Float();
+			Float(std::string const& name);
+			Float(const Atom* atm);
+			~Float();
 			static const char type;
 			
 			//virtual Atom* Dereference(std::string const& name);
@@ -45,14 +45,12 @@ namespace jmb {
 			virtual Atom* _Interpret(Atom* atm);
 			//char _type;
 		private:
-			//int ReadRawInteger(Atom* atm);
-			//int ReadRawFloat(Atom* atm);
-			int ReadAtom(const Atom* atm);
-			int _data;
+			double ReadAtom(const Atom* atm);
+			double _data;
 		};
 		
 	}
 
 }
 
-#endif //INTEGER_H
+#endif //FLOAT_H

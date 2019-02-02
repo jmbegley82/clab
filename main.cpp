@@ -13,11 +13,13 @@
 #include "Atom.h"
 #include "Node.h"
 #include "Integer.h"
+#include "Float.h"
 #include "Notype.h"
 
 using jmb::common::Atom;
 using jmb::common::Node;
 using jmb::common::Integer;
+using jmb::common::Float;
 using jmb::common::Notype;
 using std::cout;
 using std::endl;
@@ -128,8 +130,18 @@ void test5() {
 	Node* root = new Node("root");
 	Integer* i1 = new Integer("i1");
 	Integer* i2 = new Integer("i2");
+	Float* f1 = new Float("f1");
+	Float* f2 = new Float("f2");
+
 	root->AddChild(i1);
 	root->AddChild(i2);
+	root->AddChild(f1);
+	root->AddChild(f2);
+	cout << "Initializing." <<endl;
+	i1->SetValue("0");
+	i2->SetValue("0");
+	f1->SetValue("0");
+	f2->SetValue("0");
 	cout << "Setting i1 to 12 manually." << endl;
 	i1->SetValue("12");
 	cout << "If '" << i1->GetValueAsStdString() <<
@@ -169,6 +181,22 @@ void test5() {
 	root->Command("i1^=i2");
 	cout << "i1 = '" << i1->GetValueAsStdString() <<
 		"'; should be 81 again if OperatorPow is cooperating" << endl;
+
+	cout << "Command f1=i1" << endl;
+	root->Command("f1=i1");
+	cout << "f1 = '" << f1->GetValueAsStdString() <<
+		"'; should be 81" << endl;
+
+	cout << "Command f1/=i2" << endl;
+	root->Command("f1/=i2");
+	cout << "f1 = '" << f1->GetValueAsStdString() <<
+		"'; should be 40.5" << endl;
+
+        cout << "Command i1=f1" << endl;
+        root->Command("i1=f1");
+        cout << "i1 = '" << i1->GetValueAsStdString() <<
+                "'; should be 41" << endl;
+
 
 	cout << endl;
 }

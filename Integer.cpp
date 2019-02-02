@@ -13,6 +13,7 @@
 #include <assert.h>
 #include <math.h>
 #include "Integer.h"
+#include "Float.h"
 #include "Notype.h"
 
 namespace jmb {
@@ -35,14 +36,10 @@ namespace jmb {
 			_type = Integer::type;
 			isEphemeral = true;
 			char t = ((Atom*)atm)->GetType();
-			if(t == Integer::type) {
-				Integer* It = (Integer*)atm;
-				_data = *(int*)It->GetRawData();
+			if(t == Integer::type || t == Float::type) {
+				_data = ReadAtom(atm);
 			} //else assert(t == Integer::type);
 			else _type = Notype::type;
-			//{
-			//	_data = round(strtod(atm->identity.c_str(), NULL));
-			//}
 		}
 		
 		Integer::~Integer() {
@@ -68,73 +65,59 @@ namespace jmb {
 		
 		int Integer::OperatorEqu(Atom* atm) {
 			int retval = -1;
-			std::cout << "Integer::OperatorEqu: " << atm->identity << " is ";
-			if(atm->GetType() == Integer::type) {
-				std::cout << "an Integer";
-				_data = *(int*)((Integer*)atm)->GetRawData();
-				retval = 0;
-			} else if(atm->GetType() == Notype::type) {
-				std::cout << "a Notype";
-			} else {
-				std::cout << "unhandled";
-				assert(0);
+			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+				_data = ReadAtom(atm);
 			}
-			std::cout << std::endl;
 			return retval;
 		}
 		
 		int Integer::OperatorAdd(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type) {
-				//std::string vals = atm->GetValueAsStdString();
-				int vali = *(int*)((Integer*)atm)->GetRawData();;
+			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+				int vali = ReadAtom(atm);
 				_data += vali;
 				retval = 0;
-			} else assert(0);
+			}
 			return retval;
 		}
 		
 		int Integer::OperatorSub(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type) {
-				//std::string vals = atm->GetValueAsStdString();
-				int vali = *(int*)((Integer*)atm)->GetRawData();
+			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+				int vali = ReadAtom(atm);
 				_data -= vali;
 				retval = 0;
-			} else assert(0);
+			}
 			return retval;
 		}
 
 		int Integer::OperatorMul(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type) {
-				//std::string vals = atm->GetValueAsStdString();
-				int vali = *(int*)((Integer*)atm)->GetRawData();
+			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+				int vali = ReadAtom(atm);
 				_data *= vali;
 				retval = 0;
-			} else assert(0);
+			}
 			return retval;
 		}
 
 		int Integer::OperatorDiv(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type) {
-				//std::string vals = atm->GetValueAsStdString();
-				int vali = *(int*)((Integer*)atm)->GetRawData();
+			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+				int vali = ReadAtom(atm);
 				_data = (int)(_data / vali);
 				retval = 0;
-			} else assert(0);
+			}
 			return retval;
 		}
 
 		int Integer::OperatorPow(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type) {
-				//std::string vals = atm->GetValueAsStdString();
-				int vali = *(int*)((Integer*)atm)->GetRawData();
+			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+				int vali = ReadAtom(atm);
 				_data = pow(_data, vali);
 				retval = 0;
-			} else assert(0);
+			}
 			return retval;
 		}
 
@@ -154,6 +137,15 @@ namespace jmb {
 
 		void* Integer::GetRawData() {
 			return (void*)&_data;
+		}
+
+		int Integer::ReadAtom(const Atom* atm) {
+			char t = ((Atom*)atm)->GetType();
+			if(t == Integer::type)
+				return *(int*)((Integer*)atm)->GetRawData();
+			else if(t == Float::type)
+				return round(*(double*)((Float*)atm)->GetRawData());
+			else return 0;
 		}
 	}
 	
