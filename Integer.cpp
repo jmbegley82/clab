@@ -26,8 +26,23 @@ namespace jmb {
 		}
 		
 		Integer::Integer(std::string const& name) : Atom(name){
-			_type = type;
+			_type = Integer::type;
 			_data = 0;
+		}
+
+		Integer::Integer(const Atom* atm) /*: Atom(atm)*/ {
+			Integer(atm->identity);
+			_type = Integer::type;
+			isEphemeral = true;
+			char t = ((Atom*)atm)->GetType();
+			if(t == Integer::type) {
+				Integer* It = (Integer*)atm;
+				_data = *(int*)It->GetRawData();
+			} //else assert(t == Integer::type);
+			else _type = Notype::type;
+			//{
+			//	_data = round(strtod(atm->identity.c_str(), NULL));
+			//}
 		}
 		
 		Integer::~Integer() {
@@ -56,13 +71,13 @@ namespace jmb {
 			std::cout << "Integer::OperatorEqu: " << atm->identity << " is ";
 			if(atm->GetType() == Integer::type) {
 				std::cout << "an Integer";
-				std::string val = atm->GetValueAsStdString();
-				SetValue(val);
+				_data = *(int*)((Integer*)atm)->GetRawData();
 				retval = 0;
 			} else if(atm->GetType() == Notype::type) {
 				std::cout << "a Notype";
 			} else {
-				std::cout << "not any type known to this object";
+				std::cout << "unhandled";
+				assert(0);
 			}
 			std::cout << std::endl;
 			return retval;
@@ -71,8 +86,8 @@ namespace jmb {
 		int Integer::OperatorAdd(Atom* atm) {
 			int retval = -1;
 			if(atm->GetType() == Integer::type) {
-				std::string vals = atm->GetValueAsStdString();
-				int vali = (int)round(strtod(vals.c_str(), NULL));
+				//std::string vals = atm->GetValueAsStdString();
+				int vali = *(int*)((Integer*)atm)->GetRawData();;
 				_data += vali;
 				retval = 0;
 			} else assert(0);
@@ -82,8 +97,8 @@ namespace jmb {
 		int Integer::OperatorSub(Atom* atm) {
 			int retval = -1;
 			if(atm->GetType() == Integer::type) {
-				std::string vals = atm->GetValueAsStdString();
-				int vali = (int)round(strtod(vals.c_str(), NULL));
+				//std::string vals = atm->GetValueAsStdString();
+				int vali = *(int*)((Integer*)atm)->GetRawData();
 				_data -= vali;
 				retval = 0;
 			} else assert(0);
@@ -93,8 +108,8 @@ namespace jmb {
 		int Integer::OperatorMul(Atom* atm) {
 			int retval = -1;
 			if(atm->GetType() == Integer::type) {
-				std::string vals = atm->GetValueAsStdString();
-				int vali = (int)round(strtod(vals.c_str(), NULL));
+				//std::string vals = atm->GetValueAsStdString();
+				int vali = *(int*)((Integer*)atm)->GetRawData();
 				_data *= vali;
 				retval = 0;
 			} else assert(0);
@@ -104,9 +119,9 @@ namespace jmb {
 		int Integer::OperatorDiv(Atom* atm) {
 			int retval = -1;
 			if(atm->GetType() == Integer::type) {
-				std::string vals = atm->GetValueAsStdString();
-				int vali = (int)round(strtod(vals.c_str(), NULL));
-				_data /= vali;
+				//std::string vals = atm->GetValueAsStdString();
+				int vali = *(int*)((Integer*)atm)->GetRawData();
+				_data = (int)(_data / vali);
 				retval = 0;
 			} else assert(0);
 			return retval;
@@ -115,8 +130,8 @@ namespace jmb {
 		int Integer::OperatorPow(Atom* atm) {
 			int retval = -1;
 			if(atm->GetType() == Integer::type) {
-				std::string vals = atm->GetValueAsStdString();
-				int vali = (int)round(strtod(vals.c_str(), NULL));
+				//std::string vals = atm->GetValueAsStdString();
+				int vali = *(int*)((Integer*)atm)->GetRawData();
 				_data = pow(_data, vali);
 				retval = 0;
 			} else assert(0);
@@ -130,8 +145,15 @@ namespace jmb {
 		
 		Atom* Integer::_Interpret(Atom* atm) {
 			//std::cout << "Integer::_Interpret: " << atm->identity << std::endl;
+			/*
 			if(atm->GetType() == Integer::type) return atm;
 			else return new Notype(atm->identity);
+			*/
+			return new Integer(atm);
+		}
+
+		void* Integer::GetRawData() {
+			return (void*)&_data;
 		}
 	}
 	

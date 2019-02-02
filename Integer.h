@@ -22,6 +22,7 @@ namespace jmb {
 		public:
 			Integer();
 			Integer(std::string const& name);
+			Integer(const Atom* atm);
 			~Integer();
 			static const char type;
 			
@@ -38,6 +39,7 @@ namespace jmb {
 			virtual int OperatorMul(Atom* atm); // *=
 			virtual int OperatorDiv(Atom* atm); // /=
 			virtual int OperatorPow(Atom* atm); // ^=
+			virtual void* GetRawData();
 		protected:
 			virtual int _Procedure();
 			virtual Atom* _Interpret(Atom* atm);

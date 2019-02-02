@@ -28,10 +28,18 @@ namespace jmb {
 			identity = name;
 			parent = NULL;
 			_type = type;
+			isEphemeral = false;
+		}
+
+		Atom::Atom(const Atom* atm) {
+			// this is where we'll handle conversion from other types
+			// well not so much here, but in the derived classes
+			Atom(atm->identity);  // happens enough times already...
+			isEphemeral = true;
 		}
 		
 		Atom::~Atom() {
-			LeaveParent();
+			if(!isEphemeral) LeaveParent();
 		}
 		
 		Atom* Atom::Dereference(std::string const& name) {
@@ -88,7 +96,8 @@ namespace jmb {
 			if(op == "*=") retval = OperatorMul(trg);
 			if(op == "/=") retval = OperatorDiv(trg);
 			if(op == "^=") retval = OperatorPow(trg);
-			if(trg->GetType() == Notype::type)
+			//if(trg->GetType() == Notype::type)
+			//if(trg->isEphemeral) // should always be true
 				delete trg;
 			return retval;
 		}
@@ -173,7 +182,11 @@ namespace jmb {
 		Atom* Atom::_Interpret(Atom* atm) {
 			// default
 			//std::cout << "Atom::_Interpret" << std::endl;
-			return atm;
+			return new Atom(atm);
+		}
+		
+		void* Atom::GetRawData() {
+			return NULL;
 		}
 		
 	}

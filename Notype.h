@@ -24,6 +24,7 @@ namespace jmb {
 		public:
 			Notype();
 			Notype(std::string const& name);
+			Notype(const Atom* atm);
 			~Notype();
 			static const char type;
 		};

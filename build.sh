@@ -1,1 +1,1 @@
-g++ *.cpp -D_GLIBCXX_DEBUG -v -O0 -g -o test
+g++ *.cpp -D_GLIBCXX_DEBUG -g3 -o test

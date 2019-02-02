@@ -23,6 +23,11 @@ namespace jmb {
 			_type = type;
 		}
 		
+		Notype::Notype(const Atom* atm) : Atom(atm) {
+			Notype(atm->identity);
+			isEphemeral = true;
+		}
+
 		Notype::~Notype() {
 		}
 	}

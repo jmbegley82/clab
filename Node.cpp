@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <assert.h>
 #include "StrSplit.h"
 #include "Node.h"
 #include "Notype.h"
@@ -30,10 +31,23 @@ namespace jmb {
 			_mapThrough = true;
 			_type = type;
 		}
+
+		Node::Node(const Atom* atm) : Atom(atm) {
+			Node(atm->identity);
+			isEphemeral = true;
+			char t = ((Atom*)atm)->GetType();
+			if(t == Node::type) {
+				// only valid conversion is Node to (Atom*)Node
+				Node* nod = (Node*)atm;
+				for(int i=0; i<MAXOBJS; i++) {
+					_children[i] = nod->_children[i];
+				}
+			}// else assert(t == Node::type);
+		}
 		
 		Node::~Node() {
 			//std::cout << "Node::~Atom" << std::endl;
-			_Purge();
+			if(!isEphemeral) _Purge();
 		}
 		
 		Atom* Node::Dereference(std::string const& name) {
@@ -120,7 +134,8 @@ namespace jmb {
 		
 		Atom* Node::_Interpret(Atom* atm) {
 			//std::cout << "Node::_Interpret" << std::endl;
-			return Atom::_Interpret(atm);
+			//return Atom::_Interpret(atm);
+			return new Node(atm);
 		}
 		
 		unsigned int Node::_GetChildIndex(std::string const& name) {
@@ -184,7 +199,11 @@ namespace jmb {
 				//_children[i] = NULL;
 			}
 		}
-		
+		/*
+		void* GetRawData() {
+			return NULL;
+		}
+		*/
 	}
 	
 }

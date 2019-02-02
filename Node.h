@@ -51,6 +51,7 @@ namespace jmb {
 		public:
 			Node();
 			Node(std::string const& name);
+			Node(const Atom* atm);
 			virtual ~Node();
 			static const char type;
 			virtual Atom* Dereference(std::string const& name);
@@ -60,6 +61,7 @@ namespace jmb {
 			virtual int DelChild(std::string const& name);
 			virtual int FreeChild(Atom* atm);
 			virtual int OperatorEqu(Atom* atm);
+			//virtual void* GetRawData();
 		protected:
 			virtual int _Procedure();
 			virtual Atom* _Interpret(Atom* atm);
