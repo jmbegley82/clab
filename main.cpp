@@ -197,6 +197,16 @@ void test5() {
         cout << "i1 = '" << i1->GetValueAsStdString() <<
                 "'; should be 41" << endl;
 
+	cout << "Setting f2 = 3.14159" << endl;
+	f2->SetValue("3.14159");
+	cout << "f2 = '" << f2->GetValueAsStdString() <<
+		"'; should be 3.14159" << endl;
+
+	cout << "Command f1^=f2" << endl;
+	root->Command("f1^=f2");
+	cout << "f1 = '" << f1->GetValueAsStdString() <<
+		"'; no idea what it'll be" << endl;
+
 
 	cout << endl;
 }
