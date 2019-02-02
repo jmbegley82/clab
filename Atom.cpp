@@ -89,16 +89,17 @@ namespace jmb {
 		int Atom::Command(std::string const& op, Atom* target) {
 			int retval = -1;
 			if(op == "") retval = _Procedure();
-			Atom* trg = _Interpret(target);
-			if(op == "=") retval = OperatorEqu(trg);
-			if(op == "+=") retval = OperatorAdd(trg);
-			if(op == "-=") retval = OperatorSub(trg);
-			if(op == "*=") retval = OperatorMul(trg);
-			if(op == "/=") retval = OperatorDiv(trg);
-			if(op == "^=") retval = OperatorPow(trg);
-			//if(trg->GetType() == Notype::type)
-			//if(trg->isEphemeral) // should always be true
+			else {
+				Atom* trg = _Interpret(target);
+				if(op == "=") retval = OperatorEqu(trg);
+				else if(op == "+=") retval = OperatorAdd(trg);
+				else if(op == "-=") retval = OperatorSub(trg);
+				else if(op == "*=") retval = OperatorMul(trg);
+				else if(op == "/=") retval = OperatorDiv(trg);
+				else if(op == "^=") retval = OperatorPow(trg);
+				assert(trg->isEphemeral);
 				delete trg;
+			}
 			return retval;
 		}
 		
