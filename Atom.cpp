@@ -79,9 +79,7 @@ namespace jmb {
 			
 			Atom* sub = Dereference(sj);
 			if(sub == NULL) return -1;
-			if(sub->GetType() == Notype::type) {
-				assert(0);
-			}
+			assert(sub->GetType() != Notype::type);
 
 			return sub->Command(s.op, Dereference(s.target));
 		}
