@@ -14,12 +14,14 @@
 #include "Node.h"
 #include "Integer.h"
 #include "Float.h"
+#include "String.h"
 #include "Notype.h"
 
 using jmb::common::Atom;
 using jmb::common::Node;
 using jmb::common::Integer;
 using jmb::common::Float;
+using jmb::common::String;
 using jmb::common::Notype;
 using std::cout;
 using std::endl;
@@ -215,6 +217,38 @@ void test5() {
 	cout << "f1 = '" << f1->GetValueAsStdString() <<
 		"'; should be 32" << endl;
 
+	delete root;
+	cout << endl;
+}
+
+void test6() {
+	cout << "::String test::" << endl;
+	Node root("root");
+	String* s1 = new String("s1");
+	String* s2 = new String("s2");
+	String* s3 = new String("s3");
+	Integer* i1 = new Integer("i1");
+	Float* f1 = new Float("f1");
+	root.AddChild(s1);
+	root.AddChild(s2);
+	root.AddChild(s3);
+	root.AddChild(i1);
+	root.AddChild(f1);
+	s1->SetValue("This is the first half of the sentence; ");
+	s2->SetValue("the other half is on the other side of the semicolon.");
+	i1->SetValue("42");
+	f1->SetValue("3.14159");
+	root.Command("s3=s1");
+	cout << "Get/Set test:  " << s3->GetValueAsStdString();
+	root.Command("s3=s2");
+	cout << s3->GetValueAsStdString() << endl;
+	root.Command("s3=s1");
+	root.Command("s3+=s2");
+	cout << "OperatorEqu test:  " << s3->GetValueAsStdString() << endl;
+	root.Command("s3=i1");
+	cout << "Interpret test:  " << s3->GetValueAsStdString() << endl;
+	root.Command("s3=f1");
+	cout << "Interpret test:  " << s3->GetValueAsStdString() << endl;
 	cout << endl;
 }
 
@@ -225,5 +259,6 @@ int main(int argc, char** argv) {
 	test3();
 	test4();
 	test5();
+	test6();
 	return 0;
 }

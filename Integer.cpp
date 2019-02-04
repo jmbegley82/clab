@@ -65,7 +65,7 @@ namespace jmb {
 		
 		int Integer::OperatorEqu(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+			if(atm->GetType() == Integer::type) {
 				_data = ReadAtom(atm);
 			}
 			return retval;
@@ -73,7 +73,7 @@ namespace jmb {
 		
 		int Integer::OperatorAdd(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+			if(atm->GetType() == Integer::type) {
 				int vali = ReadAtom(atm);
 				_data += vali;
 				retval = 0;
@@ -83,7 +83,7 @@ namespace jmb {
 		
 		int Integer::OperatorSub(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+			if(atm->GetType() == Integer::type) {
 				int vali = ReadAtom(atm);
 				_data -= vali;
 				retval = 0;
@@ -93,7 +93,7 @@ namespace jmb {
 
 		int Integer::OperatorMul(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+			if(atm->GetType() == Integer::type) {
 				int vali = ReadAtom(atm);
 				_data *= vali;
 				retval = 0;
@@ -103,7 +103,7 @@ namespace jmb {
 
 		int Integer::OperatorDiv(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+			if(atm->GetType() == Integer::type) {
 				int vali = ReadAtom(atm);
 				_data = (int)(_data / vali);
 				retval = 0;
@@ -113,7 +113,7 @@ namespace jmb {
 
 		int Integer::OperatorPow(Atom* atm) {
 			int retval = -1;
-			if(atm->GetType() == Integer::type || atm->GetType() == Float::type) {
+			if(atm->GetType() == Integer::type) {
 				int vali = ReadAtom(atm);
 				_data = pow(_data, vali);
 				retval = 0;

@@ -13,6 +13,7 @@
 #include <assert.h>
 #include <math.h>
 #include "String.h"
+#include "Integer.h"
 #include "Float.h"
 #include "Notype.h"
 
@@ -36,10 +37,16 @@ namespace jmb {
 			_type = String::type;
 			isEphemeral = true;
 			char t = ((Atom*)atm)->GetType();
+			/*
 			if(t == String::type) {
 				_data = ReadAtom(atm);
+			} else if(t == Integer::type || t == Float::type) {
+				_data = ((Atom*)atm)->GetValueAsStdString();
 			} //else assert(t == String::type);
-			else _type = Notype::type;
+			*/
+			if(t == String::type || t == Integer::type || t == Float::type) {
+				_data = ReadAtom(atm);
+			} else _type = Notype::type;
 		}
 		
 		String::~String() {
@@ -71,6 +78,7 @@ namespace jmb {
 			int retval = -1;
 			if(atm->GetType() == String::type) {
 				std::string vals = ReadAtom(atm);
+				//std::string vals = atm->GetValueAsStdString();
 				_data += vals;
 				retval = 0;
 			}
@@ -97,10 +105,15 @@ namespace jmb {
 
 		std::string String::ReadAtom(const Atom* atm) {
 			char t = ((Atom*)atm)->GetType();
+			/*
 			if(t == String::type)
 				return (*(std::string*)((String*)atm)->GetRawData());
-			else return 0;
+			*/
+			if(t == String::type || t == Integer::type || t == Float::type)
+				return ((Atom*)atm)->GetValueAsStdString();
+			else return "";
 		}
+
 	}
 	
 }
