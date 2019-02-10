@@ -14,6 +14,7 @@
 #include <math.h>
 #include "Float.h"
 #include "Integer.h"
+#include "String.h"
 #include "Notype.h"
 
 namespace jmb {
@@ -36,7 +37,7 @@ namespace jmb {
 			_type = Float::type;
 			isEphemeral = true;
 			char t = ((Atom*)atm)->GetType();
-			if(t == Float::type || t == Integer::type) {
+			if(t == Float::type || t == Integer::type || t == String::type) {
 				_data = ReadAtom(atm);
 			} else _type = Notype::type;
 		}
@@ -145,7 +146,10 @@ namespace jmb {
 				return *(double*)((Float*)atm)->GetRawData();
 			else if(t == Integer::type)
 				return (double)(*(int*)((Integer*)atm)->GetRawData());
-			else
+			else if(t == String::type) {
+				std::string tmps = ((String*)atm)->GetValueAsStdString();
+				return strtod(tmps.c_str(), NULL);
+			} else
 				return 0.0;
 		}
 
