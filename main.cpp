@@ -267,7 +267,7 @@ void test7() {
 	root.AddChild(s2);
 	root.AddChild(s3);
 	s1->SetValue("String one");
-	s2->SetValue("Sreing two");
+	s2->SetValue("String two");
 	root.Command("s3 = s1");
 	root.Command("s3 += s2");
 	cout << "Have some concatenated strings:  " << s3->GetValueAsStdString() << endl;
