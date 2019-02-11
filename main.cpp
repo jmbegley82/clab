@@ -43,7 +43,7 @@ void test1() {
 		delete nt;
 	}
 	else cout << "Dereference badvalue test failed" << endl;
-	cout << endl;
+	cout << endl << endl;
 }
 
 void test2() {
@@ -90,7 +90,7 @@ void test2() {
 	cout << "And again:" << endl;
 	root2->Command("root1/a3");
 	delete root2;
-	cout << endl;
+	cout << endl << endl;
 }
 
 void test3() {
@@ -107,7 +107,7 @@ void test3() {
 		cout << "Dereference test #2 pass" << endl;
 	else cout << "Dereference test #2 fail" << endl;
 	delete root;
-	cout << endl;
+	cout << endl << endl;
 }
 
 void test4() {
@@ -124,7 +124,7 @@ void test4() {
 	delete a1;
 	delete a2;
 	delete root;
-	cout << endl;
+	cout << endl << endl;
 }
 
 void test5() {
@@ -218,11 +218,11 @@ void test5() {
 		"'; should be 32" << endl;
 
 	delete root;
-	cout << endl;
+	cout << endl << endl;
 }
 
 void test6() {
-	cout << "::String test::" << endl;
+	cout << ":::String test:::" << endl;
 	Node root("root");
 	String* s1 = new String("s1");
 	String* s2 = new String("s2");
@@ -239,17 +239,22 @@ void test6() {
 	i1->SetValue("42");
 	f1->SetValue("3.14159");
 	root.Command("s3=s1");
-	cout << "Get/Set test:  " << s3->GetValueAsStdString();
+	cout << "Get/Set test:      " << s3->GetValueAsStdString();
 	root.Command("s3=s2");
 	cout << s3->GetValueAsStdString() << endl;
 	root.Command("s3=s1");
 	root.Command("s3+=s2");
-	cout << "OperatorEqu test:  " << s3->GetValueAsStdString() << endl;
+	cout << "OperatorEqu test:  " << s3->GetValueAsStdString() << endl << endl;
 	root.Command("s3=i1");
-	cout << "Interpret test:  " << s3->GetValueAsStdString() << endl;
+	cout << "Interpret test:  Integer into String:  " << s3->GetValueAsStdString() << endl;
 	root.Command("s3=f1");
-	cout << "Interpret test:  " << s3->GetValueAsStdString() << endl;
-	cout << endl;
+	cout << "Interpret test:    Float into String:  " << s3->GetValueAsStdString() << endl;
+	root.Command("i1=s3");
+	cout << "Interpret test:  String into Integer:  " << i1->GetValueAsStdString() << endl;
+	root.Command("f1=s3");
+	cout << "Interpret test:    String into Float:  " << f1->GetValueAsStdString() << endl;
+	cout << endl << endl;
+
 }
 
 int main(int argc, char** argv) {
