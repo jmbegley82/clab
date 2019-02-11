@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cctype>
 
 #include "StrSplit.h"
 
@@ -9,10 +10,8 @@ namespace jmb
 	
 	namespace common {
 		
-		//#define STRSPLIT_C
 		CommandSplit::CommandSplit(std::string const& cmd, std::string const& token)
 		{
-#ifndef STRSPLIT_C
 			std::string ncmd = cmd;
 			size_t pos = ncmd.find(token,0);
 			if(pos != std::string::npos)
@@ -29,16 +28,6 @@ namespace jmb
 				left = "";
 				right = "";
 			}
-#else
-			assert(0); // dont even think about it!
-			const char* ncmd = cmd.c_str();
-			char lefty[2048] = "";
-			char righty[2048] = "";
-			//char* lefty = StrSplit((char*)ncmd, (char*)token.c_str(), righty);
-			StrSplit((char*)ncmd, (char*)token.c_str(), lefty, righty);
-			if(lefty != NULL) left = lefty;
-			if(righty != NULL) right = righty;
-#endif //STRSPLIT_C
 		}
 		
 		Sentence::Sentence(std::string const& cmd) {
@@ -80,6 +69,22 @@ namespace jmb
 				target = ""; // for good measure
 				subject = cmd;
 			}
+		}
+
+		std::string DeSpace(std::string const& text) {
+			// returns a string similar to text, but without spaces
+			std::string retval = "";
+			const char* input = text.c_str();
+			char c;
+			int i =0;
+			while(input[i]) {
+				c = input[i];
+				if(!isspace(c)) {
+					retval += c;
+				}
+				i++;
+			}
+			return retval;
 		}
 	}
 }

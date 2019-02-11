@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include <assert.h>
 #include "Atom.h"
 #include "Node.h"
 #include "Integer.h"
@@ -254,7 +255,38 @@ void test6() {
 	root.Command("f1=s3");
 	cout << "Interpret test:    String into Float:  " << f1->GetValueAsStdString() << endl;
 	cout << endl << endl;
+}
 
+void test7() {
+	cout << ":::Spaces/syntax update test:::" << endl;
+	Node root("root");
+	String* s1 = new String("s1");
+	String* s2 = new String("s2");
+	String* s3 = new String("s3");
+	root.AddChild(s1);
+	root.AddChild(s2);
+	root.AddChild(s3);
+	s1->SetValue("String one");
+	s2->SetValue("Sreing two");
+	root.Command("s3 = s1");
+	root.Command("s3 += s2");
+	cout << "Have some concatenated strings:  " << s3->GetValueAsStdString() << endl;
+	cout << endl << endl;
+}
+
+void test8() {
+	cout << ":::Test 8:::" << endl;
+	assert(0);
+	Node root("root");
+	root.Command("Integer i1");
+	root.Command("Integer i2 = 512");
+	root.Command("String s1");
+	root.Command("i1 = i2");
+	root.Command("s1 = i1");
+	String* s1 = (String*)root.Dereference("s1");
+	assert(s1 != NULL);
+	cout << "if " << s1->GetValueAsStdString() << " = 512, test passed!" << endl;
+	cout << endl << endl;
 }
 
 int main(int argc, char** argv) {
@@ -265,5 +297,6 @@ int main(int argc, char** argv) {
 	test4();
 	test5();
 	test6();
+	test7();
 	return 0;
 }

@@ -72,16 +72,17 @@ namespace jmb {
 			
 			if(cmd == "") return _Procedure();
 			Sentence s(cmd);
-			std::string sj = "";
-			if(s.target == "" && s.op == "") {
-				sj = cmd;
-			} else sj = s.subject;
-			
-			Atom* sub = Dereference(sj);
+			std::string target = DeSpace(s.target);
+			std::string subject = "";
+			if(target == "" && s.op == "") {
+				subject = cmd;
+			} else subject = s.subject;
+			subject = DeSpace(subject);
+			Atom* sub = Dereference(subject);
 			if(sub == NULL) return -1;
 			assert(sub->GetType() != Notype::type);
 
-			return sub->Command(s.op, Dereference(s.target));
+			return sub->Command(s.op, Dereference(target));
 		}
 		
 		int Atom::Command(std::string const& op, Atom* target) {

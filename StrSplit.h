@@ -28,6 +28,8 @@ namespace jmb {
 			std::string subject, op, target;
 			// predicate being op + target
 		};
+
+		std::string DeSpace(std::string const& text);
 	}
 	
 }
