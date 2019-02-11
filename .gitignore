@@ -1,4 +1,6 @@
 build
+*.o
+*.obj
 test
 test.exe
 *.stackdump
