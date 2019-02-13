@@ -8,10 +8,10 @@
  */
 
 #include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-#include <math.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cassert>
+#include <cmath>
 #include "Float.h"
 #include "Integer.h"
 #include "String.h"
@@ -37,7 +37,8 @@ namespace jmb {
 			_type = Float::type;
 			isEphemeral = true;
 			char t = ((Atom*)atm)->GetType();
-			if(t == Float::type || t == Integer::type || t == String::type) {
+			if(t == Float::type || t == Integer::type || t == String::type
+				|| Notype::type) {
 				_data = ReadAtom(atm);
 			} else _type = Notype::type;
 		}
@@ -149,6 +150,8 @@ namespace jmb {
 			else if(t == String::type) {
 				std::string tmps = ((String*)atm)->GetValueAsStdString();
 				return strtod(tmps.c_str(), NULL);
+			} else if(t == Notype::type) {
+				return strtod(atm->identity.c_str(), NULL);
 			} else
 				return 0.0;
 		}

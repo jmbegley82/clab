@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <cctype>
+#include <cassert>
 
 #include "StrSplit.h"
 
@@ -17,11 +18,8 @@ namespace jmb
 			if(pos != std::string::npos)
 			{
 				left = ncmd.substr(0,pos);
-				//dbg left <<"\n";
-				//ncmd.erase(0,pos+1);
 				ncmd.erase(0, pos+token.length());
 				right = ncmd;
-				//dbg right <<"\n";
 			}
 			else
 			{
@@ -31,7 +29,7 @@ namespace jmb
 		}
 		
 		Sentence::Sentence(std::string const& cmd) {
-			subject = op = target = "";
+			declarator = subject = op = target = "";
 			
 			std::string ncmd = cmd;
 			size_t pos = ncmd.find("=");
@@ -54,7 +52,6 @@ namespace jmb
 						pos++;
 					}
 				} else {
-					// pos = 0
 					op = "=";
 				}
 				
@@ -63,9 +60,38 @@ namespace jmb
 				size_t offset = subject.length() + op.length();
 				size_t length = ncmd.length() - offset;
 				target = ncmd.substr(offset, length);
+			} else {
+				// no operator found; set subject to whole cmd
+				subject = cmd;
 			}
 			
-			if(op == "") {
+			// at this point, subject op and target are set
+			// now see if there appears to be a declarator
+			//
+			if(subject != "") {
+				// subjEnd = position of last non-space in subject
+				int declBegin = -1;
+				int declEnd   = -1;
+				int subjBegin = -1;
+				int subjEnd   = subject.length() - 1;
+				const char* subj = subject.c_str();
+				while(subjEnd >= 0 && isspace(subj[subjEnd])) subjEnd--;
+				assert(subjEnd >= 0);  // otherwise, subject was empty
+
+				subjBegin = subjEnd;
+				while(subjBegin > 0 && !isspace(subj[subjBegin])) subjBegin--;
+				declEnd = subjBegin;
+				while(declEnd > 0 && isspace(subj[declEnd])) declEnd--;
+				declBegin = declEnd;
+				while(declBegin > 0 && !isspace(subj[declBegin])) declBegin--;
+
+				if(declEnd != 0) declarator = subject.substr(declBegin, (declEnd + 1) - declBegin);
+				subject = subject.substr(subjBegin, (subjEnd + 1) - subjBegin);
+			}
+
+			// this will need to change to allow statements like
+			// "Float f1" with no operator
+			if(declarator == "" && op == "") {
 				target = ""; // for good measure
 				subject = cmd;
 			}
@@ -76,10 +102,12 @@ namespace jmb
 			std::string retval = "";
 			const char* input = text.c_str();
 			char c;
-			int i =0;
+			int i = 0;
+			bool withinQuotes = false;
 			while(input[i]) {
 				c = input[i];
-				if(!isspace(c)) {
+				if(c == '\"') withinQuotes = !withinQuotes;
+				if(withinQuotes || !isspace(c)) {
 					retval += c;
 				}
 				i++;

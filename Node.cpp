@@ -8,9 +8,12 @@
  */
 
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 #include "StrSplit.h"
 #include "Node.h"
+#include "Integer.h"
+#include "Float.h"
+#include "String.h"
 #include "Notype.h"
 
 namespace jmb {
@@ -130,6 +133,27 @@ namespace jmb {
 				_children[i]->Command("");
 			}
 			return 0;
+		}
+
+		int Node::_Declarate(std::string const& declarator, std::string const& subject) {
+			Atom* noob = NULL;
+			if(declarator == "Node") {
+				noob = new Node(subject);
+			} else if(declarator == "Integer") {
+				noob = new Integer(subject);
+			} else if(declarator == "Float") {
+				noob = new Float(subject);
+			} else if(declarator == "String") {
+				noob = new String(subject);
+			}
+
+			if(noob == NULL) return -3; // invalid declarator
+			//else {
+				//if(AddChild(noob) != 0) return -2; // already exists or overflow
+			return AddChild(noob);
+				
+			//}
+			//return 0;
 		}
 		
 		Atom* Node::_Interpret(Atom* atm) {

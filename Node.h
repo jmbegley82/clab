@@ -35,6 +35,8 @@ namespace jmb {
 			//virtual void* GetRawData();
 		protected:
 			virtual int _Procedure();
+			virtual int _Declarate(std::string const& declarator,
+						std::string const& subject);
 			virtual Atom* _Interpret(Atom* atm);
 			unsigned int _GetChildIndex(std::string const& name);
 			unsigned int _GetChildIndex(Atom* atm);

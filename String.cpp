@@ -8,10 +8,10 @@
  */
 
 #include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-#include <math.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cassert>
+#include <cmath>
 #include "String.h"
 #include "Integer.h"
 #include "Float.h"
@@ -44,7 +44,8 @@ namespace jmb {
 				_data = ((Atom*)atm)->GetValueAsStdString();
 			} //else assert(t == String::type);
 			*/
-			if(t == String::type || t == Integer::type || t == Float::type) {
+			if(t == String::type || t == Integer::type
+				|| t == Float::type || t == Notype::type) {
 				_data = ReadAtom(atm);
 			} else _type = Notype::type;
 		}
@@ -111,7 +112,16 @@ namespace jmb {
 			*/
 			if(t == String::type || t == Integer::type || t == Float::type)
 				return ((Atom*)atm)->GetValueAsStdString();
-			else return "";
+			else if(t == Notype::type) {
+				// strip off quotation marks if present
+				std::string noQuotes = "";
+				for(size_t i=0; i < atm->identity.length(); i++) {
+					if(atm->identity.c_str()[i] != '\"')
+						noQuotes += atm->identity.c_str()[i];
+				}
+				return noQuotes;
+			}
+			return "";
 		}
 
 	}

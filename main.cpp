@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <string>
-#include <assert.h>
+#include <cassert>
 #include "Atom.h"
 #include "Node.h"
 #include "Integer.h"
@@ -153,10 +153,10 @@ void test5() {
 	root->Command("i2=i1");
 	cout << "i2 = '" << i2->GetValueAsStdString() <<
 		"'; should be 12 if Integer::OperatorEqu is working" << endl;
-	cout << "Command i1=42" << endl;
-	root->Command("i1=42");
-	cout << "i1 = '" << i1->GetValueAsStdString() <<
-		"'; should still be 12" << endl;
+	//cout << "Command i1=42" << endl;
+	//root->Command("i1=42");
+	//cout << "i1 = '" << i1->GetValueAsStdString() <<
+	//	"'; should still be 12" << endl;
 	cout << "Setting i2 to 39 manually." << endl;
 	i2->SetValue("39");
 	cout << "Command i1-=i2" << endl;
@@ -276,7 +276,6 @@ void test7() {
 
 void test8() {
 	cout << ":::Test 8:::" << endl;
-	assert(0);
 	Node root("root");
 	root.Command("Integer i1");
 	root.Command("Integer i2 = 512");
@@ -286,6 +285,12 @@ void test8() {
 	String* s1 = (String*)root.Dereference("s1");
 	assert(s1 != NULL);
 	cout << "if " << s1->GetValueAsStdString() << " = 512, test passed!" << endl;
+
+	root.Command("s1 = \"This sentence should contain spaces and no quotes\"");
+	cout << s1->GetValueAsStdString() << endl;
+	root.Command("Float f1 = 1.21");
+	root.Command("s1 = f1");
+	cout << s1->GetValueAsStdString() << " == 1.21?" << endl;
 	cout << endl << endl;
 }
 
@@ -298,5 +303,6 @@ int main(int argc, char** argv) {
 	test5();
 	test6();
 	test7();
+	test8();
 	return 0;
 }

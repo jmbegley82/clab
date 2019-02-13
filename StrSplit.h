@@ -25,7 +25,7 @@ namespace jmb {
 		class Sentence {
 		public:
 			Sentence(std::string const& cmd);
-			std::string subject, op, target;
+			std::string declarator, subject, op, target;
 			// predicate being op + target
 		};
 

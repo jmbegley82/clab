@@ -8,7 +8,7 @@
  */
 
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 #include "Atom.h"
 #include "Node.h"
 #include "Notype.h"
@@ -72,12 +72,16 @@ namespace jmb {
 			
 			if(cmd == "") return _Procedure();
 			Sentence s(cmd);
+			std::string declarator = DeSpace(s.declarator);
 			std::string target = DeSpace(s.target);
-			std::string subject = "";
-			if(target == "" && s.op == "") {
-				subject = cmd;
-			} else subject = s.subject;
-			subject = DeSpace(subject);
+			//std::string subject = "";
+			//if(target == "" && s.op == "" && declarator == "") {
+			//	subject = cmd;
+			//} else
+			//	subject = s.subject;
+			//subject = DeSpace(subject);
+			std::string subject = DeSpace(s.subject);
+			_Declarate(declarator, subject);
 			Atom* sub = Dereference(subject);
 			if(sub == NULL) return -1;
 			assert(sub->GetType() != Notype::type);
@@ -177,6 +181,10 @@ namespace jmb {
 		int Atom::_Procedure() {
 			std::cout << GetAbsolutePath() << std::endl;
 			return 0;
+		}
+
+		int Atom::_Declarate(std::string const& declarator, std::string const& subject) {
+			return -1;
 		}
 		
 		Atom* Atom::_Interpret(Atom* atm) {
