@@ -12,6 +12,7 @@
 #include <cstdio>
 #include <cassert>
 #include <cmath>
+#include <stdexcept>
 #include "String.h"
 #include "Integer.h"
 #include "Float.h"
@@ -46,7 +47,11 @@ namespace jmb {
 			*/
 			if(t == String::type || t == Integer::type
 				|| t == Float::type || t == Notype::type) {
-				_data = ReadAtom(atm);
+				try {
+					_data = ReadAtom(atm);
+				} catch (std::invalid_argument& e) {
+					std::cout << "ERROR:  " << e.what() << std::endl;
+				}
 			} else _type = Notype::type;
 		}
 		
@@ -115,12 +120,17 @@ namespace jmb {
 			else if(t == Notype::type) {
 				// strip off quotation marks if present
 				std::string noQuotes = "";
+				size_t numberOfQuotes = 0;
 				for(size_t i=0; i < atm->identity.length(); i++) {
 					if(atm->identity.c_str()[i] != '\"')
 						noQuotes += atm->identity.c_str()[i];
+					else numberOfQuotes++;
 				}
+				//the next line is ugly even by my standards but it'll work for POC
+				if(numberOfQuotes != 2)
+					throw std::invalid_argument("Incorrect number of quotation marks in expression:  " + atm->identity);
 				return noQuotes;
-			}
+			} else throw std::invalid_argument("Could not convert Literal to to String:  " + atm->identity);
 			return "";
 		}
 

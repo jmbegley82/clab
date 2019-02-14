@@ -98,18 +98,26 @@ namespace jmb
 		}
 
 		std::string DeSpace(std::string const& text) {
-			// returns a string similar to text, but without spaces
+			// returns a string with spaces stripped from the beginning and end
 			std::string retval = "";
 			const char* input = text.c_str();
-			char c;
 			int i = 0;
-			bool withinQuotes = false;
-			while(input[i]) {
-				c = input[i];
-				if(c == '\"') withinQuotes = !withinQuotes;
-				if(withinQuotes || !isspace(c)) {
-					retval += c;
-				}
+			int j = text.length();
+
+			while(i < text.length() && isspace(input[i])) i++;
+			while(j > i && isspace(input[j])) j--;
+
+			retval = text.substr(i, j-i);
+
+			return retval;
+		}
+
+		bool ValidateStrtod(std::string const& text) {
+			bool retval = true;
+			std::string::const_iterator i = text.begin();
+			while(retval && i != text.end()) {
+				if(!std::isdigit(*i) && *i != '+' && *i != '-'
+					&& *i != '.') retval = false;
 				i++;
 			}
 			return retval;

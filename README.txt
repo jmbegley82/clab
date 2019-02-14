@@ -32,26 +32,36 @@ strtod() function), it will be zero.
 
 Literals:
 =========
-Currnetly, literals (at least ones that aren't also names of Atoms accessible
-to the Atom in question) become Notypes whose Identities contain the text of
-the literal, which are then promptly discarded as there is currently no code
-to discern a useful literal from garbage text.  Encapsulating literals eg. in
-quotes is one potential solution.
+Variables can be set with Literal values, eg. "Integer i1 = 7".  String
+literals must be encapsulated within quotation marks.
 
 
 Syntax:
 =======
-<Atom><Assignment Operator><Atom>
-Assume our Node 'root' contains two Integers with Identities 'i1' and 'i2'.
-Calling root.Command("i1=i2"); will cause the value of i1 to be set to the
-current value of i2.
+[[Declarator] <Subject Atom>] [Assignment Operator <Target>]
+
+An empty string calls the _Procedure of the Atom to which it is issued.  If
+a Subject Atom is specified without an operator, its _Procedure is called.  If
+a Declarator is specified, the Subject Atom is created of the type specified
+by the Declarator.  If an Assignment Operator is specified, a Target (either a
+Literal or Atom) must also be specified.
 
 Assignment Operators are =, +=, -=, *=, /=, ^=
 
+Examples:
 
-Proposed Syntax:
-================
-<Atom><Assignment Operator><Literal or Atom>[Operator][Literal or Atom][...]
-None of this is currently in place and to incorporate order of operations and
-parentheses of any depth will be a major undertaking.
+Create an Integer named i1:
+$ Integer i1
+
+Create an Integer named i1 and set it to 7:
+$ Integer i1 = 7
+
+Create a String that contains the value of i1:
+$ String s1 = i1
+
+Create a String and set its text to "3.14159":
+$ String s1 = "3.14159"
+
+Create a Float and set its value to the number contained in s1:
+$ Float f1 = s1
 

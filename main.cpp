@@ -291,6 +291,11 @@ void test8() {
 	root.Command("Float f1 = 1.21");
 	root.Command("s1 = f1");
 	cout << s1->GetValueAsStdString() << " == 1.21?" << endl;
+	root.Command("s1 = this statement should cause an exception to be thrown");
+	cout << s1->GetValueAsStdString() << endl;
+
+	root.Command("i1 = this command should fail");
+	root.Command("Float f1 = this should fail also");
 	cout << endl << endl;
 }
 

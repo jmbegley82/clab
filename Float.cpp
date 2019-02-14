@@ -16,6 +16,7 @@
 #include "Integer.h"
 #include "String.h"
 #include "Notype.h"
+#include "StrSplit.h"
 
 namespace jmb {
 
@@ -39,7 +40,11 @@ namespace jmb {
 			char t = ((Atom*)atm)->GetType();
 			if(t == Float::type || t == Integer::type || t == String::type
 				|| Notype::type) {
-				_data = ReadAtom(atm);
+				try {
+					_data = ReadAtom(atm);
+				} catch (std::invalid_argument& e) {
+					std::cout << "ERROR:  " << e.what() << std::endl;
+				}
 			} else _type = Notype::type;
 		}
 		
@@ -149,8 +154,10 @@ namespace jmb {
 				return (double)(*(int*)((Integer*)atm)->GetRawData());
 			else if(t == String::type) {
 				std::string tmps = ((String*)atm)->GetValueAsStdString();
+				if(!ValidateStrtod(tmps)) throw std::invalid_argument("Could not convert String to Float:  " + tmps);
 				return strtod(tmps.c_str(), NULL);
 			} else if(t == Notype::type) {
+				if(!ValidateStrtod(atm->identity)) throw std::invalid_argument("Could not convert Literal to Float:  " + atm->identity);
 				return strtod(atm->identity.c_str(), NULL);
 			} else
 				return 0.0;

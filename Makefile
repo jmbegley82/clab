@@ -1,4 +1,4 @@
-CXX=clang++
+CXX=g++
 #CXXFLAGS=-I. -O3
 CXXFLAGS=-I. -g3 -D_GLIBCXX_DEBUG
 DEPS = Atom.h Node.h Notype.h String.h Integer.h Float.h

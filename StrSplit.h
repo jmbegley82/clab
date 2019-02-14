@@ -30,6 +30,7 @@ namespace jmb {
 		};
 
 		std::string DeSpace(std::string const& text);
+		bool ValidateStrtod(std::string const& text);
 	}
 	
 }
