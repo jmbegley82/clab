@@ -84,7 +84,7 @@ esac],
 AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
 
 AC_CONFIG_HEADERS([src/config.h])
-AC_CONFIG_FILES([clab-$API_VERSION.pc:clab.pc.in
+AC_CONFIG_FILES([$PACKAGE_NAME-$API_VERSION.pc:$PACKAGE_NAME.pc.in
 		 Makefile
                  src/Makefile], [], [API_VERSION='$API_VERSION'])
 AC_OUTPUT
