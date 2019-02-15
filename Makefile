@@ -1,5 +1,6 @@
 CXX=g++
-#CXXFLAGS=-I. -O3
+#CXX=clang++
+#CXXFLAGS=-I. -O3 -s
 CXXFLAGS=-I. -g3 -D_GLIBCXX_DEBUG
 DEPS = Atom.h Node.h Notype.h String.h Integer.h Float.h
 OBJ = StrSplit.o Atom.o Node.o Notype.o String.o Integer.o Float.o main.o

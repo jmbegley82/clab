@@ -53,7 +53,14 @@ namespace jmb {
 		
 		Integer::~Integer() {
 		}
-		
+
+		int Integer::Command(std::string const& cmd) {
+			if(cmd == "clear") {
+				_data = 0;
+				return 0;
+			} else return Atom::Command(cmd);
+		}
+
 		void Integer::SetValue(std::string const& val) {
 			_data = (int)round(strtod(val.c_str(), NULL));
 			//std::cout << "If '" << val << "' = '" << _data <<

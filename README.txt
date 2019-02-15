@@ -47,6 +47,7 @@ by the Declarator.  If an Assignment Operator is specified, a Target (either a
 Literal or Atom) must also be specified.
 
 Assignment Operators are =, +=, -=, *=, /=, ^=
+Command Operator is :=
 
 Examples:
 
@@ -64,4 +65,7 @@ $ String s1 = "3.14159"
 
 Create a Float and set its value to the number contained in s1:
 $ Float f1 = s1
+
+Clear a string:
+$ s1 := clear
 

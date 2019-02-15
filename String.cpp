@@ -52,6 +52,14 @@ namespace jmb {
 		
 		String::~String() {
 		}
+
+		int String::Command(std::string const& cmd) {
+			if(cmd == "clear") {
+				SetValue("");
+				return 0;
+			}
+			return Atom::Command(cmd);
+		}
 		
 		void String::SetValue(std::string const& val) {
 			_data = val;

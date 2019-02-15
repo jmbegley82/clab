@@ -88,13 +88,11 @@ namespace jmb {
 		int Atom::Command(std::string const& op, Atom* target) {
 			int retval = -1;
 			if(op == "") retval = _Procedure();
-			else {
-				//bool itWorked = true;
-				//try {
-					Atom* trg = _Interpret(target);
-				//} catch (std::invalid_argument& e) {
-				//	itWorked = false;
-				//}
+			else if(op == ":=") {
+				retval = Command(target->identity);
+				//assert(target->isEphemeral); delete target;
+			} else {
+				Atom* trg = _Interpret(target);
 				if(trg->containsValidData) {
 					if(op == "=") retval = OperatorEqu(trg);
 					else if(op == "+=") retval = OperatorAdd(trg);
@@ -102,6 +100,7 @@ namespace jmb {
 					else if(op == "*=") retval = OperatorMul(trg);
 					else if(op == "/=") retval = OperatorDiv(trg);
 					else if(op == "^=") retval = OperatorPow(trg);
+					//else if(op == ":=") retval = this->Command(trg->identity);
 				}
 				assert(trg->isEphemeral);
 				delete trg;

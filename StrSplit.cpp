@@ -47,6 +47,8 @@ namespace jmb
 						op = "/=";
 					} else if(op == "^") {
 						op = "^=";
+					} else if(op == ":") {
+						op = ":=";
 					} else {
 						op = "=";
 						pos++;

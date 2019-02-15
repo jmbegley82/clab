@@ -52,6 +52,25 @@ namespace jmb {
 		
 		Float::~Float() {
 		}
+
+		int Float::Command(std::string const& cmd) {
+			if(cmd == "clear") {
+				_data = 0.0;
+				return 0;
+			} else if(cmd == "floor") {
+				_data = floor(_data);
+				return 0;
+			} else if(cmd == "ceil") {
+				_data = ceil(_data);
+				return 0;
+			} else if(cmd == "round") {
+				_data = round(_data);
+				return 0;
+			} else if(cmd == "inverse") {
+				_data = 1 / _data;
+				return 0;
+			} else return Atom::Command(cmd);
+		}
 		
 		void Float::SetValue(std::string const& val) {
 			_data = strtod(val.c_str(), NULL);

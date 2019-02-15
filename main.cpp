@@ -303,6 +303,27 @@ void test8() {
 
 	root.Command("i1 = this command should fail");
 	root.Command("Float f1 = this should fail also");
+
+	Float* f1 = (Float*)root.Dereference("f1");
+	assert(f1 != NULL);
+
+	cout << "New command:  s1 := clear" << endl;
+	root.Command("s1 := clear");
+	cout << "s1 is now \"" << s1->GetValueAsStdString() << "\"" << endl;
+	cout << "New command:  f1 := round" << endl;
+	root.Command("f1 := round");
+	cout << "f1 is now \"" << f1->GetValueAsStdString() << "\"" << endl;
+
+	cout << "Float f2 = 8.0" << endl;
+	root.Command("Float f2 = 8.0");
+	Float* f2 = (Float*)root.Dereference("f2");
+
+	cout << "New command:  f2 := inverse" << endl;
+	root.Command("f2 := inverse");
+	cout << "f2 = " << f2->GetValueAsStdString() << "; should be 0.125000..." << endl;
+	root.Command("f2 := inverse");
+	cout << "f2 = " << f2->GetValueAsStdString() << "; should be 8.000... again" << endl;
+
 	cout << endl << endl;
 }
 
