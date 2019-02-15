@@ -4,8 +4,10 @@ AM_CFLAGS =
 AM_CXXFLAGS =
 AM_CPPFLAGS =
 
-pkgconfig_DATA = clab-$(API_VERSION).pc
+pkgconfig_DATA = $(PACKAGE_NAME)-$(API_VERSION).pc
 SUBDIRS = src
+dist_data_DATA = $(PACKAGE_NAME).pc.in src/StrSplit.h
+nodist_data_DATA = $(PACKAGE_NAME)-$(API_VERSION).pc
 
 distclean-local:
-	rm -rf clab-*.pc
+	rm -rf $(PACKAGE_NAME)-*.pc
