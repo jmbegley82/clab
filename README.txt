@@ -69,3 +69,9 @@ $ Float f1 = s1
 Clear a string:
 $ s1 := clear
 
+Round a Float:
+$ f1 := round
+
+Invert a Float (x = 1/x):
+$ f1 := inverse
+
