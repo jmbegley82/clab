@@ -1,0 +1,15 @@
+Makefile
+Makefile.in
+config.h
+stamp-h1
+gmon.out
+*.gcda
+.cproject
+.project
+.deps/*
+.libs/
+*.la
+*.lo
+*.o
+*~
+clabtest*
