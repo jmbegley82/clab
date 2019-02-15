@@ -97,9 +97,10 @@ namespace jmb
 			}
 		}
 
-		std::string DeSpace(std::string const& text) {
+		std::string RemovePadding(std::string const& text) {
 			// returns a string with spaces stripped from the beginning and end
 			std::string retval = "";
+			/*
 			const char* input = text.c_str();
 			int i = 0;
 			int j = text.length();
@@ -108,7 +109,14 @@ namespace jmb
 			while(j > i && isspace(input[j])) j--;
 
 			retval = text.substr(i, j-i);
-
+			*/
+			if(text != "") {
+				std::string::const_iterator i = text.begin();
+				while(i != text.end() && isspace(*i)) i++;
+				std::string::const_iterator j = text.end();
+				while(j > i && isspace(*j)) j--;
+				retval = std::string(i, j);
+			}
 			return retval;
 		}
 

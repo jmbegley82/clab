@@ -36,6 +36,7 @@ namespace jmb {
 			void LeaveParent();
 			std::string identity;
 			Node* parent;
+			bool containsValidData;
 			
 			virtual Atom* Dereference(std::string const& name);
 			virtual int Command(std::string const& cmd);

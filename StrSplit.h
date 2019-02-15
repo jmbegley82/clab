@@ -29,7 +29,7 @@ namespace jmb {
 			// predicate being op + target
 		};
 
-		std::string DeSpace(std::string const& text);
+		std::string RemovePadding(std::string const& text);
 		bool ValidateStrtod(std::string const& text);
 	}
 	

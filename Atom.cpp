@@ -29,6 +29,7 @@ namespace jmb {
 			parent = NULL;
 			_type = type;
 			isEphemeral = false;
+			containsValidData = true;
 		}
 
 		Atom::Atom(const Atom* atm) {
@@ -36,6 +37,7 @@ namespace jmb {
 			// well not so much here, but in the derived classes
 			Atom(atm->identity);  // happens enough times already...
 			isEphemeral = true;
+			containsValidData = atm->containsValidData;
 		}
 		
 		Atom::~Atom() {
@@ -72,15 +74,9 @@ namespace jmb {
 			
 			if(cmd == "") return _Procedure();
 			Sentence s(cmd);
-			std::string declarator = DeSpace(s.declarator);
-			std::string target = DeSpace(s.target);
-			//std::string subject = "";
-			//if(target == "" && s.op == "" && declarator == "") {
-			//	subject = cmd;
-			//} else
-			//	subject = s.subject;
-			//subject = DeSpace(subject);
-			std::string subject = DeSpace(s.subject);
+			std::string declarator = RemovePadding(s.declarator);
+			std::string target = RemovePadding(s.target);
+			std::string subject = RemovePadding(s.subject);
 			_Declarate(declarator, subject);
 			Atom* sub = Dereference(subject);
 			if(sub == NULL) return -1;
@@ -93,13 +89,20 @@ namespace jmb {
 			int retval = -1;
 			if(op == "") retval = _Procedure();
 			else {
-				Atom* trg = _Interpret(target);
-				if(op == "=") retval = OperatorEqu(trg);
-				else if(op == "+=") retval = OperatorAdd(trg);
-				else if(op == "-=") retval = OperatorSub(trg);
-				else if(op == "*=") retval = OperatorMul(trg);
-				else if(op == "/=") retval = OperatorDiv(trg);
-				else if(op == "^=") retval = OperatorPow(trg);
+				//bool itWorked = true;
+				//try {
+					Atom* trg = _Interpret(target);
+				//} catch (std::invalid_argument& e) {
+				//	itWorked = false;
+				//}
+				if(trg->containsValidData) {
+					if(op == "=") retval = OperatorEqu(trg);
+					else if(op == "+=") retval = OperatorAdd(trg);
+					else if(op == "-=") retval = OperatorSub(trg);
+					else if(op == "*=") retval = OperatorMul(trg);
+					else if(op == "/=") retval = OperatorDiv(trg);
+					else if(op == "^=") retval = OperatorPow(trg);
+				}
 				assert(trg->isEphemeral);
 				delete trg;
 			}

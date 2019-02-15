@@ -37,20 +37,15 @@ namespace jmb {
 			String(atm->identity);
 			_type = String::type;
 			isEphemeral = true;
+			containsValidData = true;
 			char t = ((Atom*)atm)->GetType();
-			/*
-			if(t == String::type) {
-				_data = ReadAtom(atm);
-			} else if(t == Integer::type || t == Float::type) {
-				_data = ((Atom*)atm)->GetValueAsStdString();
-			} //else assert(t == String::type);
-			*/
 			if(t == String::type || t == Integer::type
 				|| t == Float::type || t == Notype::type) {
 				try {
 					_data = ReadAtom(atm);
 				} catch (std::invalid_argument& e) {
 					std::cout << "ERROR:  " << e.what() << std::endl;
+					containsValidData = false;
 				}
 			} else _type = Notype::type;
 		}

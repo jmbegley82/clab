@@ -37,6 +37,7 @@ namespace jmb {
 			Float(atm->identity);
 			_type = Float::type;
 			isEphemeral = true;
+			containsValidData = true;
 			char t = ((Atom*)atm)->GetType();
 			if(t == Float::type || t == Integer::type || t == String::type
 				|| Notype::type) {
@@ -44,6 +45,7 @@ namespace jmb {
 					_data = ReadAtom(atm);
 				} catch (std::invalid_argument& e) {
 					std::cout << "ERROR:  " << e.what() << std::endl;
+					containsValidData = false;
 				}
 			} else _type = Notype::type;
 		}

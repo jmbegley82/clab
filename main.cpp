@@ -282,8 +282,15 @@ void test8() {
 	root.Command("String s1");
 	root.Command("i1 = i2");
 	root.Command("s1 = i1");
+
+	Integer* i1 = (Integer*)root.Dereference("i1");
+	Integer* i2 = (Integer*)root.Dereference("i2");
 	String* s1 = (String*)root.Dereference("s1");
 	assert(s1 != NULL);
+
+	//cout << "i1 is currently:  \"" << i1->GetValueAsStdString() << "\"" << endl;
+	//cout << "i2 is currently:  \"" << i2->GetValueAsStdString() << "\"" << endl;
+	//cout << "s1 is currently:  \"" << s1->GetValueAsStdString() << "\"" << endl;
 	cout << "if " << s1->GetValueAsStdString() << " = 512, test passed!" << endl;
 
 	root.Command("s1 = \"This sentence should contain spaces and no quotes\"");
@@ -292,7 +299,7 @@ void test8() {
 	root.Command("s1 = f1");
 	cout << s1->GetValueAsStdString() << " == 1.21?" << endl;
 	root.Command("s1 = this statement should cause an exception to be thrown");
-	cout << s1->GetValueAsStdString() << endl;
+	cout << s1->GetValueAsStdString() << " should still be ~= 1.21" << endl;
 
 	root.Command("i1 = this command should fail");
 	root.Command("Float f1 = this should fail also");
