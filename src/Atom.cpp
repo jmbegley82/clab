@@ -12,7 +12,7 @@
 #include "Atom.h"
 #include "Node.h"
 #include "Notype.h"
-#include "StrSplit.h"
+#include "StringStuff.h"
 
 namespace jmb {
 

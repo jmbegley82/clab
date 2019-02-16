@@ -9,7 +9,7 @@
 
 #include <iostream>
 #include <cassert>
-#include "StrSplit.h"
+#include "StringStuff.h"
 #include "Node.h"
 #include "Integer.h"
 #include "Float.h"

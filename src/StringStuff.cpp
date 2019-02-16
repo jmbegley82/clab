@@ -4,7 +4,7 @@
 #include <cctype>
 #include <cassert>
 
-#include "StrSplit.h"
+#include "StringStuff.h"
 
 namespace jmb
 {

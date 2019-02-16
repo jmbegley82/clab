@@ -6,7 +6,7 @@ AM_CPPFLAGS =
 
 pkgconfig_DATA = $(PACKAGE_NAME)-$(API_VERSION).pc
 SUBDIRS = src
-dist_data_DATA = $(PACKAGE_NAME).pc.in src/StrSplit.h
+dist_data_DATA = $(PACKAGE_NAME).pc.in src/StringStuff.h
 nodist_data_DATA = $(PACKAGE_NAME)-$(API_VERSION).pc
 
 distclean-local:
