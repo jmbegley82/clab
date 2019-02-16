@@ -16,6 +16,7 @@
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
+#include "TestMachine.cpp"
 #include "Notype.h"
 
 using jmb::common::Atom;
@@ -23,6 +24,7 @@ using jmb::common::Node;
 using jmb::common::Integer;
 using jmb::common::Float;
 using jmb::common::String;
+using jmb::common::TestMachine;
 using jmb::common::Notype;
 using std::cout;
 using std::endl;
@@ -327,6 +329,16 @@ void test8() {
 	cout << endl << endl;
 }
 
+void test9() {
+	cout << ":::Test 9 from outer space:::" << endl;
+	Node root("root");
+	root.Command("TestMachine tm");
+	TestMachine* tm = (TestMachine*)root.Dereference("tm");
+	assert(tm != NULL);
+	cout << "tm reports a value of:  " << tm->GetValueAsStdString() << endl;
+	cout << endl << endl;
+}
+
 int main(int argc, char** argv) {
 	cout << "The test begins...  now." << endl;
 	test1();
@@ -337,5 +349,6 @@ int main(int argc, char** argv) {
 	test6();
 	test7();
 	test8();
+	test9();
 	return 0;
 }

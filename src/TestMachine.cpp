@@ -12,6 +12,8 @@
 #include <cstdio>
 #include <cassert>
 #include <cmath>
+#include <sstream>
+#include <iomanip>
 #include "TestMachine.h"
 #include "Float.h"
 #include "String.h"
@@ -57,7 +59,7 @@ namespace jmb {
 		int TestMachine::Command(std::string const& cmd) {
 			if(cmd == "clear") {
 				//_data = 0;
-				return 0;
+				return -1;
 			} else return Atom::Command(cmd);
 		}
 
@@ -70,7 +72,9 @@ namespace jmb {
 		}
 		
 		std::string TestMachine::GetValueAsStdString() {
-			std::string retval = "TestMachine";
+			std::stringstream val;
+			val << "TestMachine@" << std::hex << (unsigned long long int)GetRawData();
+			std::string retval = val.str();
 			//char tmpc[128] = {};
 			//snprintf(tmpc, 128, "%d", _data);
 			//retval += tmpc;
