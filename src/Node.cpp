@@ -14,6 +14,7 @@
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
+#include "TestMachine.h"
 #include "Notype.h"
 
 namespace jmb {
@@ -145,6 +146,8 @@ namespace jmb {
 				noob = new Float(subject);
 			} else if(declarator == "String") {
 				noob = new String(subject);
+			} else if(declarator == "TestMachine") {
+				noob = new TestMachine(subject);
 			}
 
 			if(noob == NULL) return -3; // invalid declarator
