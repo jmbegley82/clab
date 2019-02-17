@@ -84,7 +84,7 @@ namespace jmb {
 		void TestMachine::Debug() {
 		}
 
-/*		
+		/*		
 		int TestMachine::OperatorEqu(Atom* atm) {
 			int retval = -1;
 			if(atm->GetType() == TestMachine::type) {
@@ -142,7 +142,7 @@ namespace jmb {
 			}
 			return retval;
 		}
-*/
+		*/
 
 		int TestMachine::_Procedure() {
 			int retval = -1;

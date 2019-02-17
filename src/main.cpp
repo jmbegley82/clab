@@ -333,10 +333,52 @@ void test9() {
 	cout << ":::Test 9 from outer space:::" << endl;
 	Node root("root");
 	root.Command("TestMachine tm");
+	root.Command("TestMachine tm2");
+	root.Command("TestMachine tm3");
 	TestMachine* tm = (TestMachine*)root.Dereference("tm");
+	TestMachine* tm2 = (TestMachine*)root.Dereference("tm2");
+	TestMachine* tm3 = (TestMachine*)root.Dereference("tm3");
 	assert(tm != NULL);
-	cout << "tm reports a value of:  " << tm->GetValueAsStdString() << endl;
+	assert(tm2 != NULL);
+	assert(tm3 != NULL);
+	cout << "tm  reports a value of:  " << tm->GetValueAsStdString() << endl;
+	cout << "tm2 reports a value of:  " << tm2->GetValueAsStdString() << endl;
+	cout << "tm3 reports a value of:  " << tm3->GetValueAsStdString() << endl;
 	cout << endl << endl;
+}
+
+void testX() {
+	cout << ":::Hypothetical situations:::" <<endl;
+	bool this_code_is_usable = false;
+	assert(this_code_is_usable); // none of this works!
+	// Hierarchy:
+	// (root)\
+	//       |-Renderer
+	//       |-Audio
+	//       |-Input
+	//       |-ObjectMgr
+	//       | |-ImgCache
+	//       | |-SndCache
+	//       | \-ObjCache
+	//       |-EventMgr
+	//       | |-TxtCache
+	//       | \-Timer
+	//       \-Log
+	//
+
+	Node root("root");
+	root.Command("Renderer Renderer");
+	root.Command("AudioSys Audio");
+	root.Command("InputSys Input");
+	root.Command("EventMgr Event");
+	// ...
+	
+	root.Command("event := initScript: Data/script.txt");
+/*
+	while(!root.erase_me) {
+		root.tick();
+	}
+*/
 }
 
 int main(int argc, char** argv) {
