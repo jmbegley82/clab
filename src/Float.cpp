@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <cstdio>
 #include <cassert>
@@ -80,11 +81,9 @@ namespace jmb {
 		}
 		
 		std::string Float::GetValueAsStdString() {
-			std::string retval = "";
-			char tmpc[128] = {};
-			snprintf(tmpc, 128, "%16.16f", _data);
-			retval += std::string(tmpc);
-			return retval;
+			std::stringstream ss;
+			ss << _data;
+			return ss.str();
 		}
 		
 		void Float::Debug() {

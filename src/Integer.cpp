@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <cstdio>
 #include <cassert>
@@ -69,11 +70,9 @@ namespace jmb {
 		}
 		
 		std::string Integer::GetValueAsStdString() {
-			std::string retval = "";
-			char tmpc[128] = {};
-			snprintf(tmpc, 128, "%d", _data);
-			retval += tmpc;
-			return retval;
+			std::stringstream ss;
+			ss << _data;
+			return ss.str();
 		}
 		
 		void Integer::Debug() {
