@@ -81,9 +81,11 @@ namespace jmb {
 		}
 		
 		std::string Float::GetValueAsStdString() {
-			std::stringstream ss;
-			ss << _data;
-			return ss.str();
+			std::string retval = "";
+			char tmpc[128] = {};
+			snprintf(tmpc, 128, "%f", _data);
+			retval += std::string(tmpc);
+			return retval;
 		}
 		
 		void Float::Debug() {
