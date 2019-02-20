@@ -82,7 +82,7 @@ namespace jmb {
 		std::string Float::GetValueAsStdString() {
 			std::string retval = "";
 			char tmpc[128] = {};
-			snprintf(tmpc, 128, "%16.16f", _data);
+			snprintf(tmpc, 128, "%f", _data);
 			retval += std::string(tmpc);
 			return retval;
 		}
