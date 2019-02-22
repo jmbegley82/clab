@@ -55,6 +55,19 @@ AC_TYPE_SIZE_T
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([atexit memset])
 
+# SDL and friends
+AM_PATH_SDL2([2.0], , AC_MSG_ERROR([Please install libsdl2 >= 2.0]))
+PKG_CHECK_MODULES(SDL_image, SDL2_image)
+AC_SUBST(SDL_image_CFLAGS)
+AC_SUBST(SDL_image_LIBS)
+PKG_CHECK_MODULES(SDL_ttf, SDL2_ttf)
+AC_SUBST(SDL_ttf_CFLAGS)
+AC_SUBST(SDL_ttf_LIBS)
+PKG_CHECK_MODULES(SDL_mixer, SDL2_mixer)
+AC_SUBST(SDL_mixer_CFLAGS)
+AC_SUBST(SDL_mixer_LIBS)
+
+
 #User options:
 if test "x$prefix" = "xNONE" ; then
 	prefix="/usr/local"

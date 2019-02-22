@@ -47,8 +47,11 @@ namespace jmb {
 		private:
 			//int ReadRawTestMachine(Atom* atm);
 			//int ReadRawFloat(Atom* atm);
-			int ReadAtom(const Atom* atm);
-			//int _data;
+			void* ReadAtom(const Atom* atm);
+			void _Init();
+			void* _Renderer;
+			void* _Window;
+			void* _Buffer;
 		};
 		
 	}

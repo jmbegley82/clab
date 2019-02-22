@@ -14,6 +14,10 @@
 #include <cmath>
 #include <sstream>
 #include <iomanip>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include "TestMachine.h"
 #include "Float.h"
 #include "String.h"
@@ -32,10 +36,12 @@ namespace jmb {
 		
 		TestMachine::TestMachine(std::string const& name) : Atom(name){
 			_type = TestMachine::type;
+			_Init();
 			//_data = 0;
 		}
 
 		TestMachine::TestMachine(const Atom* atm) /*: Atom(atm)*/ {
+			assert(0); // i see no reason why this should happen
 			TestMachine(atm->identity);
 			_type = TestMachine::type;
 			isEphemeral = true;
@@ -162,7 +168,7 @@ namespace jmb {
 			return (void*)this; //(void*)&_data;
 		}
 
-		int TestMachine::ReadAtom(const Atom* atm) {
+		void* TestMachine::ReadAtom(const Atom* atm) {
 			/*
 			char t = ((Atom*)atm)->GetType();
 			if(t == TestMachine::type)
@@ -177,7 +183,19 @@ namespace jmb {
 				if(!ValidateStrtod(atm->identity)) throw std::invalid_argument("Could not convert Literal to TestMachine:  " + atm->identity);
 				return (int)strtod(atm->identity.c_str(), NULL);
 			}
-			else */ return 0;
+			else */ return NULL;
+		}
+
+		void TestMachine::_Init() {
+			_Window = _Renderer = _Buffer = NULL;
+			int ok = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS
+					| SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
+			//assert(ok == 0);
+			_Window = (void*)SDL_CreateWindow("TestMachine", 0, 0, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+			_Renderer = (void*)SDL_CreateRenderer((SDL_Window*)_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
+			assert(_Window != NULL);
+			assert(_Renderer != NULL);
+			TTF_Init();
 		}
 	}
 	

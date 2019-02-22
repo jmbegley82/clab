@@ -3,7 +3,7 @@ include _Sources.mk
 AUTOMAKE_OPTIONS = foreign
 
 AM_CXXFLAGS =
-AM_CPPFLAGS =
+AM_CPPFLAGS = $(SDL_CFLAGS) $(SDL_image_CFLAGS) $(SDL_ttf_CFLAGS) $(SDL_mixer_CFLAGS)
 lib@PACKAGE_NAME@_@API_VERSION@_la_LDFLAGS = -no-undefined -Wl,-rpath -Wl,LIBDIR -fPIC -version-number $(PACKAGE_VERSION_MAJOR):$(PACKAGE_VERSION_MINOR):$(PACKAGE_VERSION_MICRO)
 if DEBUG
 AM_CXXFLAGS += -g3 -D_GLIBCXX_DEBUG
@@ -17,7 +17,7 @@ endif
 
 lib_LTLIBRARIES = lib@PACKAGE_NAME@-@API_VERSION@.la
 lib@PACKAGE_NAME@_@API_VERSION@_la_dir = $(pkgdatadir)
-lib@PACKAGE_NAME@_@API_VERSION@_la_LIBADD =
+lib@PACKAGE_NAME@_@API_VERSION@_la_LIBADD = $(SDL_LIBS) $(SDL_image_LIBS) $(SDL_ttf_LIBS) $(SDL_mixer_LIBS)
 lib@PACKAGE_NAME@_@API_VERSION@_la_SOURCES = $(CLAB_SOURCES)
 otherinclude_HEADERS = Atom.h Node.h Notype.h String.h Integer.h Float.h TestMachine.h
 
