@@ -1,5 +1,5 @@
 /*
- *  Node.cpp
+ *  Video.cpp
  *  Test
  *
  *  Created by james on 7/14/18.
@@ -8,61 +8,74 @@
  */
 
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 #include <cassert>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <SDL_ttf.h>
 #include "StringStuff.h"
+#include "Video.h"
 #include "Node.h"
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
 #include "TestMachine.h"
 #include "Notype.h"
-#include "Video.h"
 
 namespace jmb {
 	
 	namespace common {
 		
-		const char Node::type = 0x00;
+		const char Video::type = 0x7F;
 		
-		Node::Node() {
-			Node("");
+		Video::Video() {
+			Video("");
+			_type = type;
 		}
 		
-		Node::Node(std::string const& name) : Atom(name) {
+		Video::Video(std::string const& name) : Node(name) {
+			/*
 			for(int i=0; i<MAXOBJS; i++) {
 				_children[i] = NULL;
 			}
 			_childCount = 0;
 			_mapThrough = true;
 			_type = type;
+			*/
+			_type = type;
+			_Init();
 		}
 
-		Node::Node(const Atom* atm) : Atom(atm) {
-			Node(atm->identity);
+		Video::Video(const Atom* atm) : Node(atm) {
+			assert(0); // this too seems unnecessary
+			Video(atm->identity);
 			isEphemeral = true;
 			char t = ((Atom*)atm)->GetType();
-			if(t == Node::type) {
-				// only valid conversion is Node to (Atom*)Node
-				Node* nod = (Node*)atm;
+			if(t == Video::type) {
+				// only valid conversion is Video to (Atom*)Video
+				Video* nod = (Video*)atm;
 				for(int i=0; i<MAXOBJS; i++) {
 					_children[i] = nod->_children[i];
 				}
-			}// else assert(t == Node::type);
+			}// else assert(t == Video::type);
 		}
 		
-		Node::~Node() {
-			//std::cout << "Node::~Atom" << std::endl;
+		Video::~Video() {
+			//std::cout << "Video::~Atom" << std::endl;
 			if(!isEphemeral) _Purge();
 		}
-		
-		Atom* Node::Dereference(std::string const& name) {
+
+		/*
+		Atom* Video::Dereference(std::string const& name) {
 			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
 			if(retval->GetType() == Notype::type) {
 				delete retval;
 				retval = NULL;
 			}
 			if(_mapThrough) {
-				// in case we want to create a Node-derived object with private children
+				// in case we want to create a Video-derived object with private children
 				if(retval == NULL) {
 					std::string dname;
 					if(name[0] == '/') {
@@ -87,8 +100,21 @@ namespace jmb {
 			if(retval == NULL) retval = new Notype(name);
 			return retval;
 		}
-		
-		int Node::AddChild(Atom* atm) {
+		*/
+
+		int Video::Command(std::string const& cmd) {
+			// TODO:  something meaningful
+			return Node::Command(cmd);
+		}
+
+		std::string Video::GetValueAsStdString() {
+			std::stringstream ss;
+			ss << "Video " << identity << "@" << std::hex << this;
+			return ss.str();
+		}
+
+		/*
+		int Video::AddChild(Atom* atm) {
 			if(_childCount >= MAXOBJS)
 				return -1;  // we're full
 			if(_GetChild(atm->identity) != NULL)
@@ -102,21 +128,21 @@ namespace jmb {
 			return 0;
 		}
 		
-		int Node::DelChild(Atom* atm) {
+		int Video::DelChild(Atom* atm) {
 			int idx = _GetChildIndex(atm);
 			if(idx == MAXOBJS) return -1;  // not found
 			_DeleteByIndex(idx);
 			return 0;
 		}
 		
-		int Node::DelChild(std::string const& name) {
+		int Video::DelChild(std::string const& name) {
 			unsigned int idx = _GetChildIndex(name);
 			if(idx == MAXOBJS) return -1; // not found
 			_DeleteByIndex(idx);
 			return 0;
 		}
 		
-		int Node::FreeChild(Atom* atm) {
+		int Video::FreeChild(Atom* atm) {
 			int idx = _GetChildIndex(atm);
 			if(idx == MAXOBJS) return -1; // not found
 			_children[idx] = NULL;
@@ -124,20 +150,25 @@ namespace jmb {
 			return 0;
 		}
 		
-		int Node::OperatorEqu(Atom* atm) {
-			std::cout << "Node::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
+		int Video::OperatorEqu(Atom* atm) {
+			std::cout << "Video::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
 			return -1; //NI
 		}
-		
-		int Node::_Procedure() {
+		*/
+
+		int Video::_Procedure() {
+			/*
 			Atom::_Procedure();
 			for(int i=0; i<_childCount; i++) {
 				_children[i]->Command("");
 			}
-			return 0;
+			*/
+			return Node::_Procedure();
+			//return 0;
 		}
 
-		int Node::_Declarate(std::string const& declarator, std::string const& subject) {
+		/*
+		int Video::_Declarate(std::string const& declarator, std::string const& subject) {
 			Atom* noob = NULL;
 			if(declarator == "Node") {
 				noob = new Node(subject);
@@ -149,8 +180,6 @@ namespace jmb {
 				noob = new String(subject);
 			} else if(declarator == "TestMachine") {
 				noob = new TestMachine(subject);
-			} else if(declarator == "Video") {
-				noob = new Video(subject);
 			}
 
 			if(noob == NULL) return -3; // invalid declarator
@@ -161,14 +190,16 @@ namespace jmb {
 			//}
 			//return 0;
 		}
-		
-		Atom* Node::_Interpret(Atom* atm) {
-			//std::cout << "Node::_Interpret" << std::endl;
+		*/
+
+		Atom* Video::_Interpret(Atom* atm) {
+			//std::cout << "Video::_Interpret" << std::endl;
 			//return Atom::_Interpret(atm);
-			return new Node(atm);
+			return new Video(atm);
 		}
-		
-		unsigned int Node::_GetChildIndex(std::string const& name) {
+
+		/*
+		unsigned int Video::_GetChildIndex(std::string const& name) {
 			// return MAXOBJS if not found
 			unsigned int retval;
 			for(retval=0; retval<MAXOBJS; retval++) {
@@ -180,7 +211,7 @@ namespace jmb {
 			return retval;
 		}
 		
-		unsigned int Node::_GetChildIndex(Atom* atm) {
+		unsigned int Video::_GetChildIndex(Atom* atm) {
 			unsigned int retval;
 			for(retval=0; retval<MAXOBJS; retval++) {
 				if(_children[retval] == atm) {
@@ -190,7 +221,7 @@ namespace jmb {
 			return retval;
 		}
 		
-		Atom* Node::_GetChild(std::string const& name) {
+		Atom* Video::_GetChild(std::string const& name) {
 			// should only get a one-name path
 			// no slashes and definitely no operators!
 			Atom* retval = NULL;
@@ -199,7 +230,7 @@ namespace jmb {
 			return retval;
 		}
 		
-		void Node::_DeleteByIndex(unsigned int idx) {
+		void Video::_DeleteByIndex(unsigned int idx) {
 			// unsafe!  assumes all critical checks have been performed
 			delete _children[idx];
 			_children[idx] = NULL;
@@ -207,7 +238,7 @@ namespace jmb {
 			_MakeContiguous();
 		}
 		
-		void Node::_MakeContiguous() {
+		void Video::_MakeContiguous() {
 			_childCount = 0;
 			for(int i=0; i < MAXOBJS; i++) {
 				if(_children[i] != NULL) {
@@ -220,7 +251,7 @@ namespace jmb {
 			}
 		}
 		
-		void Node::_Purge() {
+		void Video::_Purge() {
 			// this should be more thorough?
 			_MakeContiguous();
 			for(int i=0; i<_childCount; i++) {
@@ -229,11 +260,28 @@ namespace jmb {
 				//_children[i] = NULL;
 			}
 		}
-		/*
-		void* GetRawData() {
-			return NULL;
-		}
 		*/
+
+		void* Video::ReadAtom(const Atom* atm) {
+			return (void*)this; //shrug
+		}
+
+		void Video::_Init() {
+			_Window = _Renderer = _Buffer = NULL;
+			int ok = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+			if(ok != 0) {
+				// error condition...
+				std::cout << "ERROR:  Could not initialize SDL:  " << SDL_GetError() <<std::endl;
+			} else {
+				std::string id = GetValueAsStdString();
+				_Window = (void*)SDL_CreateWindow(id.c_str(), 0, 0, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+				_Renderer = (void*)SDL_CreateRenderer((SDL_Window*)_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
+				assert(_Window != NULL);
+				assert(_Renderer != NULL);
+				TTF_Init();
+			}
+		}
+
 	}
 	
 }

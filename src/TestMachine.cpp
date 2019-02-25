@@ -188,14 +188,18 @@ namespace jmb {
 
 		void TestMachine::_Init() {
 			_Window = _Renderer = _Buffer = NULL;
-			int ok = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS
-					| SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
-			//assert(ok == 0);
-			_Window = (void*)SDL_CreateWindow("TestMachine", 0, 0, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-			_Renderer = (void*)SDL_CreateRenderer((SDL_Window*)_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
-			assert(_Window != NULL);
-			assert(_Renderer != NULL);
-			TTF_Init();
+			int ok = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+			if(ok != 0) {
+				// error condition...
+				std::cout << "ERROR:  Could not initialize SDL:  " << SDL_GetError() <<std::endl;
+			} else {
+				std::string id = identity + " (" + GetValueAsStdString() + ")";
+				_Window = (void*)SDL_CreateWindow(id.c_str(), 0, 0, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+				_Renderer = (void*)SDL_CreateRenderer((SDL_Window*)_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
+				assert(_Window != NULL);
+				assert(_Renderer != NULL);
+				TTF_Init();
+			}
 		}
 	}
 	

@@ -19,7 +19,8 @@ lib_LTLIBRARIES = lib@PACKAGE_NAME@-@API_VERSION@.la
 lib@PACKAGE_NAME@_@API_VERSION@_la_dir = $(pkgdatadir)
 lib@PACKAGE_NAME@_@API_VERSION@_la_LIBADD = $(SDL_LIBS) $(SDL_image_LIBS) $(SDL_ttf_LIBS) $(SDL_mixer_LIBS)
 lib@PACKAGE_NAME@_@API_VERSION@_la_SOURCES = $(CLAB_SOURCES)
-otherinclude_HEADERS = Atom.h Node.h Notype.h String.h Integer.h Float.h TestMachine.h
+#otherinclude_HEADERS = Atom.h Node.h Notype.h String.h Integer.h Float.h TestMachine.h Video.h
+otherinclude_HEADERS = $(CLAB_OIHEADERS)
 
 noinst_PROGRAMS = @PACKAGE_NAME@test
 @PACKAGE_NAME@test_SOURCES = $(CLAB_TEST_SOURCES)

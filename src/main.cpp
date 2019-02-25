@@ -16,7 +16,8 @@
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
-#include "TestMachine.cpp"
+#include "TestMachine.h"
+#include "Video.h"
 #include "Notype.h"
 
 using jmb::common::Atom;
@@ -25,6 +26,7 @@ using jmb::common::Integer;
 using jmb::common::Float;
 using jmb::common::String;
 using jmb::common::TestMachine;
+using jmb::common::Video;
 using jmb::common::Notype;
 using std::cout;
 using std::endl;
@@ -329,6 +331,7 @@ void test8() {
 void test9() {
 	cout << ":::Test 9 from outer space:::" << endl;
 	Node root("root");
+	/*
 	root.Command("TestMachine tm");
 	root.Command("TestMachine tm2");
 	root.Command("TestMachine tm3");
@@ -341,6 +344,15 @@ void test9() {
 	cout << "tm  reports a value of:  " << tm->GetValueAsStdString() << endl;
 	cout << "tm2 reports a value of:  " << tm2->GetValueAsStdString() << endl;
 	cout << "tm3 reports a value of:  " << tm3->GetValueAsStdString() << endl;
+	cout << "Cleaning..." << endl;
+	root.DelChild("tm");
+	root.DelChild("tm2");
+	root.DelChild("tm3");
+	*/
+	root.Command("Video v1");
+	Video* v1 = (Video*)root.Dereference("v1");
+	assert(v1 != NULL);
+	cout << "v1  reports a value of:  " << v1->GetValueAsStdString() << endl;
 	cout << endl << endl;
 }
 

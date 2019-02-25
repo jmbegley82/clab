@@ -81,7 +81,7 @@ namespace jmb {
 			Atom* sub = Dereference(subject);
 			if(sub == NULL) return -1;
 			assert(sub->GetType() != Notype::type);
-
+			if(declarator != "" && s.op == "") return 0; // prevent running _Procedure during initialization
 			return sub->Command(s.op, Dereference(target));
 		}
 		
