@@ -55,6 +55,13 @@ namespace jmb {
                         void* _Renderer;
                         void* _Window;
                         void* _Buffer;
+
+			int _windowX;
+			int _windowY;
+			int _windowW;
+			int _windowH;
+			int _bufferW;
+			int _bufferH;
 		};
 	
 	}

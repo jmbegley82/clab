@@ -353,6 +353,10 @@ void test9() {
 	Video* v1 = (Video*)root.Dereference("v1");
 	assert(v1 != NULL);
 	cout << "v1  reports a value of:  " << v1->GetValueAsStdString() << endl;
+	v1->Command("");
+	v1->Command("");
+	v1->Command("");
+	v1->Command("");		
 	cout << endl << endl;
 }
 

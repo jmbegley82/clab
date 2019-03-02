@@ -22,6 +22,7 @@
 #include "Float.h"
 #include "String.h"
 #include "TestMachine.h"
+#include "ShadowInteger.h"
 #include "Notype.h"
 
 namespace jmb {
@@ -33,6 +34,11 @@ namespace jmb {
 		Video::Video() {
 			Video("");
 			_type = type;
+			_windowX = _windowY = 0;
+			_windowW = 640;
+			_windowH = 480;
+			_bufferW = 640;
+			_bufferH = 480;
 		}
 		
 		Video::Video(std::string const& name) : Node(name) {
@@ -45,6 +51,11 @@ namespace jmb {
 			_type = type;
 			*/
 			_type = type;
+			_windowX = _windowY = 0;
+			_windowW = 640;
+			_windowH = 480;
+			_bufferW = 640;
+			_bufferH = 480;
 			_Init();
 		}
 
@@ -163,6 +174,10 @@ namespace jmb {
 				_children[i]->Command("");
 			}
 			*/
+			Command("windowWidth -= 1");
+			//_windowW--;
+			ShadowInteger* siWinW = (ShadowInteger*)Dereference("windowWidth");
+			std::cout << "windowWidth deref test:  " << siWinW->GetValueAsStdString() << std::endl;
 			return Node::_Procedure();
 			//return 0;
 		}
@@ -274,11 +289,19 @@ namespace jmb {
 				std::cout << "ERROR:  Could not initialize SDL:  " << SDL_GetError() <<std::endl;
 			} else {
 				std::string id = GetValueAsStdString();
-				_Window = (void*)SDL_CreateWindow(id.c_str(), 0, 0, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+				_Window = (void*)SDL_CreateWindow(id.c_str(), _windowX, _windowY, _windowW, _windowH, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 				_Renderer = (void*)SDL_CreateRenderer((SDL_Window*)_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
 				assert(_Window != NULL);
 				assert(_Renderer != NULL);
 				TTF_Init();
+				//ShadowInteger* siWinW = new ShadowInteger("windowWidth", &_windowW);
+				//AddChild(siWinW);
+				AddChild(new ShadowInteger("windowPosX",	&_windowX));
+				AddChild(new ShadowInteger("windowPosY",	&_windowY));
+				AddChild(new ShadowInteger("windowWidth",	&_windowW));
+				AddChild(new ShadowInteger("windowHeight",	&_windowH));
+				AddChild(new ShadowInteger("bufferWidth",	&_bufferW));
+				AddChild(new ShadowInteger("bufferHeight",	&_bufferH));
 			}
 		}
 
