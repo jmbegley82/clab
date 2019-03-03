@@ -37,9 +37,9 @@ namespace jmb {
 		ShadowInteger::ShadowInteger(std::string const& name, int* addr) : Atom(name){
 			_type = ShadowInteger::type;
 			hasOwnData = false;
-			std::cout << "debug1:  addr=" << addr << std::endl;
+			//std::cout << "debug1:  addr=" << addr << std::endl;
 			_data = addr;
-			std::cout << "debug2: _data=" << *_data << std::endl;
+			//std::cout << "debug2: _data=" << *_data << std::endl;
 		}
 
 		ShadowInteger::ShadowInteger(const Atom* atm) /*: Atom(atm)*/ {
@@ -149,8 +149,13 @@ namespace jmb {
 		}
 
 		int ShadowInteger::_Procedure() {
+			/*
 			int retval = -1;
 			return retval;
+			*/
+			
+			std::cout << GetAbsolutePath() << " = " << *_data << std::endl;
+			return 0;
 		}
 		
 		Atom* ShadowInteger::_Interpret(Atom* atm) {

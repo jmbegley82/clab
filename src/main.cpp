@@ -349,14 +349,15 @@ void test9() {
 	root.DelChild("tm2");
 	root.DelChild("tm3");
 	*/
-	root.Command("Video v1");
-	Video* v1 = (Video*)root.Dereference("v1");
+	root.Command("Video VideoMgr");
+	Video* v1 = (Video*)root.Dereference("VideoMgr");
 	assert(v1 != NULL);
-	cout << "v1  reports a value of:  " << v1->GetValueAsStdString() << endl;
-	v1->Command("");
-	v1->Command("");
-	v1->Command("");
-	v1->Command("");		
+	cout << "VideoMgr  reports a value of:  " << v1->GetValueAsStdString() << endl;
+	//v1->Command("");
+	root.Command("");
+	//v1->Command("");
+	//v1->Command("");
+	//v1->Command("");		
 	cout << endl << endl;
 }
 

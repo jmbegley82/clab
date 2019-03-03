@@ -174,10 +174,10 @@ namespace jmb {
 				_children[i]->Command("");
 			}
 			*/
-			Command("windowWidth -= 1");
+			//Command("windowWidth -= 1");
 			//_windowW--;
-			ShadowInteger* siWinW = (ShadowInteger*)Dereference("windowWidth");
-			std::cout << "windowWidth deref test:  " << siWinW->GetValueAsStdString() << std::endl;
+			//ShadowInteger* siWinW = (ShadowInteger*)Dereference("windowWidth");
+			//std::cout << "windowWidth deref test:  " << siWinW->GetValueAsStdString() << std::endl;
 			return Node::_Procedure();
 			//return 0;
 		}
