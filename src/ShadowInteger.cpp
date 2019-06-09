@@ -94,6 +94,7 @@ namespace jmb {
 			int retval = -1;
 			if(atm->GetType() == ShadowInteger::type) {
 				*_data = ReadAtom(atm);
+				retval = 0;
 			}
 			return retval;
 		}

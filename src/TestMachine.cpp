@@ -152,6 +152,7 @@ namespace jmb {
 
 		int TestMachine::_Procedure() {
 			int retval = -1;
+			retval = 0;
 			return retval;
 		}
 		

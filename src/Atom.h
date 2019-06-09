@@ -37,6 +37,7 @@ namespace jmb {
 			std::string identity;
 			Node* parent;
 			bool containsValidData;
+			bool wasUpdated;
 			
 			virtual Atom* Dereference(std::string const& name);
 			virtual int Command(std::string const& cmd);
@@ -52,6 +53,7 @@ namespace jmb {
 			virtual int OperatorDiv(Atom* atm); // /=
 			virtual int OperatorPow(Atom* atm); // ^=
 			virtual void* GetRawData();
+			virtual void Tick(int time);
 		protected:
 			virtual int _Procedure();
 			virtual int _Declarate(std::string const& declarator, std::string const& subject);

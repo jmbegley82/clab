@@ -29,6 +29,21 @@ Integers are rounded.  If a String is _Interpreted as an Integer or Float and
 contains non-numeric data (eg. data not correctly understood by the CRT's
 strtod() function), it will be zero.
 
+Tick() and wasUpdated:
+======================
+All Atoms implement void Tick(int ms), though won't necessarily do anything
+with them.  An Atom will call Tick(ms) for every Atom it contains (static or
+dynamic as in Node, Video etc.)  Time is currently specified to be in milli-
+seconds but may change in the future.
+During Tick, an Atom may need to determine whether or not any Atom contained
+within has changed since its last Tick.  If the contained Atom has changed, its
+wasUpdated flag will be set.  The containing Atom will perform its specified
+task and set the contained Atom's wasUpdated flag to false.
+Almost none of this functionality has beeen written yet.  Implementations of
+Tick should ensure that wasUpdated flags are dealt with correctly; depending
+upon context, it may make more sense to set wasUpdated to false as each Atom is
+examined, or it may make more sense to Tick all contained Atoms before setting
+their wasUpdated flags to false.
 
 Literals:
 =========

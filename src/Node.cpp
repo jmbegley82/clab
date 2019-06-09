@@ -126,7 +126,7 @@ namespace jmb {
 		
 		int Node::OperatorEqu(Atom* atm) {
 			std::cout << "Node::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
-			return -1; //NI
+			return 0; //NI
 		}
 		
 		int Node::_Procedure() {
@@ -234,6 +234,18 @@ namespace jmb {
 			return NULL;
 		}
 		*/
+
+		void Node::Tick(int time) {
+			Atom::Tick(time);
+			for(int i=0; i<_childCount; i++) {
+				_children[i]->Tick(time);
+				if(_children[i]->wasUpdated)
+					std::cout << "We got a live one!  "  << _children[i]->identity << std::endl;
+				_children[i]->wasUpdated = false;
+				if(_children[i]->wasUpdated)
+					std::cout << "What the shit?" << std::endl;
+			}
+		}
 	}
 	
 }

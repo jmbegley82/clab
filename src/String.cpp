@@ -79,6 +79,7 @@ namespace jmb {
 			int retval = -1;
 			if(atm->GetType() == String::type) {
 				_data = ReadAtom(atm);
+				retval = 0;
 			}
 			return retval;
 		}
@@ -96,6 +97,7 @@ namespace jmb {
 
 		int String::_Procedure() {
 			int retval = -1;
+			retval = 0;
 			return retval;
 		}
 		

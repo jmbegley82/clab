@@ -152,6 +152,7 @@ namespace jmb {
 
 		int Float::_Procedure() {
 			int retval = -1;
+			retval = 0;
 			return retval;
 		}
 		

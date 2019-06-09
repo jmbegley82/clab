@@ -30,6 +30,7 @@ namespace jmb {
 			_type = type;
 			isEphemeral = false;
 			containsValidData = true;
+			wasUpdated = false;  // it just pops into existence
 		}
 
 		Atom::Atom(const Atom* atm) {
@@ -38,6 +39,7 @@ namespace jmb {
 			Atom(atm->identity);  // happens enough times already...
 			isEphemeral = true;
 			containsValidData = atm->containsValidData;
+			wasUpdated = atm->wasUpdated;
 		}
 		
 		Atom::~Atom() {
@@ -105,6 +107,7 @@ namespace jmb {
 				assert(trg->isEphemeral);
 				delete trg;
 			}
+			if(retval != -1) wasUpdated = true;
 			return retval;
 		}
 		
@@ -199,6 +202,10 @@ namespace jmb {
 			return NULL;
 		}
 		
+		void Atom::Tick(int time) {
+			// almost purely virtual
+			//std::cout << GetAbsolutePath() << "::Tick(" << time << ")" << std::endl;
+		}
 	}
 
 }
