@@ -21,7 +21,7 @@
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
-#include "TestMachine.h"
+//#include "TestMachine.h"
 #include "ShadowInteger.h"
 #include "Notype.h"
 

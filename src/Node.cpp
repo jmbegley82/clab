@@ -14,7 +14,7 @@
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
-#include "TestMachine.h"
+//#include "TestMachine.h"
 #include "Notype.h"
 #include "Video.h"
 
@@ -147,9 +147,9 @@ namespace jmb {
 				noob = new Float(subject);
 			} else if(declarator == "String") {
 				noob = new String(subject);
-			} else if(declarator == "TestMachine") {
+			} /*else if(declarator == "TestMachine") {
 				noob = new TestMachine(subject);
-			} else if(declarator == "Video") {
+			}*/ else if(declarator == "Video") {
 				noob = new Video(subject);
 			}
 
