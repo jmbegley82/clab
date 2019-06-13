@@ -37,6 +37,7 @@ namespace jmb {
 			String(atm->identity);
 			_type = String::type;
 			isEphemeral = true;
+			eraseMe = atm->eraseMe;
 			containsValidData = true;
 			char t = ((Atom*)atm)->GetType();
 			if(t == String::type || t == Integer::type

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <cassert>
+#include <cmath>
 #include "Atom.h"
 #include "Node.h"
 #include "Integer.h"
@@ -18,7 +19,10 @@
 #include "String.h"
 //#include "TestMachine.h"
 #include "Video.h"
+#include "Manager.h"
 #include "Notype.h"
+#include "Time.h"
+#include "config.h"
 
 using jmb::common::Atom;
 using jmb::common::Node;
@@ -27,7 +31,9 @@ using jmb::common::Float;
 using jmb::common::String;
 //using jmb::common::TestMachine;
 using jmb::common::Video;
+using jmb::common::Manager;
 using jmb::common::Notype;
+using jmb::common::GetTimeInMsec;
 using std::cout;
 using std::endl;
 
@@ -330,22 +336,40 @@ void test8() {
 
 void test9() {
 	cout << ":::Test 9 from outer space:::" << endl;
-	Node root("root");
-	root.Command("Video VideoMgr");
+	
+	Manager root("root");
+	//root.Command("Video VideoMgr");
+	//root.Command("Event EventMgr");
 	Video* v1 = (Video*)root.Dereference("VideoMgr");
 	assert(v1 != NULL);
 	cout << "VideoMgr reports a value of:  " << v1->GetValueAsStdString() << endl;
-	//v1->Command("");
 	root.Command("");
-	//v1->Command("");
-	//v1->Command("");
-	//v1->Command("");
-	v1->Tick(0);
-	v1->Tick(0);
-	v1->Command("/VideoMgr/windowPosX=500");
+	root.Tick(0);
+	root.Command("/VideoMgr/windowPosX=200");
 	root.Command("");
-	v1->Tick(0);
-	v1->Tick(0);
+	root.Tick(0);
+	root.Tick(0);
+	int time = GetTimeInMsec();
+	int target = time + 5000;
+	double t_slice = 1000 / 60;
+	int currentMsec = GetTimeInMsec();
+	int prevMsec = currentMsec - t_slice;
+	while(currentMsec < target) {
+		int delta = currentMsec - prevMsec;
+		//while(GetTimeInMsec() < prevMsec + t_slice) {
+		while(delta < t_slice) {
+			cout << "Debug main:  frame limiting..." << endl;
+			delta = GetTimeInMsec() - prevMsec;
+		}
+		root.Tick(delta);
+		//root.Command("");
+		cout << "Debug main:  " << currentMsec << " " << delta << endl;
+		//currentMsec = GetTimeInMsec();
+		jmb::common::SleepMsec(t_slice - (GetTimeInMsec() - currentMsec));
+		prevMsec = currentMsec;
+		currentMsec = GetTimeInMsec();
+	}
+
 	cout << endl << endl;
 }
 
@@ -355,13 +379,13 @@ void testX() {
 	assert(this_code_is_usable); // none of this works!
 	// Hierarchy:
 	// (root)\
-	//       |-Renderer
-	//       |-Audio
-	//       |-Input
-	//       |-ObjectMgr
-	//       | |-ImgCache
-	//       | |-SndCache
-	//       | \-ObjCache
+	//       |-VideoMgr
+	//       |-AudioMgr
+	//       |-InputMgr
+	//       |-Cache
+	//       | |-Images
+	//       | |-Sounds
+	//       | \-Objects
 	//       |-EventMgr
 	//       | |-TxtCache
 	//       | \-Timer
@@ -369,13 +393,15 @@ void testX() {
 	//
 
 	Node root("root");
-	root.Command("Renderer Renderer");
-	root.Command("AudioSys Audio");
-	root.Command("InputSys Input");
-	root.Command("EventMgr Event");
+	root.Command("Video VideoMgr");
+	root.Command("Audio AudioMgr");
+	root.Command("Input InputMgr");
+	root.Command("Event EventMgr");
+	root.Command("Node  Cache");
+	root.Command("Logger Log");
 	// ...
 	
-	root.Command("event := initScript: Data/script.txt");
+	root.Command("EventMgr := initScript: Data/script.txt");
 /*
 	while(!root.erase_me) {
 		root.tick();

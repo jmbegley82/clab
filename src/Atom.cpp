@@ -31,6 +31,7 @@ namespace jmb {
 			isEphemeral = false;
 			containsValidData = true;
 			wasUpdated = false;  // it just pops into existence
+			eraseMe = false;
 		}
 
 		Atom::Atom(const Atom* atm) {
@@ -40,6 +41,7 @@ namespace jmb {
 			isEphemeral = true;
 			containsValidData = atm->containsValidData;
 			wasUpdated = atm->wasUpdated;
+			eraseMe = atm->eraseMe;
 		}
 		
 		Atom::~Atom() {

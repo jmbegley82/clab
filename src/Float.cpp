@@ -38,6 +38,7 @@ namespace jmb {
 			Float(atm->identity);
 			_type = Float::type;
 			isEphemeral = true;
+			eraseMe = atm->eraseMe;
 			containsValidData = true;
 			char t = ((Atom*)atm)->GetType();
 			if(t == Float::type || t == Integer::type || t == String::type

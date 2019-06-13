@@ -38,6 +38,7 @@ namespace jmb {
 			Node* parent;
 			bool containsValidData;
 			bool wasUpdated;
+			bool eraseMe;
 			
 			virtual Atom* Dereference(std::string const& name);
 			virtual int Command(std::string const& cmd);

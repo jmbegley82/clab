@@ -34,7 +34,7 @@ namespace jmb {
 			assert(0);
 		}
 		
-		ShadowInteger::ShadowInteger(std::string const& name, int* addr) : Atom(name){
+		ShadowInteger::ShadowInteger(std::string const& name, int* addr) : Atom(name) {
 			_type = ShadowInteger::type;
 			hasOwnData = false;
 			//std::cout << "debug1:  addr=" << addr << std::endl;
@@ -47,6 +47,7 @@ namespace jmb {
 			_type = ShadowInteger::type;
 			_data = new int;
 			isEphemeral = true;
+			eraseMe = atm->eraseMe;
 			hasOwnData = true;
 			containsValidData = true;
 			char t = ((Atom*)atm)->GetType();

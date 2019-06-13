@@ -236,7 +236,7 @@ namespace jmb {
 		*/
 
 		void Node::Tick(int time) {
-			Atom::Tick(time);
+			//Atom::Tick(time);
 			for(int i=0; i<_childCount; i++) {
 				_children[i]->Tick(time);
 				if(_children[i]->wasUpdated)
