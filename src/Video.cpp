@@ -126,10 +126,6 @@ namespace jmb {
 			((ShadowInteger*)_bufW_SI)->wasUpdated = false;
 			((ShadowInteger*)_bufH_SI)->wasUpdated = false;
 			// observe window position changes
-			//int tmpX = 0, tmpY = 0, tmpW = 0, tmpH = 0;
-			//SDL_GetWindowPosition((SDL_Window*)_Window, &tmpX, &tmpY);
-			//SDL_GetWindowSize((SDL_Window*)_Window, &tmpW, &tmpH);
-			//std::cout << "Video debug XYWH:  " << tmpX << " " << tmpY << " " << tmpW << " " << tmpH << std::endl;
 			SDL_GetWindowPosition((SDL_Window*)_Window, &_windowX, &_windowY);
 			SDL_GetWindowSize((SDL_Window*)_Window, &_windowW, &_windowH);
 			// draw buffer to screen

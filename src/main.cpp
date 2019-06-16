@@ -351,22 +351,22 @@ void test9() {
 	root.Tick(0);
 	int time = GetTimeInMsec();
 	int target = time + 5000;
-	double t_slice = 1000 / 60;
+	double t_slice = 1000 / 30;
 	int currentMsec = GetTimeInMsec();
 	int prevMsec = currentMsec - t_slice;
-	while(currentMsec < target) {
-		int delta = currentMsec - prevMsec;
+	while(GetTimeInMsec() < target) {
+		int delta = GetTimeInMsec() - prevMsec;
 		//while(GetTimeInMsec() < prevMsec + t_slice) {
 		while(delta < t_slice) {
 			cout << "Debug main:  frame limiting..." << endl;
+			jmb::common::SleepMsec(floor(t_slice - delta));
 			delta = GetTimeInMsec() - prevMsec;
 		}
 		root.Tick(delta);
 		//root.Command("");
-		cout << "Debug main:  " << currentMsec << " " << delta << endl;
-		//currentMsec = GetTimeInMsec();
-		jmb::common::SleepMsec(t_slice - (GetTimeInMsec() - currentMsec));
+		cout << "Debug main:  " << GetTimeInMsec() << " " << delta << endl;
 		prevMsec = currentMsec;
+		jmb::common::SleepMsec((t_slice - (GetTimeInMsec() - prevMsec))/1);
 		currentMsec = GetTimeInMsec();
 	}
 
