@@ -13,7 +13,9 @@ namespace jmb {
 	namespace common {
 
 		int GetTimeInMsec();
+		double GetTimeInMsecAsDouble();
 		void SleepMsec(int ms);
+		void SleepMsec(double ms);
 
 	}
 

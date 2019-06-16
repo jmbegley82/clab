@@ -33,7 +33,7 @@ using jmb::common::String;
 using jmb::common::Video;
 using jmb::common::Manager;
 using jmb::common::Notype;
-using jmb::common::GetTimeInMsec;
+using jmb::common::GetTimeInMsecAsDouble;
 using std::cout;
 using std::endl;
 
@@ -349,25 +349,25 @@ void test9() {
 	root.Command("");
 	root.Tick(0);
 	root.Tick(0);
-	int time = GetTimeInMsec();
-	int target = time + 5000;
-	double t_slice = 1000 / 30;
-	int currentMsec = GetTimeInMsec();
-	int prevMsec = currentMsec - t_slice;
-	while(GetTimeInMsec() < target) {
-		int delta = GetTimeInMsec() - prevMsec;
+	double time = GetTimeInMsecAsDouble();
+	double target = time + 5000;
+	double t_slice = 1000 / 120;
+	double currentMsec = GetTimeInMsecAsDouble();
+	double prevMsec = currentMsec - t_slice;
+	while(GetTimeInMsecAsDouble() < target) {
+		double delta = GetTimeInMsecAsDouble() - prevMsec;
 		//while(GetTimeInMsec() < prevMsec + t_slice) {
 		while(delta < t_slice) {
 			cout << "Debug main:  frame limiting..." << endl;
-			jmb::common::SleepMsec(floor(t_slice - delta));
-			delta = GetTimeInMsec() - prevMsec;
+			jmb::common::SleepMsec((double)(t_slice - delta));
+			delta = GetTimeInMsecAsDouble() - prevMsec;
 		}
 		root.Tick(delta);
 		//root.Command("");
-		cout << "Debug main:  " << GetTimeInMsec() << " " << delta << endl;
+		cout << "Debug main:  " << GetTimeInMsecAsDouble() << " " << delta << endl;
 		prevMsec = currentMsec;
-		jmb::common::SleepMsec((t_slice - (GetTimeInMsec() - prevMsec))/1);
-		currentMsec = GetTimeInMsec();
+		jmb::common::SleepMsec((double)(t_slice - (GetTimeInMsecAsDouble() - prevMsec))/1);
+		currentMsec = GetTimeInMsecAsDouble();
 	}
 
 	cout << endl << endl;
