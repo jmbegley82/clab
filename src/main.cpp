@@ -22,6 +22,7 @@
 #include "Manager.h"
 #include "Notype.h"
 #include "Time.h"
+#include "Clock.h"
 #include "config.h"
 
 using jmb::common::Atom;
@@ -33,7 +34,8 @@ using jmb::common::String;
 using jmb::common::Video;
 using jmb::common::Manager;
 using jmb::common::Notype;
-using jmb::common::GetTimeInMsecAsDouble;
+//using jmb::common::GetTimeInMsecAsDouble;
+using jmb::common::Clock;
 using std::cout;
 using std::endl;
 
@@ -349,25 +351,25 @@ void test9() {
 	root.Command("");
 	root.Tick(0);
 	root.Tick(0);
-	double time = GetTimeInMsecAsDouble();
-	double target = time + 5000;
+	Clock clk;
+	double time = clk.GetTime();
+	double target = time + 10000;
 	double t_slice = 1000 / 120;
-	double currentMsec = GetTimeInMsecAsDouble();
+	double currentMsec = time;
 	double prevMsec = currentMsec - t_slice;
-	while(GetTimeInMsecAsDouble() < target) {
-		double delta = GetTimeInMsecAsDouble() - prevMsec;
-		//while(GetTimeInMsec() < prevMsec + t_slice) {
+	while(clk.GetTime() < target) {
+		double delta = clk.GetTime() - prevMsec;
 		while(delta < t_slice) {
 			cout << "Debug main:  frame limiting..." << endl;
-			jmb::common::SleepMsec((double)(t_slice - delta));
-			delta = GetTimeInMsecAsDouble() - prevMsec;
+			jmb::common::SleepMsec(t_slice - delta);
+			delta = clk.GetTime() - prevMsec;
 		}
 		root.Tick(delta);
 		//root.Command("");
-		cout << "Debug main:  " << GetTimeInMsecAsDouble() << " " << delta << endl;
+		cout << "Debug main:  " << clk.GetTime() << " " << delta << endl;
 		prevMsec = currentMsec;
-		jmb::common::SleepMsec((double)(t_slice - (GetTimeInMsecAsDouble() - prevMsec))/1);
-		currentMsec = GetTimeInMsecAsDouble();
+		jmb::common::SleepMsec(t_slice - (clk.GetTime() - prevMsec));
+		currentMsec = clk.GetTime();
 	}
 
 	cout << endl << endl;
