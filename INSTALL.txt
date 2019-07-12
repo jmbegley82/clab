@@ -1,0 +1,16 @@
+Includes autotools and cmake support.  Autotools is probably going away soon.
+
+Requirements:  autotools or cmake, pkgconfig, dev packages for SDL2, SDL2_mixer, SDL2_image, SDL2_ttf
+
+Autotools-specific:
+> autoreconf -i
+> mkdir build
+> ./configure
+> make
+
+Cmake-specific:
+> mkdir build
+> cd build
+> cmake .. (or ccmake ..)
+> make (builds library)
+> make clabtest (builds test program)
