@@ -139,6 +139,7 @@ namespace jmb {
 
 		int Node::_Declarate(std::string const& declarator, std::string const& subject) {
 			Atom* noob = NULL;
+			/*
 			if(declarator == "Node") {
 				noob = new Node(subject);
 			} else if(declarator == "Integer") {
@@ -147,11 +148,12 @@ namespace jmb {
 				noob = new Float(subject);
 			} else if(declarator == "String") {
 				noob = new String(subject);
-			} /*else if(declarator == "TestMachine") {
-				noob = new TestMachine(subject);
-			}*/ else if(declarator == "Video") {
+			} else if(declarator == "Video") {
 				noob = new Video(subject);
 			}
+			*/
+
+			noob = Create(declarator, subject);
 
 			if(noob == NULL) return -3; // invalid declarator
 			//else {

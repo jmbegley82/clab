@@ -1,0 +1,2 @@
+1) spin off everything that requires SDL (or other deps) into another library
+
