@@ -25,6 +25,7 @@ namespace jmb {
 			Manager(std::string const& name);
 			Manager(const Atom* atm);
 			virtual ~Manager();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			//virtual Atom* Dereference(std::string const& name);
                         virtual int Command(std::string const& cmd);

@@ -25,6 +25,7 @@ namespace jmb {
 			Video(std::string const& name);
 			Video(const Atom* atm);
 			virtual ~Video();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			//virtual Atom* Dereference(std::string const& name);
                         virtual int Command(std::string const& cmd);

@@ -25,6 +25,7 @@ namespace jmb {
 			ShadowInteger(std::string const& name, int* addr);
 			ShadowInteger(const Atom* atm);
 			~ShadowInteger();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			
 			//virtual Atom* Dereference(std::string const& name);

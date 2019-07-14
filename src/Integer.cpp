@@ -56,6 +56,10 @@ namespace jmb {
 		Integer::~Integer() {
 		}
 
+		Atom* Integer::CtorWrapper(std::string name) {
+			return new Integer(name);
+		}
+
 		int Integer::Command(std::string const& cmd) {
 			if(cmd == "clear") {
 				_data = 0;

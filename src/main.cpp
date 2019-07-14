@@ -12,6 +12,7 @@
 #include <string>
 #include <cassert>
 #include <cmath>
+#include "Types.h"
 #include "Atom.h"
 #include "Node.h"
 #include "Integer.h"
@@ -36,6 +37,7 @@ using jmb::common::Manager;
 using jmb::common::Notype;
 //using jmb::common::GetTimeInMsecAsDouble;
 using jmb::common::Clock;
+using jmb::common::Types::AddMapping;
 using std::cout;
 using std::endl;
 
@@ -413,6 +415,12 @@ void testX() {
 
 int main(int argc, char** argv) {
 	cout << "The test begins...  now." << endl;
+	AddMapping("Atom", Atom::CtorWrapper);
+	AddMapping("Notype", Notype::CtorWrapper);
+	AddMapping("Integer", Integer::CtorWrapper);
+	AddMapping("String", String::CtorWrapper);
+	AddMapping("Float", Float::CtorWrapper);
+	AddMapping("Video", Video::CtorWrapper);
 	test1();
 	test2();
 	test3();

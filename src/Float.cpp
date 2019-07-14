@@ -55,6 +55,10 @@ namespace jmb {
 		Float::~Float() {
 		}
 
+		Atom* Float::CtorWrapper(std::string name) {
+			return new Float(name);
+		}
+
 		int Float::Command(std::string const& cmd) {
 			if(cmd == "clear") {
 				_data = 0.0;

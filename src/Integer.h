@@ -24,6 +24,7 @@ namespace jmb {
 			Integer(std::string const& name);
 			Integer(const Atom* atm);
 			~Integer();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			
 			//virtual Atom* Dereference(std::string const& name);

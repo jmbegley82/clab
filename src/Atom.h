@@ -28,6 +28,7 @@ namespace jmb {
 			Atom(std::string const& name);
 			Atom(const Atom* atm);
 			virtual ~Atom();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			bool isEphemeral;
 			

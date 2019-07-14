@@ -68,6 +68,11 @@ namespace jmb {
 			if(hasOwnData) delete _data;
 		}
 
+		Atom* ShadowInteger::CtorWrapper(std::string name) {
+			// this seems unnecessary
+			return new ShadowInteger(name);
+		}
+
 		int ShadowInteger::Command(std::string const& cmd) {
 			if(cmd == "clear") {
 				*_data = 0;

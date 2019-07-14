@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <cassert>
+#include "Types.h"
 #include "StringStuff.h"
 #include "Node.h"
 #include "Integer.h"
@@ -53,6 +54,10 @@ namespace jmb {
 		Node::~Node() {
 			//std::cout << "Node::~Atom" << std::endl;
 			if(!isEphemeral) _Purge();
+		}
+
+		Atom* Node::CtorWrapper(std::string name) {
+			return new Node(name);
 		}
 		
 		Atom* Node::Dereference(std::string const& name) {
@@ -153,7 +158,7 @@ namespace jmb {
 			}
 			*/
 
-			noob = Create(declarator, subject);
+			noob = Types::CreateNew(declarator, subject);
 
 			if(noob == NULL) return -3; // invalid declarator
 			//else {

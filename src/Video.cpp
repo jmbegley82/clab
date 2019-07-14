@@ -71,6 +71,10 @@ namespace jmb {
 			if(!isEphemeral) _Purge();
 		}
 
+		Atom* Video::CtorWrapper(std::string name) {
+			return new Video(name);
+		}
+
 		int Video::Command(std::string const& cmd) {
 			// TODO:  something meaningful
 			return Node::Command(cmd);

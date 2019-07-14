@@ -24,6 +24,7 @@ namespace jmb {
 			Float(std::string const& name);
 			Float(const Atom* atm);
 			~Float();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			
 			//virtual Atom* Dereference(std::string const& name);

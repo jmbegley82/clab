@@ -24,6 +24,7 @@ namespace jmb {
 			Node(std::string const& name);
 			Node(const Atom* atm);
 			virtual ~Node();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			virtual Atom* Dereference(std::string const& name);
 			//virtual int Command(std::string const& cmd);

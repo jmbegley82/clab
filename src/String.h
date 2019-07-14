@@ -7,8 +7,8 @@
  *
  */
 
-#ifndef STRING_H
-#define STRING_H
+#ifndef JMSTRING_H
+#define JMSTRING_H
 
 #include <string>
 #include "Atom.h"
@@ -24,6 +24,7 @@ namespace jmb {
 			String(std::string const& name);
 			String(const Atom* atm);
 			~String();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			
 			//virtual Atom* Dereference(std::string const& name);
@@ -53,4 +54,4 @@ namespace jmb {
 
 }
 
-#endif //STRING_H
+#endif //JMSTRING_H

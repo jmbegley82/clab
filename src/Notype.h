@@ -26,6 +26,7 @@ namespace jmb {
 			Notype(std::string const& name);
 			Notype(const Atom* atm);
 			~Notype();
+			static Atom* CtorWrapper(std::string name);
 			static const char type;
 		};
 	}

@@ -47,6 +47,10 @@ namespace jmb {
 		Atom::~Atom() {
 			if(!isEphemeral) LeaveParent();
 		}
+
+		Atom* Atom::CtorWrapper(std::string name) {
+			return new Atom(name);
+		}
 		
 		Atom* Atom::Dereference(std::string const& name) {
 			// Applied to command string subjects and targets to convert them

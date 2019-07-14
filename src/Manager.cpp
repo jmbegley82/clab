@@ -61,6 +61,10 @@ namespace jmb {
 			if(!isEphemeral) _Purge();
 		}
 
+		Atom* Manager::CtorWrapper(std::string name) {
+			return new Manager(name);
+		}
+
 		int Manager::Command(std::string const& cmd) {
 			// TODO:  something meaningful
 			return Node::Command(cmd);

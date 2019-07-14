@@ -54,6 +54,10 @@ namespace jmb {
 		String::~String() {
 		}
 
+		Atom* String::CtorWrapper(std::string name) {
+			return new String(name);
+		}
+
 		int String::Command(std::string const& cmd) {
 			if(cmd == "clear") {
 				SetValue("");

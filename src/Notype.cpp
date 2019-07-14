@@ -30,6 +30,10 @@ namespace jmb {
 
 		Notype::~Notype() {
 		}
+		
+		Atom* Notype::CtorWrapper(std::string name) {
+			return new Notype(name);
+		}
 	}
 	
 }
