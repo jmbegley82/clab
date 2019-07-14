@@ -160,7 +160,9 @@ namespace jmb {
 
 			noob = Types::CreateNew(declarator, subject);
 
-			if(noob == NULL) return -3; // invalid declarator
+			if(noob == NULL) {
+				return -3; // invalid declarator
+			}
 			//else {
 				//if(AddChild(noob) != 0) return -2; // already exists or overflow
 			return AddChild(noob);

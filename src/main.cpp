@@ -12,6 +12,7 @@
 #include <string>
 #include <cassert>
 #include <cmath>
+#include "Clab.h"
 #include "Types.h"
 #include "Atom.h"
 #include "Node.h"
@@ -19,8 +20,8 @@
 #include "Float.h"
 #include "String.h"
 //#include "TestMachine.h"
-#include "Video.h"
-#include "Manager.h"
+//#include "Video.h"
+//#include "Manager.h"
 #include "Notype.h"
 #include "Time.h"
 #include "Clock.h"
@@ -32,12 +33,13 @@ using jmb::common::Integer;
 using jmb::common::Float;
 using jmb::common::String;
 //using jmb::common::TestMachine;
-using jmb::common::Video;
-using jmb::common::Manager;
+//using jmb::common::Video;
+//using jmb::common::Manager;
 using jmb::common::Notype;
 //using jmb::common::GetTimeInMsecAsDouble;
 using jmb::common::Clock;
 using jmb::common::Types::AddMapping;
+using jmb::common::ClabInit;
 using std::cout;
 using std::endl;
 
@@ -338,6 +340,7 @@ void test8() {
 	cout << endl << endl;
 }
 
+/*
 void test9() {
 	cout << ":::Test 9 from outer space:::" << endl;
 	
@@ -376,6 +379,7 @@ void test9() {
 
 	cout << endl << endl;
 }
+*/
 
 void testX() {
 	cout << ":::Hypothetical situations:::" <<endl;
@@ -415,12 +419,15 @@ void testX() {
 
 int main(int argc, char** argv) {
 	cout << "The test begins...  now." << endl;
+	/*
 	AddMapping("Atom", Atom::CtorWrapper);
 	AddMapping("Notype", Notype::CtorWrapper);
 	AddMapping("Integer", Integer::CtorWrapper);
 	AddMapping("String", String::CtorWrapper);
 	AddMapping("Float", Float::CtorWrapper);
-	AddMapping("Video", Video::CtorWrapper);
+//	AddMapping("Video", Video::CtorWrapper);
+	*/
+	ClabInit();
 	test1();
 	test2();
 	test3();
@@ -429,6 +436,6 @@ int main(int argc, char** argv) {
 	test6();
 	test7();
 	test8();
-	test9();
+//	test9();
 	return 0;
 }
