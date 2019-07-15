@@ -24,7 +24,5 @@ target_compile_options(clab PUBLIC ${SDL2_CFLAGS_OTHER} ${SDL2_image_CFLAGS_OTHE
 add_executable(clabtest EXCLUDE_FROM_ALL src/main.cpp)
 target_link_libraries(clabtest clab)
 
-#add_executable (brometheus src/Brometheus.cpp src/main.cpp)
-#target_link_libraries(brometheus JMB ${RTMIDI_LIBRARIES} ${EVDEV_LIBRARIES})
-#target_include_directories(brometheus PUBLIC ${RTMIDI_INCLUDE_DIRS} ${EVDEV_INCLUDE_DIRS})
-#target_compile_options(brometheus PUBLIC ${RTMIDI_CFLAGS_OTHER} ${EVDEV_CFLAGS_OTHER})
+install(TARGETS clab DESTINATION lib)
+install(FILES src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h DESTINATION include/Clab)
