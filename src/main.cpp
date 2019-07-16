@@ -428,6 +428,7 @@ int main(int argc, char** argv) {
 //	AddMapping("Video", Video::CtorWrapper);
 	*/
 	ClabInit();
+	cout << endl;
 	test1();
 	test2();
 	test3();
