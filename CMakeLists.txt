@@ -13,11 +13,11 @@ set (includedir "${prefix}/include")
 
 configure_file(
 	"${PROJECT_SOURCE_DIR}/src/config.h.in"
-	"${PROJECT_SOURCE_DIR}/src/config.h"
+	"${PROJECT_BINARY_DIR}/src/config.h"
 	)
 configure_file(
 	"${PROJECT_SOURCE_DIR}/Clab.pc.in"
-	"${PROJECT_SOURCE_DIR}/Clab-${API_VERSION}.pc"
+	"${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc"
 	@ONLY
 	)
 include_directories("${PROJECT_BINARY_DIR}")
@@ -40,5 +40,5 @@ add_executable(clabtest EXCLUDE_FROM_ALL src/main.cpp)
 target_link_libraries(clabtest Clab)
 
 install(TARGETS Clab LIBRARY DESTINATION lib)
-install(FILES src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h DESTINATION include/Clab)
-install(FILES "${PROJECT_SOURCE_DIR}/Clab-${API_VERSION}.pc" DESTINATION lib/pkgconfig)
+install(FILES src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h DESTINATION include/Clab-${API_VERSION})
+install(FILES "${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc" DESTINATION lib/pkgconfig)
