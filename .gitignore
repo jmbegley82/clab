@@ -19,3 +19,6 @@ clab*.pc
 Clab*.pc
 build
 *~
+.DS_Store
+*/.DS_Store
+**/.DS_Store
