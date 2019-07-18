@@ -25,7 +25,6 @@
 #include "Notype.h"
 #include "Time.h"
 #include "Clock.h"
-#include "config.h"
 
 using jmb::common::Atom;
 using jmb::common::Node;
@@ -42,6 +41,16 @@ using jmb::common::Types::AddMapping;
 using jmb::common::ClabInit;
 using std::cout;
 using std::endl;
+
+void test0() {
+	cout << ":::Version Variable Test:::" << endl;
+	cout << "Library reports version string:  " << jmb::common::ClabVersionString() << endl;
+	cout << "Library reports major version:   " << jmb::common::ClabVersionMajor() << endl;
+	cout << "Library reports minor version:   " << jmb::common::ClabVersionMinor() << endl;
+	cout << "Linked using major version:   " << CLAB_VERSION_MAJOR << endl;
+	cout << "Linked using minor version:   " << CLAB_VERSION_MINOR << endl;
+	cout << endl;
+}
 
 void test1() {
 	cout << ":::Atom test:::" << endl;
@@ -429,6 +438,7 @@ int main(int argc, char** argv) {
 	*/
 	ClabInit();
 	cout << endl;
+	test0();
 	test1();
 	test2();
 	test3();

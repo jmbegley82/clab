@@ -20,6 +20,11 @@ configure_file(
 	"${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc"
 	@ONLY
 	)
+configure_file(
+	"${PROJECT_SOURCE_DIR}/src/Clab.h.in"
+	"${PROJECT_BINARY_DIR}/src/Clab.h"
+	@ONLY
+	)
 include_directories("${PROJECT_BINARY_DIR}/src")
 
 #include_directories (src)

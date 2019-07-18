@@ -1,0 +1,24 @@
+/*
+ * Clab.h.in
+ * 07/18/2019
+ * jmb
+ */
+
+#ifndef CLAB_H
+#define CLAB_H
+
+#include <string>
+
+#define CLAB_VERSION_MAJOR @Clab_VERSION_MAJOR@
+#define CLAB_VERSION_MINOR @Clab_VERSION_MINOR@
+
+namespace jmb {
+	namespace common {
+		int ClabInit();
+		std::string ClabVersionString();
+		int ClabVersionMajor();
+		int ClabVersionMinor();
+	}
+}
+
+#endif //CLAB_H

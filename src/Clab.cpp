@@ -4,6 +4,7 @@
  * jmb
  */
 
+#include <string>
 #include "Clab.h"
 #include "Atom.h"
 #include "Node.h"
@@ -13,7 +14,10 @@
 #include "String.h"
 #include "ShadowInteger.h"
 #include "Types.h"
+#include "config.h"
+#include "toaster.h"
 
+using std::string;
 using jmb::common::Atom;
 using jmb::common::Node;
 using jmb::common::Notype;
@@ -36,6 +40,18 @@ namespace jmb {
 			AddMapping("ShadowInteger", ShadowInteger::CtorWrapper);
 			//AddMapping("Video", Video::CtorWrapper);
 			return retval;
+		}
+
+		string ClabVersionString() {
+			return string(TOASTER(PACKAGE_NAME)) + " " + string(TOASTER(PACKAGE_VERSION)) + " built on " + __DATE__;
+		}
+
+		int ClabVersionMajor() {
+			return CLAB_VERSION_MAJOR;
+		}
+		
+		int ClabVersionMinor() {
+			return CLAB_VERSION_MINOR;
 		}
 	}
 }
