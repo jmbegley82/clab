@@ -20,7 +20,7 @@ configure_file(
 	"${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc"
 	@ONLY
 	)
-include_directories("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_BINARY_DIR}/src")
 
 #include_directories (src)
 #find_package (PkgConfig REQUIRED)
