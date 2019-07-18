@@ -43,7 +43,7 @@ namespace jmb {
 		}
 
 		string ClabVersionString() {
-			return string(TOASTER(PACKAGE_NAME)) + " " + string(TOASTER(PACKAGE_VERSION)) + " built on " + __DATE__;
+			return string(TOASTER(PACKAGE_NAME)) + " " + string(TOASTER(PACKAGE_VERSION)) + " built on " + __DATE__ + " at " + __TIME__;
 		}
 
 		int ClabVersionMajor() {
