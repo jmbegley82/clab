@@ -15,9 +15,7 @@
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
-//#include "TestMachine.h"
 #include "Notype.h"
-#include "Video.h"
 
 namespace jmb {
 	
