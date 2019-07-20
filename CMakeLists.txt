@@ -48,6 +48,7 @@ install(TARGETS Clab LIBRARY DESTINATION lib)
 install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h DESTINATION include/Clab-${API_VERSION})
 install(FILES "${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc" DESTINATION lib/pkgconfig)
 
+set(CPACK_PACKAGE_VERSION ${PACKAGE_VERSION})
 set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "jmb")
 set(CPACK_PACKAGING_INSTALL_PREFIX "/usr/local")
