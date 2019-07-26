@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (Clab)
 set (Clab_VERSION_MAJOR 0)
-set (Clab_VERSION_MINOR 1)
+set (Clab_VERSION_MINOR 2)
 set (DEST_DIR "${CMAKE_INSTALL_PREFIX}")
 set (prefix "${DEST_DIR}")
 set (exec_prefix "${prefix}")
@@ -34,7 +34,7 @@ include_directories("${PROJECT_BINARY_DIR}/src")
 #pkg_check_modules(SDL2_mixer REQUIRED SDL2_mixer)
 #pkg_check_modules(SDL2_ttf REQUIRED SDL2_ttf)
 
-add_library(Clab SHARED src/Atom.cpp src/Clock.cpp src/Float.cpp src/Integer.cpp src/Node.cpp src/Notype.cpp src/ShadowInteger.cpp src/String.cpp src/StringStuff.cpp src/Time.cpp src/Types.cpp src/Clab.cpp)
+add_library(Clab SHARED src/Atom.cpp src/Clock.cpp src/Float.cpp src/Integer.cpp src/Node.cpp src/Notype.cpp src/ShadowInteger.cpp src/String.cpp src/StringStuff.cpp src/Time.cpp src/Types.cpp src/Log.cpp src/Clab.cpp)
 set_target_properties(Clab PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}-${API_VERSION}")
 set_target_properties(Clab PROPERTIES SOVERSION "${PACKAGE_VERSION}")
 #target_link_libraries(clab ${SDL2_LIBRARIES} ${SDL2_image_LIBRARIES} ${SDL2_mixer_LIBRARIES} ${SDL2_ttf_LIBRARIES})
@@ -44,9 +44,13 @@ set_target_properties(Clab PROPERTIES SOVERSION "${PACKAGE_VERSION}")
 add_executable(clabtest EXCLUDE_FROM_ALL src/main.cpp)
 target_link_libraries(clabtest Clab)
 
-install(TARGETS Clab LIBRARY DESTINATION lib)
-install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h DESTINATION include/Clab-${API_VERSION})
-install(FILES "${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc" DESTINATION lib/pkgconfig)
+install(TARGETS Clab
+	ARCHIVE DESTINATION lib
+	LIBRARY DESTINATION lib)
+install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h src/Log.h
+	DESTINATION include/Clab-${API_VERSION})
+install(FILES "${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc"
+	DESTINATION lib/pkgconfig)
 
 set(CPACK_PACKAGE_VERSION ${PACKAGE_VERSION})
 set(CPACK_GENERATOR "DEB")

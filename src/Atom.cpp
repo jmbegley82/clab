@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <cassert>
+#include "Log.h"
 #include "Atom.h"
 #include "Node.h"
 #include "Notype.h"
@@ -156,7 +157,7 @@ namespace jmb {
 		}
 		
 		int Atom::OperatorEqu(Atom* atm) {
-			std::cout << "Atom::" << __FUNCTION__ << ": stub" << std::endl;
+			*Log << "Atom::" << __FUNCTION__ << ": stub" << std::endl;
 			return -1;
 		}
 		
@@ -190,7 +191,7 @@ namespace jmb {
 		}
 		
 		int Atom::_Procedure() {
-			std::cout << GetAbsolutePath() << std::endl;
+			*Log << GetAbsolutePath() << std::endl;
 			return 0;
 		}
 
@@ -200,7 +201,7 @@ namespace jmb {
 		
 		Atom* Atom::_Interpret(Atom* atm) {
 			// default
-			//std::cout << "Atom::_Interpret" << std::endl;
+			//*Log << "Atom::_Interpret" << std::endl;
 			return new Atom(atm);
 		}
 		
@@ -210,7 +211,7 @@ namespace jmb {
 		
 		void Atom::Tick(int time) {
 			// almost purely virtual
-			//std::cout << GetAbsolutePath() << "::Tick(" << time << ")" << std::endl;
+			//*Log << GetAbsolutePath() << "::Tick(" << time << ")" << std::endl;
 		}
 	}
 

@@ -13,6 +13,7 @@
 #include <cstdio>
 #include <cassert>
 #include <cmath>
+#include "Log.h"
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
@@ -46,7 +47,7 @@ namespace jmb {
 				try {
 					_data = ReadAtom(atm);
 				} catch (std::invalid_argument& e) {
-					std::cout << "ERROR:  " << e.what() << std::endl;
+					*Log << "ERROR:  " << e.what() << std::endl;
 					containsValidData = false;
 				}
 			} //else assert(t == Integer::type);
@@ -69,7 +70,7 @@ namespace jmb {
 
 		void Integer::SetValue(std::string const& val) {
 			_data = (int)round(strtod(val.c_str(), NULL));
-			//std::cout << "If '" << val << "' = '" << _data <<
+			//*Log << "If '" << val << "' = '" << _data <<
 			//	"' Integer::SetValue worked correctly on " <<
 			//	GetAbsolutePath() << std::endl;
 		}
@@ -149,7 +150,7 @@ namespace jmb {
 		}
 		
 		Atom* Integer::_Interpret(Atom* atm) {
-			//std::cout << "Integer::_Interpret: " << atm->identity << std::endl;
+			//*Log << "Integer::_Interpret: " << atm->identity << std::endl;
 			/*
 			if(atm->GetType() == Integer::type) return atm;
 			else return new Notype(atm->identity);

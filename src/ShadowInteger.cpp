@@ -13,6 +13,7 @@
 #include <cstdio>
 #include <cassert>
 #include <cmath>
+#include "Log.h"
 #include "ShadowInteger.h"
 #include "Integer.h"
 #include "Float.h"
@@ -37,9 +38,9 @@ namespace jmb {
 		ShadowInteger::ShadowInteger(std::string const& name, int* addr) : Atom(name) {
 			_type = ShadowInteger::type;
 			hasOwnData = false;
-			//std::cout << "debug1:  addr=" << addr << std::endl;
+			//*Log << "debug1:  addr=" << addr << std::endl;
 			_data = addr;
-			//std::cout << "debug2: _data=" << *_data << std::endl;
+			//*Log << "debug2: _data=" << *_data << std::endl;
 		}
 
 		ShadowInteger::ShadowInteger(const Atom* atm) /*: Atom(atm)*/ {
@@ -57,7 +58,7 @@ namespace jmb {
 				try {
 					*_data = ReadAtom(atm);
 				} catch (std::invalid_argument& e) {
-					std::cout << "ERROR:  " << e.what() << std::endl;
+					*Log << "ERROR:  " << e.what() << std::endl;
 					containsValidData = false;
 				}
 			} //else assert(t == ShadowInteger::type);
@@ -82,7 +83,7 @@ namespace jmb {
 
 		void ShadowInteger::SetValue(std::string const& val) {
 			*_data = (int)round(strtod(val.c_str(), NULL));
-			//std::cout << "If '" << val << "' = '" << _data <<
+			//*Log << "If '" << val << "' = '" << _data <<
 			//	"' ShadowInteger::SetValue worked correctly on " <<
 			//	GetAbsolutePath() << std::endl;
 		}
@@ -161,12 +162,12 @@ namespace jmb {
 			return retval;
 			*/
 			
-			std::cout << GetAbsolutePath() << " = " << *_data << std::endl;
+			*Log << GetAbsolutePath() << " = " << *_data << std::endl;
 			return 0;
 		}
 		
 		Atom* ShadowInteger::_Interpret(Atom* atm) {
-			//std::cout << "ShadowInteger::_Interpret: " << atm->identity << std::endl;
+			//*Log << "ShadowInteger::_Interpret: " << atm->identity << std::endl;
 			/*
 			if(atm->GetType() == ShadowInteger::type) return atm;
 			else return new Notype(atm->identity);
@@ -192,7 +193,7 @@ namespace jmb {
 				return *((ShadowInteger*)atm)->_data;
 			} else if(t == Notype::type) {
 				if(!ValidateStrtod(atm->identity)) throw std::invalid_argument("Could not convert Literal to ShadowInteger:  " + atm->identity);
-				std::cout << "debug:  Notype > ShadowInteger:  " << atm->identity << std::endl;
+				*Log << "debug:  Notype > ShadowInteger:  " << atm->identity << std::endl;
 				return (int)strtod(atm->identity.c_str(), NULL);
 			}
 			else return 0;

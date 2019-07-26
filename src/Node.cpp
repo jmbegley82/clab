@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <cassert>
+#include "Log.h"
 #include "Types.h"
 #include "StringStuff.h"
 #include "Node.h"
@@ -50,7 +51,7 @@ namespace jmb {
 		}
 		
 		Node::~Node() {
-			//std::cout << "Node::~Atom" << std::endl;
+			//*Log << "Node::~Atom" << std::endl;
 			if(!isEphemeral) _Purge();
 		}
 
@@ -128,7 +129,7 @@ namespace jmb {
 		}
 		
 		int Node::OperatorEqu(Atom* atm) {
-			std::cout << "Node::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
+			*Log << "Node::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
 			return 0; //NI
 		}
 		
@@ -170,7 +171,7 @@ namespace jmb {
 		}
 		
 		Atom* Node::_Interpret(Atom* atm) {
-			//std::cout << "Node::_Interpret" << std::endl;
+			//*Log << "Node::_Interpret" << std::endl;
 			//return Atom::_Interpret(atm);
 			return new Node(atm);
 		}
@@ -247,10 +248,10 @@ namespace jmb {
 			for(int i=0; i<_childCount; i++) {
 				_children[i]->Tick(time);
 				if(_children[i]->wasUpdated)
-					std::cout << "We got a live one!  "  << _children[i]->identity << std::endl;
+					*Log << "We got a live one!  "  << _children[i]->identity << std::endl;
 				_children[i]->wasUpdated = false;
 				if(_children[i]->wasUpdated)
-					std::cout << "What the shit?" << std::endl;
+					*Log << "What the shit?" << std::endl;
 			}
 		}
 	}

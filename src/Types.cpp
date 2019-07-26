@@ -11,8 +11,8 @@
 #include <iostream>
 #include <cassert>
 #include "Types.h"
+#include "Log.h"
 
-using std::cout;
 using std::endl;
 using std::string;
 
@@ -35,7 +35,7 @@ namespace jmb {
 				_tmItr i = _types.find(name);
 				if(i == _types.end()) {
 					// add it, it's not in there
-					cout << "AddMapping:  " << name << endl;
+					*Log << "AddMapping:  " << name << endl;
 					_types[name] = CtorWrapper;
 				}
 			}
@@ -45,7 +45,7 @@ namespace jmb {
 				_tmItr i = _types.find(type);
 				if(i != _types.end()) {
 					retval = (*i->second)(name);
-					cout << "CreateNew:  " << type << " " << name << endl;
+					*Log << "CreateNew:  " << type << " " << name << endl;
 				}
 				return retval;
 			}

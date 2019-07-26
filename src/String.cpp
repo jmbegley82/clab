@@ -13,6 +13,7 @@
 #include <cassert>
 #include <cmath>
 #include <stdexcept>
+#include "Log.h"
 #include "String.h"
 #include "Integer.h"
 #include "Float.h"
@@ -45,7 +46,7 @@ namespace jmb {
 				try {
 					_data = ReadAtom(atm);
 				} catch (std::invalid_argument& e) {
-					std::cout << "ERROR:  " << e.what() << std::endl;
+					*Log << "ERROR:  " << e.what() << std::endl;
 					containsValidData = false;
 				}
 			} else _type = Notype::type;
@@ -68,7 +69,7 @@ namespace jmb {
 		
 		void String::SetValue(std::string const& val) {
 			_data = val;
-			//std::cout << "If '" << val << "' = '" << _data <<
+			//*Log << "If '" << val << "' = '" << _data <<
 			//	"' String::SetValue worked correctly on " <<
 			//	GetAbsolutePath() << std::endl;
 		}
@@ -107,7 +108,7 @@ namespace jmb {
 		}
 		
 		Atom* String::_Interpret(Atom* atm) {
-			//std::cout << "String::_Interpret: " << atm->identity << std::endl;
+			//*Log << "String::_Interpret: " << atm->identity << std::endl;
 			/*
 			if(atm->GetType() == String::type) return atm;
 			else return new Notype(atm->identity);

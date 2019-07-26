@@ -6,6 +6,7 @@
 
 #include <string>
 #include "Clab.h"
+#include "Log.h"
 #include "Atom.h"
 #include "Node.h"
 #include "Notype.h"
@@ -31,6 +32,7 @@ namespace jmb {
 	namespace common {
 		int ClabInit() {
 			int retval = 0;  // TODO:  something meaningful with this?
+			SetLogFile("");
 			AddMapping("Atom", Atom::CtorWrapper);
 			AddMapping("Notype", Notype::CtorWrapper);
 			AddMapping("Node", Node::CtorWrapper);
