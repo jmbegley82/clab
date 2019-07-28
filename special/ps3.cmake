@@ -1,7 +1,7 @@
 # This Toolchain file is used to cross compile the ps3
 # version of Hatari under linux using powerpc64-ps3
 # Now it's used for frivolous shit:
-# use : cd build; ccmake -DCMAKE_TOOLCHAIN_FILE=../ps3.cmake -DCMAKE_MAKE_PROGRAM=/usr/bin/make ..
+# use : cd build; ccmake -DCMAKE_TOOLCHAIN_FILE=../special/ps3.cmake -DCMAKE_INSTALL_PREFIX=/opt/ps3dev/ppu -DCMAKE_MAKE_PROGRAM=/usr/bin/make ..
 # TODO: fix this so CMAKE_MAKE_PROGRAM detects correctly
 
 # this one is important
@@ -19,8 +19,8 @@ SET(PSL1GHT ${PS3DEV})
 # specify the cross compiler
 SET(CMAKE_C_COMPILER powerpc64-ps3-elf-gcc)
 SET(CMAKE_CXX_COMPILER powerpc64-ps3-elf-g++)
-SET(CMAKE_C_FLAGS "-mcpu=cell -I${PSL1GHT}/ppu/include -I${PS3DEV}/portlibs/ppu/include")
-SET(CMAKE_CXX_FLAGS "-mcpu=cell -I${PSL1GHT}/ppu/include -I${PS3DEV}/portlibs/ppu/include")
+SET(CMAKE_C_FLAGS "-mcpu=cell -I${PSL1GHT}/ppu/include -I${PS3DEV}/portlibs/ppu/include -DCLAB_PS3")
+SET(CMAKE_CXX_FLAGS "-mcpu=cell -I${PSL1GHT}/ppu/include -I${PS3DEV}/portlibs/ppu/include -DCLAB_PS3")
 
 # where is the target environment 
 SET(CMAKE_FIND_ROOT_PATH ${PS3DEV}/ppu ${PSL1GHT}/ppu ${PS3DEV}/portlibs/ppu )

@@ -32,7 +32,11 @@ namespace jmb {
 	namespace common {
 		int ClabInit() {
 			int retval = 0;  // TODO:  something meaningful with this?
-			SetLogFile("");
+#if defined CLAB_PS3
+			SetLogFile("/dev_usb000/log.txt");
+#else
+			SetLogFile("");  // default to cout
+#endif //CLAB_*
 			AddMapping("Atom", Atom::CtorWrapper);
 			AddMapping("Notype", Notype::CtorWrapper);
 			AddMapping("Node", Node::CtorWrapper);
@@ -45,7 +49,11 @@ namespace jmb {
 		}
 
 		string ClabVersionString() {
+#if defined CLAB_PS3
+			return string(TOASTER(PACKAGE_NAME)) + " " + string(TOASTER(PACKAGE_VERSION)) + " built on " + __DATE__ + " at " + __TIME__ + " for PS3/PSL1GHT";
+#else
 			return string(TOASTER(PACKAGE_NAME)) + " " + string(TOASTER(PACKAGE_VERSION)) + " built on " + __DATE__ + " at " + __TIME__;
+#endif //CLAB_*
 		}
 
 		int ClabVersionMajor() {
