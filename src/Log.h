@@ -18,7 +18,6 @@ namespace jmb {
 		//static int SetLogFile(char* file);
 		// variables
 		extern std::ostream* Log;
-		extern std::ofstream _logFile;
 	}
 }
 

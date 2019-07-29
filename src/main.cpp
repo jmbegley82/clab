@@ -26,8 +26,12 @@
 #include "Notype.h"
 #include "Time.h"
 #include "Clock.h"
+#include "FileOps.h"
 
 using jmb::common::Log;
+using jmb::common::GetHomePrefix;
+using jmb::common::GetAppPrefix;
+using jmb::common::GetLogPrefix;
 using jmb::common::Atom;
 using jmb::common::Node;
 using jmb::common::Integer;
@@ -439,6 +443,10 @@ int main(int argc, char** argv) {
 	*/
 	ClabInit();
 	*Log << "The test begins...  now." << endl;
+	*Log << endl;
+	*Log << "Home Prefix appears to be:  " << GetHomePrefix() << endl;
+	*Log << "App Prefix appears to be:   " << GetAppPrefix() << endl;
+	*Log << "Log Prefix appears to be:   " << GetLogPrefix() << endl;
 	*Log << endl;
 	test0();
 	test1();

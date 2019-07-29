@@ -28,7 +28,7 @@ namespace jmb {
 			std::string declarator, subject, op, target;
 			// predicate being op + target
 		};
-
+		void ReplaceString(std::string& input, std::string const& from, std::string const& to);
 		std::string RemovePadding(std::string const& text);
 		bool ValidateStrtod(std::string const& text);
 	}

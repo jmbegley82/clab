@@ -99,6 +99,17 @@ namespace jmb
 			}
 		}
 
+		void ReplaceString(std::string& input, std::string const& from, std::string const& to) {
+			//ReplaceString(input, from, to, NULL, "", "");
+
+			if (from.empty()) return;
+			size_t start_pos = 0;
+			while ((start_pos = input.find(from, start_pos)) != std::string::npos) {
+				input.replace(start_pos, from.length(), to);
+				start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+			}
+		}
+
 		std::string RemovePadding(std::string const& text) {
 			// returns a string with spaces stripped from the beginning and end
 			std::string retval = "";

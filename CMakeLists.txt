@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (Clab)
 set (Clab_VERSION_MAJOR 0)
-set (Clab_VERSION_MINOR 2)
+set (Clab_VERSION_MINOR 3)
 set (DEST_DIR "${CMAKE_INSTALL_PREFIX}")
 set (prefix "${DEST_DIR}")
 set (exec_prefix "${prefix}")
@@ -27,23 +27,21 @@ configure_file(
 	)
 include_directories("${PROJECT_BINARY_DIR}/src")
 
-#include_directories (src)
 #find_package (PkgConfig REQUIRED)
-#pkg_check_modules(SDL2 REQUIRED sdl2)
-#pkg_check_modules(SDL2_image REQUIRED SDL2_image)
-#pkg_check_modules(SDL2_mixer REQUIRED SDL2_mixer)
-#pkg_check_modules(SDL2_ttf REQUIRED SDL2_ttf)
 
-add_library(Clab SHARED src/Atom.cpp src/Clock.cpp src/Float.cpp src/Integer.cpp src/Node.cpp src/Notype.cpp src/ShadowInteger.cpp src/String.cpp src/StringStuff.cpp src/Time.cpp src/Types.cpp src/Log.cpp src/Clab.cpp)
+#TODO:  make this conditional upon detection of Windows platform!
+#set(CLAB_PLATFORM_SPECIFIC "src/msvs_dirent.cpp")
+
+add_library(Clab SHARED src/Atom.cpp src/Clock.cpp src/Float.cpp src/Integer.cpp src/Node.cpp src/Notype.cpp src/ShadowInteger.cpp src/String.cpp src/StringStuff.cpp src/Time.cpp src/Types.cpp src/FileOps.cpp ${CLAB_PLATFORM_SPECIFIC} src/Log.cpp src/Clab.cpp)
 set_target_properties(Clab PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}-${API_VERSION}")
 set_target_properties(Clab PROPERTIES SOVERSION "${PACKAGE_VERSION}")
-#target_link_libraries(clab ${SDL2_LIBRARIES} ${SDL2_image_LIBRARIES} ${SDL2_mixer_LIBRARIES} ${SDL2_ttf_LIBRARIES})
-#target_include_directories(clab PUBLIC ${SDL2_INCLUDE_DIRS} ${SDL2_image_INCLUDE_DIRS} ${SDL2_mixer_INCLUDE_DIRS} ${SDL2_ttf_INCLUDE_DIRS})
-#target_compile_options(clab PUBLIC ${SDL2_CFLAGS_OTHER} ${SDL2_image_CFLAGS_OTHER} ${SDL2_mixer_CFLAGS_OTHER} ${SDL2_ttf_CFLAGS_OTHER})
-target_compile_options(Clab PUBLIC ${SPECIAL_MCPU} ${SPECIAL_INCLUDES} ${SPECIAL_DEFS})
+target_compile_options(Clab PUBLIC ${SPECIAL_MCPU} ${SPECIAL_INCLUDES})
+target_compile_definitions(Clab PUBLIC ${SPECIAL_DEFS})
 
 add_executable(clabtest EXCLUDE_FROM_ALL src/main.cpp)
 target_link_libraries(clabtest Clab)
+target_compile_options(clabtest PUBLIC ${SPECIAL_MCPU} ${SPECIAL_INCLUDES})
+target_compile_definitions(clabtest PUBLIC ${SPECIAL_DEFS})
 
 install(TARGETS Clab
 	ARCHIVE DESTINATION lib

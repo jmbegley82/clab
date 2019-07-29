@@ -15,6 +15,7 @@
 #include "String.h"
 #include "ShadowInteger.h"
 #include "Types.h"
+#include "FileOps.h"
 #include "config.h"
 #include "toaster.h"
 
@@ -27,13 +28,20 @@ using jmb::common::Float;
 using jmb::common::String;
 using jmb::common::ShadowInteger;
 using jmb::common::Types::AddMapping;
+using jmb::common::InitHomePrefix;
+using jmb::common::InitAppPrefix;
+using jmb::common::InitLogPrefix;
+using jmb::common::GetLogPrefix;
 
 namespace jmb {
 	namespace common {
 		int ClabInit() {
 			int retval = 0;  // TODO:  something meaningful with this?
+			InitHomePrefix();
+			InitAppPrefix();
+			InitLogPrefix();
 #if defined CLAB_PS3
-			SetLogFile("/dev_usb000/log.txt");
+			SetLogFile(GetLogPrefix() + "/log.txt");
 #else
 			SetLogFile("");  // default to cout
 #endif //CLAB_*

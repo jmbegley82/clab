@@ -15,7 +15,7 @@ namespace jmb {
 	namespace common {
 		// variables
 		std::ostream* Log;
-		std::ofstream _logFile;
+		static std::ofstream _logFile;
 		
 		int SetLogFile(string const& file) {
 			int retval = 0;
