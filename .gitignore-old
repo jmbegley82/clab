@@ -1,7 +1,0 @@
-build
-*.o
-*.obj
-test
-test.exe
-*.stackdump
-*.dSYM
