@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (Clab)
 set (Clab_VERSION_MAJOR 0)
-set (Clab_VERSION_MINOR 3)
+set (Clab_VERSION_MINOR 4)
 set (DEST_DIR "${CMAKE_INSTALL_PREFIX}")
 set (prefix "${DEST_DIR}")
 set (exec_prefix "${prefix}")
@@ -46,7 +46,7 @@ target_compile_definitions(clabtest PUBLIC ${SPECIAL_DEFS})
 install(TARGETS Clab
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib)
-install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h src/Log.h
+install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h src/FileOps.h src/Log.h
 	DESTINATION include/Clab-${API_VERSION})
 install(FILES "${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc"
 	DESTINATION lib/pkgconfig)

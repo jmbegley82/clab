@@ -1,2 +1,2 @@
-1) spin off everything that requires SDL (or other deps) into another library
-
+1)	*Log is not remotely threadsafe and the functions used to configure it are unfinished
+2)	Objects for sprites/animations/animation sets/etc.
