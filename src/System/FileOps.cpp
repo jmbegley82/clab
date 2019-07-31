@@ -34,7 +34,7 @@
 #endif //__FREEBSD
 
 #include "FileOps.h"
-#include "StringStuff.h"
+#include "StringManip.h"
 #include "config.h"
 //#include "toaster.h"
 

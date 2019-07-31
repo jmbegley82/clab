@@ -7,14 +7,6 @@
 namespace jmb {
 	
 	namespace common {
-		/*
-		 class Commandant
-		 {
-		 public:
-		 Commandant(std::string const &cmd);
-		 std::string left, op, right;
-		 };
-		 */
 		
 		class CommandSplit {
 		public:

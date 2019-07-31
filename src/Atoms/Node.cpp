@@ -11,7 +11,7 @@
 #include <cassert>
 #include "Log.h"
 #include "Types.h"
-#include "StringStuff.h"
+#include "StringManip.h"
 #include "Node.h"
 #include "Integer.h"
 #include "Float.h"

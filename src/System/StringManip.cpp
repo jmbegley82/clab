@@ -4,7 +4,7 @@
 #include <cctype>
 #include <cassert>
 
-#include "StringStuff.h"
+#include "StringManip.h"
 
 namespace jmb
 {

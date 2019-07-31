@@ -25,20 +25,20 @@ configure_file(
 	"${PROJECT_BINARY_DIR}/src/Clab.h"
 	@ONLY
 	)
-include_directories("${PROJECT_BINARY_DIR}/src")
+include_directories("${PROJECT_BINARY_DIR}/src;${PROJECT_SOURCE_DIR}/src/Atoms;${PROJECT_SOURCE_DIR}/src/System;${PROJECT_SOURCE_DIR}/src/Platform;${PROJECT_SOURCE_DIR}/src")
 
 #find_package (PkgConfig REQUIRED)
 
 #TODO:  make this conditional upon detection of Windows platform!
-#set(CLAB_PLATFORM_SPECIFIC "src/msvs_dirent.cpp")
+#set(CLAB_PLATFORM_SPECIFIC "src/Platform/msvs_dirent.cpp")
 
-add_library(Clab SHARED src/Atom.cpp src/Clock.cpp src/Float.cpp src/Integer.cpp src/Node.cpp src/Notype.cpp src/ShadowInteger.cpp src/String.cpp src/StringStuff.cpp src/Time.cpp src/Types.cpp src/FileOps.cpp ${CLAB_PLATFORM_SPECIFIC} src/Log.cpp src/Clab.cpp)
+add_library(Clab SHARED src/Atoms/Atom.cpp src/Atoms/Integer.cpp src/Atoms/Float.cpp src/Atoms/Node.cpp src/Atoms/Notype.cpp src/Atoms/ShadowInteger.cpp src/Atoms/String.cpp src/System/Clock.cpp src/System/StringManip.cpp src/System/Time.cpp src/System/Types.cpp src/System/FileOps.cpp ${CLAB_PLATFORM_SPECIFIC} src/System/Log.cpp src/Clab.cpp)
 set_target_properties(Clab PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}-${API_VERSION}")
 set_target_properties(Clab PROPERTIES SOVERSION "${PACKAGE_VERSION}")
 target_compile_options(Clab PUBLIC ${SPECIAL_MCPU} ${SPECIAL_INCLUDES})
 target_compile_definitions(Clab PUBLIC ${SPECIAL_DEFS})
 
-add_executable(clabtest EXCLUDE_FROM_ALL src/main.cpp)
+add_executable(clabtest EXCLUDE_FROM_ALL src/Test/main.cpp)
 target_link_libraries(clabtest Clab)
 target_compile_options(clabtest PUBLIC ${SPECIAL_MCPU} ${SPECIAL_INCLUDES})
 target_compile_definitions(clabtest PUBLIC ${SPECIAL_DEFS})
@@ -46,7 +46,7 @@ target_compile_definitions(clabtest PUBLIC ${SPECIAL_DEFS})
 install(TARGETS Clab
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib)
-install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atom.h src/Node.h src/Notype.h src/Integer.h src/Float.h src/String.h src/ShadowInteger.h src/Types.h src/Time.h src/Clock.h src/StringStuff.h src/FileOps.h src/Log.h
+install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atoms/Atom.h src/Atoms/Node.h src/Atoms/Notype.h src/Atoms/Integer.h src/Atoms/Float.h src/Atoms/String.h src/Atoms/ShadowInteger.h src/System/Types.h src/System/Time.h src/System/Clock.h src/System/StringManip.h src/System/FileOps.h src/System/Log.h
 	DESTINATION include/Clab-${API_VERSION})
 install(FILES "${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc"
 	DESTINATION lib/pkgconfig)

@@ -18,7 +18,7 @@
 #include "Float.h"
 #include "String.h"
 #include "Notype.h"
-#include "StringStuff.h"
+#include "StringManip.h"
 
 namespace jmb {
 

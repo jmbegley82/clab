@@ -13,7 +13,7 @@
 #include "Atom.h"
 #include "Node.h"
 #include "Notype.h"
-#include "StringStuff.h"
+#include "StringManip.h"
 
 namespace jmb {
 
