@@ -33,8 +33,10 @@ include_directories("${PROJECT_BINARY_DIR}/src;${PROJECT_SOURCE_DIR}/src/Atoms;$
 #set(CLAB_PLATFORM_SPECIFIC "src/Platform/msvs_dirent.cpp")
 
 add_library(Clab SHARED src/Atoms/Atom.cpp src/Atoms/Integer.cpp src/Atoms/Float.cpp src/Atoms/Node.cpp src/Atoms/Notype.cpp src/Atoms/ShadowInteger.cpp src/Atoms/String.cpp src/System/Clock.cpp src/System/StringManip.cpp src/System/Time.cpp src/System/Types.cpp src/System/FileOps.cpp ${CLAB_PLATFORM_SPECIFIC} src/System/Log.cpp src/Clab.cpp)
-set_target_properties(Clab PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}-${API_VERSION}")
-set_target_properties(Clab PROPERTIES SOVERSION "${PACKAGE_VERSION}")
+set_target_properties(Clab PROPERTIES
+			   OUTPUT_NAME "${CMAKE_PROJECT_NAME}-${API_VERSION}"
+			   VERSION "${PACKAGE_VERSION}"
+			   SOVERSION "${Clab_VERSION_MAJOR}")
 target_compile_options(Clab PUBLIC ${SPECIAL_MCPU} ${SPECIAL_INCLUDES})
 target_compile_definitions(Clab PUBLIC ${SPECIAL_DEFS})
 
