@@ -8,6 +8,7 @@
  */
 
 
+#include <sstream>
 #include <iostream>
 #include <string>
 #include <cassert>
@@ -27,6 +28,7 @@
 #include "Time.h"
 #include "Clock.h"
 #include "FileOps.h"
+#include "StringManip.h"
 
 using jmb::common::Log;
 using jmb::common::GetHomePrefix;
@@ -45,8 +47,10 @@ using jmb::common::Notype;
 using jmb::common::Clock;
 using jmb::common::Types::AddMapping;
 using jmb::common::ClabInit;
+using jmb::common::GetHexString;
 using std::cout;
 using std::endl;
+using std::stringstream;
 
 void test0() {
 	*Log << ":::Version Variable Test:::" << endl;
@@ -396,8 +400,18 @@ void test9() {
 }
 */
 
+void test9() {
+	*Log << ":::GetHexString test:::" << endl;
+	Atom a = new Atom("a");
+	*Log << "Address of Atom a (as reported by GetHexString) is.................. " << GetHexString(&a) << endl;
+	stringstream ss;
+	ss << &a;
+	*Log << "As reported by unceremoniously dumping it into a stringstream, it is " << ss.str() << endl;
+	*Log << endl;
+}
+
 void testX() {
-	*Log << ":::Hypothetical situations:::" <<endl;
+	*Log << ":::Hypothetical situations:::" << endl;
 	bool this_code_is_usable = false;
 	assert(this_code_is_usable); // none of this works!
 	// Hierarchy:
@@ -457,6 +471,6 @@ int main(int argc, char** argv) {
 	test6();
 	test7();
 	test8();
-//	test9();
+	test9();
 	return 0;
 }

@@ -23,6 +23,7 @@ namespace jmb {
 		void ReplaceString(std::string& input, std::string const& from, std::string const& to);
 		std::string RemovePadding(std::string const& text);
 		bool ValidateStrtod(std::string const& text);
+		std::string GetHexString(void* object);
 	}
 	
 }

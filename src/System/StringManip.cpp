@@ -3,19 +3,23 @@
 #include <algorithm>
 #include <cctype>
 #include <cassert>
+#include <sstream>
 
 #include "StringManip.h"
+
+using std::string;
+using std::stringstream;
 
 namespace jmb
 {
 	
 	namespace common {
 		
-		CommandSplit::CommandSplit(std::string const& cmd, std::string const& token)
+		CommandSplit::CommandSplit(string const& cmd, string const& token)
 		{
-			std::string ncmd = cmd;
+			string ncmd = cmd;
 			size_t pos = ncmd.find(token,0);
-			if(pos != std::string::npos)
+			if(pos != string::npos)
 			{
 				left = ncmd.substr(0,pos);
 				ncmd.erase(0, pos+token.length());
@@ -28,12 +32,12 @@ namespace jmb
 			}
 		}
 		
-		Sentence::Sentence(std::string const& cmd) {
+		Sentence::Sentence(string const& cmd) {
 			declarator = subject = op = target = "";
 			
-			std::string ncmd = cmd;
+			string ncmd = cmd;
 			size_t pos = ncmd.find("=");
-			if(pos != std::string::npos) {
+			if(pos != string::npos) {
 				if(pos > 0) {
 					pos--;
 					op = ncmd.substr(pos,1);
@@ -99,20 +103,20 @@ namespace jmb
 			}
 		}
 
-		void ReplaceString(std::string& input, std::string const& from, std::string const& to) {
+		void ReplaceString(string& input, string const& from, string const& to) {
 			//ReplaceString(input, from, to, NULL, "", "");
 
 			if (from.empty()) return;
 			size_t start_pos = 0;
-			while ((start_pos = input.find(from, start_pos)) != std::string::npos) {
+			while ((start_pos = input.find(from, start_pos)) != string::npos) {
 				input.replace(start_pos, from.length(), to);
 				start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
 			}
 		}
 
-		std::string RemovePadding(std::string const& text) {
+		string RemovePadding(string const& text) {
 			// returns a string with spaces stripped from the beginning and end
-			std::string retval = "";
+			string retval = "";
 			/*
 			const char* input = text.c_str();
 			int i = 0;
@@ -124,24 +128,30 @@ namespace jmb
 			retval = text.substr(i, j-i);
 			*/
 			if(text != "") {
-				std::string::const_iterator i = text.begin();
+				string::const_iterator i = text.begin();
 				while(i != text.end() && isspace(*i)) i++;
-				std::string::const_iterator j = text.end();
+				string::const_iterator j = text.end();
 				while(j > i && isspace(*j)) j--;
-				retval = std::string(i, j);
+				retval = string(i, j);
 			}
 			return retval;
 		}
 
-		bool ValidateStrtod(std::string const& text) {
+		bool ValidateStrtod(string const& text) {
 			bool retval = true;
-			std::string::const_iterator i = text.begin();
+			string::const_iterator i = text.begin();
 			while(retval && i != text.end()) {
 				if(!std::isdigit(*i) && *i != '+' && *i != '-'
 					&& *i != '.') retval = false;
 				i++;
 			}
 			return retval;
+		}
+
+		string GetHexString(void* obj) {
+			stringstream ss;
+			ss << std::hex << obj;
+			return ss.str();
 		}
 	}
 }
