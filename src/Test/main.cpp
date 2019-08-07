@@ -48,7 +48,6 @@ using jmb::common::Clock;
 using jmb::common::Types::AddMapping;
 using jmb::common::ClabInit;
 using jmb::common::GetHexString;
-using std::cout;
 using std::endl;
 using std::stringstream;
 
