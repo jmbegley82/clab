@@ -153,5 +153,32 @@ namespace jmb
 			ss << std::hex << obj;
 			return ss.str();
 		}
+
+//		std::string GetFirstWord(std::string const& phrase, std::string & remainder);
+		string GetFirstWord(string const& phrase, string & remainder) {
+			string retval = "";
+			remainder = "";
+
+			// ensure that our input doesn't begin with a space
+			string stripped = RemovePadding(phrase);
+
+			// iterate thru stripped and add each character to retval
+			//   until we reach either a space or the end of stripped
+			string::const_iterator i = stripped.begin();
+			while(i != stripped.end() && !isspace(*i)) {
+				retval += *i;
+				++i;
+			}
+
+			// continue iterating through the rest of the string
+			//   and add everything to remainder
+			while(i != stripped.end()) {
+				remainder += *i;
+				++i;
+			}
+
+			return retval;
+		}
+
 	}
 }

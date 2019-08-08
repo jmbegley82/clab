@@ -48,6 +48,8 @@ using jmb::common::Clock;
 using jmb::common::Types::AddMapping;
 using jmb::common::ClabInit;
 using jmb::common::GetHexString;
+using jmb::common::GetFirstWord;
+using std::string;
 using std::endl;
 using std::stringstream;
 
@@ -409,6 +411,23 @@ void test9() {
 	*Log << endl;
 }
 
+void test10() {
+	*Log << ":::GetFirstWord Test:::" << endl;
+	string input = "sweet dash 44 dash tender dash nine dash hot dash juicy dash pork chops";
+	string remainder = "dummy";
+	*Log << "Have some words:  ";
+
+	while(remainder != "") {
+		string aword = GetFirstWord(input, remainder);
+		*Log << aword << " ";
+		input = remainder;
+	}
+
+	*Log << endl;
+	*Log << "Compare with:     sweet dash 44 dash tender dash nine dash hot dash juicy dash pork chops" << endl;
+	*Log << endl << endl;
+}
+
 void testX() {
 	*Log << ":::Hypothetical situations:::" << endl;
 	bool this_code_is_usable = false;
@@ -471,5 +490,6 @@ int main(int argc, char** argv) {
 	test7();
 	test8();
 	test9();
+	test10();
 	return 0;
 }
