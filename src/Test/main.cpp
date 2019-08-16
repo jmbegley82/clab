@@ -49,6 +49,7 @@ using jmb::common::Types::AddMapping;
 using jmb::common::ClabInit;
 using jmb::common::GetHexString;
 using jmb::common::GetFirstWord;
+using jmb::common::GetFirstWordEtc;
 using std::string;
 using std::endl;
 using std::stringstream;
@@ -412,20 +413,32 @@ void test9() {
 }
 
 void test10() {
-	*Log << ":::GetFirstWord Test:::" << endl;
+	*Log << ":::GetFirstWord* Test:::" << endl;
 	string input = "sweet dash 44 dash tender dash nine dash hot dash juicy dash pork chops";
+
+	*Log << "The word after the colon should be 'sweet':  " << GetFirstWord(input) << endl;
+
 	string remainder = "dummy";
 	*Log << "Have some words:  ";
 
 	while(remainder != "") {
-		string aword = GetFirstWord(input, remainder);
+		string aword = GetFirstWordEtc(input, remainder);
 		*Log << aword << " ";
 		input = remainder;
 	}
 
 	*Log << endl;
 	*Log << "Compare with:     sweet dash 44 dash tender dash nine dash hot dash juicy dash pork chops" << endl;
-	*Log << endl << endl;
+	*Log << "Empty string test begins...";
+	input = "";
+	remainder = "dummy";
+	while(remainder != "") {
+		string aword = GetFirstWordEtc(input, remainder);
+		*Log << aword << " ";
+		input = remainder;
+	}
+	*Log << endl << "Empty string test passed!" << endl;
+	*Log << endl;
 }
 
 void testX() {

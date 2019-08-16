@@ -25,7 +25,8 @@ namespace jmb {
 		std::string RemovePadding(std::string const& text);
 		bool ValidateStrtod(std::string const& text);
 		std::string GetHexString(void* object);
-		std::string GetFirstWord(std::string const& phrase, std::string & remainder);
+		std::string GetFirstWord(std::string const& phrase);
+		std::string GetFirstWordEtc(std::string const& phrase, std::string & remainder);
 	}
 	
 }

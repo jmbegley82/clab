@@ -155,7 +155,25 @@ namespace jmb
 		}
 
 //		std::string GetFirstWord(std::string const& phrase, std::string & remainder);
-		string GetFirstWord(string const& phrase, string & remainder) {
+
+		string GetFirstWord(string const& phrase) {
+			string retval = "";
+
+			// ensure that our input doesn't begin with a space
+			string stripped = RemovePadding(phrase);
+
+			// iterate thru each character and add it to retval
+			//   until we reach either a space or end of stripped
+			string::const_iterator i = stripped.begin();
+			while(i != stripped.end() && !isspace(*i)) {
+				retval += *i;
+				++i;
+			}
+
+			return retval;
+		}
+
+		string GetFirstWordEtc(string const& phrase, string & remainder) {
 			string retval = "";
 			remainder = "";
 
