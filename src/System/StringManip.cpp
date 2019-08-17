@@ -148,6 +148,12 @@ namespace jmb
 			return retval;
 		}
 
+		string GetString(int val) {
+			stringstream ss;
+			ss << val;
+			return ss.str();
+		}
+
 		string GetHexString(void* obj) {
 			stringstream ss;
 			ss << std::hex << obj;

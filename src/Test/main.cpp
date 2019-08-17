@@ -50,6 +50,7 @@ using jmb::common::ClabInit;
 using jmb::common::GetHexString;
 using jmb::common::GetFirstWord;
 using jmb::common::GetFirstWordEtc;
+using jmb::common::GetString;
 using std::string;
 using std::endl;
 using std::stringstream;
@@ -409,6 +410,7 @@ void test9() {
 	stringstream ss;
 	ss << &a;
 	*Log << "As reported by unceremoniously dumping it into a stringstream, it is " << ss.str() << endl;
+	*Log << "GetString(int) thinks that -413 is " << GetString(-413) << endl;
 	*Log << endl;
 }
 
