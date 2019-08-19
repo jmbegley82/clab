@@ -10,14 +10,16 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <string>
+#include <map>
 #include "Atom.h"
-
-#define MAXOBJS 32
 
 namespace jmb {
 	
 	namespace common {
-	
+		typedef std::map<std::string, Atom*> AtomMap;
+		typedef AtomMap::iterator AtomMapItr;
+
 		class Node : public Atom {
 		public:
 			Node();
@@ -40,14 +42,18 @@ namespace jmb {
 			virtual int _Declarate(std::string const& declarator,
 						std::string const& subject);
 			virtual Atom* _Interpret(Atom* atm);
-			unsigned int _GetChildIndex(std::string const& name);
-			unsigned int _GetChildIndex(Atom* atm);
+			//unsigned int _GetChildIndex(std::string const& name);
+			//unsigned int _GetChildIndex(Atom* atm);
 			Atom* _GetChild(std::string const& name);
-			void _DeleteByIndex(unsigned int idx);
-			void _MakeContiguous();
+			AtomMapItr _GetChildItr(std::string const& name);
+			AtomMapItr _GetChildItr(Atom* atm);
+			//void _DeleteByIndex(unsigned int idx);
+			void _DeleteByItr(AtomMapItr target);
+			//void _MakeContiguous();
 			void _Purge();
-			Atom* _children[MAXOBJS];
-			int _childCount;
+			//Atom* _children[MAXOBJS];
+			AtomMap _children;
+			//int _childCount;
 			bool _mapThrough;
 		};
 	

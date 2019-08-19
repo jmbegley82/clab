@@ -14,8 +14,6 @@
 
 #include <string>
 
-//#define MAXOBJS 32
-
 namespace jmb {
 	
 	namespace common {

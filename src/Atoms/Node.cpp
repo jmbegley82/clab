@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <map>
 #include <cassert>
 #include "Log.h"
 #include "Types.h"
@@ -29,10 +30,12 @@ namespace jmb {
 		}
 		
 		Node::Node(std::string const& name) : Atom(name) {
+			/*
 			for(int i=0; i<MAXOBJS; i++) {
 				_children[i] = NULL;
 			}
 			_childCount = 0;
+			*/
 			_mapThrough = true;
 			_type = type;
 		}
@@ -44,8 +47,14 @@ namespace jmb {
 			if(t == Node::type) {
 				// only valid conversion is Node to (Atom*)Node
 				Node* nod = (Node*)atm;
+				/*
 				for(int i=0; i<MAXOBJS; i++) {
 					_children[i] = nod->_children[i];
+				}
+				*/
+				//_children.insert(_children.begin(), nod->_children.begin(), nod->_children.end());
+				for(AtomMapItr i = nod->_children.begin(); i != nod->_children.end(); i++) {
+					_children[i->first] = i->second;
 				}
 			}// else assert(t == Node::type);
 		}
@@ -93,38 +102,56 @@ namespace jmb {
 		}
 		
 		int Node::AddChild(Atom* atm) {
+			/*
 			if(_childCount >= MAXOBJS)
 				return -1;  // we're full
+			*/
 			if(_GetChild(atm->identity) != NULL)
 				return -2; // name exists within this node
 			if(atm->parent != NULL) {
 				atm->LeaveParent();
 			}
 			atm->parent = this;
-			_children[_childCount] = atm;
-			_childCount++;
+			//_children[_childCount] = atm;
+			//_childCount++;
+			_children[atm->identity] = atm;
 			return 0;
 		}
 		
 		int Node::DelChild(Atom* atm) {
+			/*
 			int idx = _GetChildIndex(atm);
 			if(idx == MAXOBJS) return -1;  // not found
 			_DeleteByIndex(idx);
+			*/
+			AtomMapItr target = _GetChildItr(atm);
+			if(target == _children.end()) return -1;  // not found
+			_DeleteByItr(target);
 			return 0;
 		}
 		
 		int Node::DelChild(std::string const& name) {
+			/*
 			unsigned int idx = _GetChildIndex(name);
 			if(idx == MAXOBJS) return -1; // not found
 			_DeleteByIndex(idx);
+			*/
+			AtomMapItr target = _GetChildItr(name);
+			if(target == _children.end()) return -1;  // not found
+			_DeleteByItr(target);
 			return 0;
 		}
 		
 		int Node::FreeChild(Atom* atm) {
+			/*
 			int idx = _GetChildIndex(atm);
 			if(idx == MAXOBJS) return -1; // not found
 			_children[idx] = NULL;
 			_MakeContiguous();
+			*/
+			AtomMapItr target = _GetChildItr(atm);
+			if(target == _children.end()) return -1;  // not found
+			_children.erase(target);
 			return 0;
 		}
 		
@@ -135,9 +162,15 @@ namespace jmb {
 		
 		int Node::_Procedure() {
 			Atom::_Procedure();
+			/*
 			for(int i=0; i<_childCount; i++) {
 				_children[i]->Command("");
 			}
+			*/
+			for(AtomMapItr i = _children.begin(); i != _children.end(); i++) {
+				i->second->Command("");
+			}
+
 			return 0;
 		}
 
@@ -175,7 +208,8 @@ namespace jmb {
 			//return Atom::_Interpret(atm);
 			return new Node(atm);
 		}
-		
+
+/*	
 		unsigned int Node::_GetChildIndex(std::string const& name) {
 			// return MAXOBJS if not found
 			unsigned int retval;
@@ -197,16 +231,35 @@ namespace jmb {
 			}
 			return retval;
 		}
-		
+*/
+
 		Atom* Node::_GetChild(std::string const& name) {
 			// should only get a one-name path
 			// no slashes and definitely no operators!
 			Atom* retval = NULL;
+			/*
 			int idx = _GetChildIndex(name);
 			if(idx < MAXOBJS) retval = _children[idx];
+			*/
+			AtomMapItr i = _GetChildItr(name);
+			if(i != _children.end()) retval = i->second;
 			return retval;
 		}
-		
+
+		AtomMapItr Node::_GetChildItr(std::string const& name) {
+			return _children.find(name);
+		}
+
+		AtomMapItr Node::_GetChildItr(Atom* atm) {
+			AtomMapItr retval = _children.begin();
+			while(retval != _children.end()) {
+				if(retval->second == atm) return retval;
+				retval++;
+			}
+			return retval;
+		}
+
+/*		
 		void Node::_DeleteByIndex(unsigned int idx) {
 			// unsafe!  assumes all critical checks have been performed
 			delete _children[idx];
@@ -214,7 +267,15 @@ namespace jmb {
 			//_childCount--;  // taken care of in next line
 			_MakeContiguous();
 		}
-		
+*/
+
+		void Node::_DeleteByItr(AtomMapItr target) {
+			// unsafe!  assumes all critical checks have been performed!
+			//delete target->second;
+			_children.erase(target);
+		}
+
+/*		
 		void Node::_MakeContiguous() {
 			_childCount = 0;
 			for(int i=0; i < MAXOBJS; i++) {
@@ -227,24 +288,40 @@ namespace jmb {
 				_children[i] = NULL;
 			}
 		}
-		
+*/
+
 		void Node::_Purge() {
 			// this should be more thorough?
+			/*
 			_MakeContiguous();
 			for(int i=0; i<_childCount; i++) {
 				_DeleteByIndex(i);
 				//delete _children[i];
 				//_children[i] = NULL;
 			}
+			*/
+			/*
+			for(AtomMapItr i = _children.begin(); i != _children.end(); ) {
+				_DeleteByItr(i);
+				++i;
+			}
+			*/
+			for(AtomMapItr i = _children.begin(), next_i = i; i!= _children.end(); i = next_i) {
+				++next_i;
+				_DeleteByItr(i);
+				//_children.erase(i);
+			}
 		}
-		/*
+
+/*
 		void* GetRawData() {
 			return NULL;
 		}
-		*/
+*/
 
 		void Node::Tick(int time) {
 			//Atom::Tick(time);
+			/*
 			for(int i=0; i<_childCount; i++) {
 				_children[i]->Tick(time);
 				if(_children[i]->wasUpdated)
@@ -252,6 +329,16 @@ namespace jmb {
 				_children[i]->wasUpdated = false;
 				if(_children[i]->wasUpdated)
 					*Log << "What the shit?" << std::endl;
+			}
+			*/
+			for(AtomMapItr i = _children.begin(); i != _children.end(); i++) {
+				i->second->Tick(time);
+				if(i->second->wasUpdated)
+					*Log << "We got a live one!  "  << i->second->identity << std::endl;
+				i->second->wasUpdated = false;
+				if(i->second->wasUpdated) {
+					*Log << "What the shit?  This should never be reached..." << std::endl;
+				}
 			}
 		}
 	}
