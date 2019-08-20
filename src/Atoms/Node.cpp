@@ -271,8 +271,9 @@ namespace jmb {
 
 		void Node::_DeleteByItr(AtomMapItr target) {
 			// unsafe!  assumes all critical checks have been performed!
-			// delete target->second;
+			Atom* atm = target->second;
 			_children.erase(target);
+			delete atm;
 		}
 
 /*		
