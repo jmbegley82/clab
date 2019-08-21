@@ -1,5 +1,5 @@
 /*
- *  OldNode.cpp
+ *  FastNode.cpp
  *  Test
  *
  *  Created by james on 8/19/19.
@@ -11,7 +11,7 @@
 #include "Log.h"
 #include "Types.h"
 #include "StringManip.h"
-#include "OldNode.h"
+#include "FastNode.h"
 #include "Integer.h"
 #include "Float.h"
 #include "String.h"
@@ -21,13 +21,13 @@ namespace jmb {
 	
 	namespace common {
 		
-		const char OldNode::type = 0x04;
+		const char FastNode::type = 0x04;
 		
-		OldNode::OldNode() {
-			OldNode("");
+		FastNode::FastNode() {
+			FastNode("");
 		}
 		
-		OldNode::OldNode(std::string const& name) : Atom(name) {
+		FastNode::FastNode(std::string const& name) : NodeBase(name) {
 			for(int i=0; i<MAXOBJS; i++) {
 				_children[i] = NULL;
 			}
@@ -36,36 +36,36 @@ namespace jmb {
 			_type = type;
 		}
 
-		OldNode::OldNode(const Atom* atm) : Atom(atm) {
-			OldNode(atm->identity);
+		FastNode::FastNode(const Atom* atm) : NodeBase(atm) {
+			FastNode(atm->identity);
 			isEphemeral = true;
 			char t = ((Atom*)atm)->GetType();
-			if(t == OldNode::type) {
-				// only valid conversion is OldNode to (Atom*)OldNode
-				OldNode* nod = (OldNode*)atm;
+			if(t == FastNode::type) {
+				// only valid conversion is FastNode to (Atom*)FastNode
+				FastNode* nod = (FastNode*)atm;
 				for(int i=0; i<MAXOBJS; i++) {
 					_children[i] = nod->_children[i];
 				}
-			}// else assert(t == OldNode::type);
+			}// else assert(t == FastNode::type);
 		}
 		
-		OldNode::~OldNode() {
-			//*Log << "OldNode::~Atom" << std::endl;
+		FastNode::~FastNode() {
+			//*Log << "FastNode::~Atom" << std::endl;
 			if(!isEphemeral) _Purge();
 		}
 
-		Atom* OldNode::CtorWrapper(std::string name) {
-			return new OldNode(name);
+		Atom* FastNode::CtorWrapper(std::string name) {
+			return new FastNode(name);
 		}
 		
-		Atom* OldNode::Dereference(std::string const& name) {
+		Atom* FastNode::Dereference(std::string const& name) {
 			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
 			if(retval->GetType() == Notype::type) {
 				delete retval;
 				retval = NULL;
 			}
 			if(_mapThrough) {
-				// in case we want to create a OldNode-derived object with private children
+				// in case we want to create a FastNode-derived object with private children
 				if(retval == NULL) {
 					std::string dname;
 					if(name[0] == '/') {
@@ -91,7 +91,7 @@ namespace jmb {
 			return retval;
 		}
 		
-		int OldNode::AddChild(Atom* atm) {
+		int FastNode::AddChild(Atom* atm) {
 			if(_childCount >= MAXOBJS)
 				return -1;  // we're full
 			if(_GetChild(atm->identity) != NULL)
@@ -105,21 +105,21 @@ namespace jmb {
 			return 0;
 		}
 		
-		int OldNode::DelChild(Atom* atm) {
+		int FastNode::DelChild(Atom* atm) {
 			int idx = _GetChildIndex(atm);
 			if(idx == MAXOBJS) return -1;  // not found
 			_DeleteByIndex(idx);
 			return 0;
 		}
 		
-		int OldNode::DelChild(std::string const& name) {
+		int FastNode::DelChild(std::string const& name) {
 			unsigned int idx = _GetChildIndex(name);
 			if(idx == MAXOBJS) return -1; // not found
 			_DeleteByIndex(idx);
 			return 0;
 		}
 		
-		int OldNode::FreeChild(Atom* atm) {
+		int FastNode::FreeChild(Atom* atm) {
 			int idx = _GetChildIndex(atm);
 			if(idx == MAXOBJS) return -1; // not found
 			_children[idx] = NULL;
@@ -127,12 +127,12 @@ namespace jmb {
 			return 0;
 		}
 		
-		int OldNode::OperatorEqu(Atom* atm) {
-			*Log << "OldNode::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
+		int FastNode::OperatorEqu(Atom* atm) {
+			*Log << "FastNode::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
 			return 0; //NI
 		}
 		
-		int OldNode::_Procedure() {
+		int FastNode::_Procedure() {
 			Atom::_Procedure();
 			for(int i=0; i<_childCount; i++) {
 				_children[i]->Command("");
@@ -140,11 +140,11 @@ namespace jmb {
 			return 0;
 		}
 
-		int OldNode::_Declarate(std::string const& declarator, std::string const& subject) {
+		int FastNode::_Declarate(std::string const& declarator, std::string const& subject) {
 			Atom* noob = NULL;
 			/*
-			if(declarator == "OldNode") {
-				noob = new OldNode(subject);
+			if(declarator == "FastNode") {
+				noob = new FastNode(subject);
 			} else if(declarator == "Integer") {
 				noob = new Integer(subject);
 			} else if(declarator == "Float") {
@@ -169,13 +169,13 @@ namespace jmb {
 			//return 0;
 		}
 		
-		Atom* OldNode::_Interpret(Atom* atm) {
-			//*Log << "OldNode::_Interpret" << std::endl;
+		Atom* FastNode::_Interpret(Atom* atm) {
+			//*Log << "FastNode::_Interpret" << std::endl;
 			//return Atom::_Interpret(atm);
-			return new OldNode(atm);
+			return new FastNode(atm);
 		}
 		
-		unsigned int OldNode::_GetChildIndex(std::string const& name) {
+		unsigned int FastNode::_GetChildIndex(std::string const& name) {
 			// return MAXOBJS if not found
 			unsigned int retval;
 			for(retval=0; retval<MAXOBJS; retval++) {
@@ -187,7 +187,7 @@ namespace jmb {
 			return retval;
 		}
 		
-		unsigned int OldNode::_GetChildIndex(Atom* atm) {
+		unsigned int FastNode::_GetChildIndex(Atom* atm) {
 			unsigned int retval;
 			for(retval=0; retval<MAXOBJS; retval++) {
 				if(_children[retval] == atm) {
@@ -197,7 +197,7 @@ namespace jmb {
 			return retval;
 		}
 		
-		Atom* OldNode::_GetChild(std::string const& name) {
+		Atom* FastNode::_GetChild(std::string const& name) {
 			// should only get a one-name path
 			// no slashes and definitely no operators!
 			Atom* retval = NULL;
@@ -206,7 +206,7 @@ namespace jmb {
 			return retval;
 		}
 		
-		void OldNode::_DeleteByIndex(unsigned int idx) {
+		void FastNode::_DeleteByIndex(unsigned int idx) {
 			// unsafe!  assumes all critical checks have been performed
 			delete _children[idx];
 			_children[idx] = NULL;
@@ -214,7 +214,7 @@ namespace jmb {
 			_MakeContiguous();
 		}
 		
-		void OldNode::_MakeContiguous() {
+		void FastNode::_MakeContiguous() {
 			_childCount = 0;
 			for(int i=0; i < MAXOBJS; i++) {
 				if(_children[i] != NULL) {
@@ -227,7 +227,7 @@ namespace jmb {
 			}
 		}
 		
-		void OldNode::_Purge() {
+		void FastNode::_Purge() {
 			// this should be more thorough?
 			_MakeContiguous();
 			for(int i=0; i<_childCount; i++) {
@@ -242,7 +242,7 @@ namespace jmb {
 		}
 		*/
 
-		void OldNode::Tick(int time) {
+		void FastNode::Tick(int time) {
 			//Atom::Tick(time);
 			for(int i=0; i<_childCount; i++) {
 				_children[i]->Tick(time);

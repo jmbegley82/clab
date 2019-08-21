@@ -18,7 +18,7 @@ namespace jmb {
 	
 	namespace common {
 
-		class Node;
+		class NodeBase;
 		
 		class Atom {
 		public:
@@ -34,7 +34,7 @@ namespace jmb {
 			char GetType();
 			void LeaveParent();
 			std::string identity;
-			Node* parent;
+			NodeBase* parent;
 			bool containsValidData;
 			bool wasUpdated;
 			bool eraseMe;

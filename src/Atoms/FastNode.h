@@ -1,14 +1,15 @@
 /*
- *  OldNode.h
+ *  FastNode.h
  *  Test
  *
  *  Created by james on 8/18/19.
  *
  */
 
-#ifndef OLDNODE_H
-#define OLDNODE_H
+#ifndef FASTNODE_H
+#define FASTNODE_H
 
+#include "NodeBase.h"
 #include "Atom.h"
 
 #define MAXOBJS 32
@@ -17,12 +18,12 @@ namespace jmb {
 	
 	namespace common {
 	
-		class OldNode : public Atom {
+		class FastNode : public NodeBase {
 		public:
-			OldNode();
-			OldNode(std::string const& name);
-			OldNode(const Atom* atm);
-			virtual ~OldNode();
+			FastNode();
+			FastNode(std::string const& name);
+			FastNode(const Atom* atm);
+			virtual ~FastNode();
 			static Atom* CtorWrapper(std::string name);
 			static const char type;
 			virtual Atom* Dereference(std::string const& name);
@@ -54,4 +55,4 @@ namespace jmb {
 
 }
 
-#endif //OLDNODE_H
+#endif //FASTNODE_H

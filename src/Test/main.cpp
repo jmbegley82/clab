@@ -29,6 +29,7 @@
 #include "Clock.h"
 #include "FileOps.h"
 #include "StringManip.h"
+#include "FastNode.h"
 
 using jmb::common::Log;
 using jmb::common::GetHomePrefix;
@@ -36,6 +37,7 @@ using jmb::common::GetAppPrefix;
 using jmb::common::GetLogPrefix;
 using jmb::common::Atom;
 using jmb::common::Node;
+using jmb::common::FastNode;
 using jmb::common::Integer;
 using jmb::common::Float;
 using jmb::common::String;
@@ -440,7 +442,99 @@ void test10() {
 		input = remainder;
 	}
 	*Log << endl << "Empty string test passed!" << endl;
-	*Log << endl;
+	*Log << endl << endl;
+}
+
+void test11() {
+	*Log << ":::FastNode Test:::" << endl;
+        FastNode* root1 = new FastNode("root1");
+        Atom* a1 = new Atom("a1");
+        Atom* a2 = new Atom("a2");
+        Atom* a3 = new Atom("a3");
+        root1->AddChild(a1);
+        root1->AddChild(a2);
+        root1->AddChild(a3);
+        FastNode* root2 = new FastNode("root2");
+        Atom* b1 = new Atom("b1");
+        Atom* b2 = new Atom("b2");
+        Atom* b3 = new Atom("b3");
+        root2->AddChild(b1);
+        root2->AddChild(b2);
+        root2->AddChild(b3);
+
+        *Log << "root1:" << endl;
+        root1->Command("");
+        *Log << endl << "root2:" << endl;
+        root2->Command("");
+        *Log << endl;
+
+        *Log << "Move a2 from root1 to root2:" << endl;
+        root2->AddChild(a2);
+        *Log << "root1:" << endl;
+        root1->Command("");
+        *Log << endl << "root2:" << endl;
+        root2->Command("");
+        *Log << endl;
+
+        *Log << "Move root1 into root2:" << endl;
+        root2->AddChild(root1);
+        *Log << "root2:" << endl;
+        root2->Command("");
+        *Log << endl;
+
+        *Log << "Now just a3:" << endl;
+        //a3->Command("");
+        root2->Command("/root1/a3");
+        *Log << "And again:" << endl;
+        root2->Command("root1/a3");
+        delete root2;
+	*Log << endl << endl;
+}
+
+void test12() {
+        *Log << ":::FastNode/Node Interop Test:::" << endl;
+        Node* root1 = new Node("root1");
+        Atom* a1 = new Atom("a1");
+        Atom* a2 = new Atom("a2");
+        Atom* a3 = new Atom("a3");
+        root1->AddChild(a1);
+        root1->AddChild(a2);
+        root1->AddChild(a3);
+        FastNode* root2 = new FastNode("root2");
+        Atom* b1 = new Atom("b1");
+        Atom* b2 = new Atom("b2");
+        Atom* b3 = new Atom("b3");
+        root2->AddChild(b1);
+        root2->AddChild(b2);
+        root2->AddChild(b3);
+
+        *Log << "root1:" << endl;
+        root1->Command("");
+        *Log << endl << "root2:" << endl;
+        root2->Command("");
+        *Log << endl;
+
+        *Log << "Move a2 from root1 to root2:" << endl;
+        root2->AddChild(a2);
+        *Log << "root1:" << endl;
+        root1->Command("");
+        *Log << endl << "root2:" << endl;
+        root2->Command("");
+        *Log << endl;
+
+        *Log << "Move root1 into root2:" << endl;
+        root2->AddChild(root1);
+        *Log << "root2:" << endl;
+        root2->Command("");
+        *Log << endl;
+
+        *Log << "Now just a3:" << endl;
+        //a3->Command("");
+        root2->Command("/root1/a3");
+        *Log << "And again:" << endl;
+        root2->Command("root1/a3");
+        delete root2;
+        *Log << endl << endl;
 }
 
 void testX() {
@@ -506,5 +600,7 @@ int main(int argc, char** argv) {
 	test8();
 	test9();
 	test10();
+	test11();
+	test12();
 	return 0;
 }

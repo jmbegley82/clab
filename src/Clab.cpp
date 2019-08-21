@@ -9,6 +9,7 @@
 #include "Log.h"
 #include "Atom.h"
 #include "Node.h"
+#include "FastNode.h"
 #include "Notype.h"
 #include "Integer.h"
 #include "Float.h"
@@ -22,6 +23,7 @@
 using std::string;
 using jmb::common::Atom;
 using jmb::common::Node;
+using jmb::common::FastNode;
 using jmb::common::Notype;
 using jmb::common::Integer;
 using jmb::common::Float;
@@ -48,6 +50,7 @@ namespace jmb {
 			AddMapping("Atom", Atom::CtorWrapper);
 			AddMapping("Notype", Notype::CtorWrapper);
 			AddMapping("Node", Node::CtorWrapper);
+			AddMapping("FastNode", FastNode::CtorWrapper);
 			AddMapping("Integer", Integer::CtorWrapper);
 			AddMapping("String", String::CtorWrapper);
 			AddMapping("Float", Float::CtorWrapper);
