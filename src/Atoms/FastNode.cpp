@@ -28,22 +28,25 @@ namespace jmb {
 		}
 		
 		FastNode::FastNode(std::string const& name) : NodeBase(name) {
-			for(int i=0; i<MAXOBJS; i++) {
+			_childCount = 0;
+			_children = NULL;
+			SetMaxChildren(DEFAULT_MAXCHILDREN);
+			for(int i=0; i<_maxChildren; i++) {
 				_children[i] = NULL;
 			}
-			_childCount = 0;
 			_mapThrough = true;
 			_type = type;
 		}
 
 		FastNode::FastNode(const Atom* atm) : NodeBase(atm) {
+			assert(0);  // not implemented!
 			FastNode(atm->identity);
 			isEphemeral = true;
 			char t = ((Atom*)atm)->GetType();
 			if(t == FastNode::type) {
 				// only valid conversion is FastNode to (Atom*)FastNode
 				FastNode* nod = (FastNode*)atm;
-				for(int i=0; i<MAXOBJS; i++) {
+				for(int i=0; i<DEFAULT_MAXCHILDREN; i++) {
 					_children[i] = nod->_children[i];
 				}
 			}// else assert(t == FastNode::type);
@@ -52,6 +55,7 @@ namespace jmb {
 		FastNode::~FastNode() {
 			//*Log << "FastNode::~Atom" << std::endl;
 			if(!isEphemeral) _Purge();
+			if(_children) free(_children);
 		}
 
 		Atom* FastNode::CtorWrapper(std::string name) {
@@ -92,7 +96,7 @@ namespace jmb {
 		}
 		
 		int FastNode::AddChild(Atom* atm) {
-			if(_childCount >= MAXOBJS)
+			if(_childCount >= _maxChildren)
 				return -1;  // we're full
 			if(_GetChild(atm->identity) != NULL)
 				return -2; // name exists within this node
@@ -107,21 +111,21 @@ namespace jmb {
 		
 		int FastNode::DelChild(Atom* atm) {
 			int idx = _GetChildIndex(atm);
-			if(idx == MAXOBJS) return -1;  // not found
+			if(idx == _maxChildren) return -1;  // not found
 			_DeleteByIndex(idx);
 			return 0;
 		}
 		
 		int FastNode::DelChild(std::string const& name) {
 			unsigned int idx = _GetChildIndex(name);
-			if(idx == MAXOBJS) return -1; // not found
+			if(idx == _maxChildren) return -1; // not found
 			_DeleteByIndex(idx);
 			return 0;
 		}
 		
 		int FastNode::FreeChild(Atom* atm) {
 			int idx = _GetChildIndex(atm);
-			if(idx == MAXOBJS) return -1; // not found
+			if(idx == _maxChildren) return -1; // not found
 			_children[idx] = NULL;
 			_MakeContiguous();
 			return 0;
@@ -131,7 +135,38 @@ namespace jmb {
 			*Log << "FastNode::" << __FUNCTION__ << ": stub: " << atm->identity << std::endl;
 			return 0; //NI
 		}
-		
+
+		int FastNode::GetMaxChildren() {
+			return _maxChildren;
+		}
+
+		int FastNode::SetMaxChildren(int count) {
+			int retval = 0;
+			// if count is less than current number of children, it's a no-go
+			if(count < _childCount) return -1;
+
+			// go ahead and set _maxChildren now
+			_maxChildren = count;
+
+			// back up the current contents of _children
+			Atom** bup = NULL;
+			if(_childCount >0) bup = (Atom**)malloc(_childCount*sizeof(Atom*));
+
+			// if _children is not NULL, erase it
+			if(_children) {
+				free(_children);
+				_children = NULL;
+			}
+			_children = (Atom**)malloc(_maxChildren*sizeof(Atom*));
+			if(bup) {
+				for(int i=0; i<_childCount; i++) {
+					_children[i] = bup[i];
+				}
+				free(bup);
+			}
+			return retval;
+		}
+
 		int FastNode::_Procedure() {
 			Atom::_Procedure();
 			for(int i=0; i<_childCount; i++) {
@@ -176,9 +211,9 @@ namespace jmb {
 		}
 		
 		unsigned int FastNode::_GetChildIndex(std::string const& name) {
-			// return MAXOBJS if not found
+			// return _maxChildren if not found
 			unsigned int retval;
-			for(retval=0; retval<MAXOBJS; retval++) {
+			for(retval=0; retval<_maxChildren; retval++) {
 				if(_children[retval] != NULL &&
 				   _children[retval]->identity == name) {
 					break;
@@ -189,7 +224,7 @@ namespace jmb {
 		
 		unsigned int FastNode::_GetChildIndex(Atom* atm) {
 			unsigned int retval;
-			for(retval=0; retval<MAXOBJS; retval++) {
+			for(retval=0; retval<_maxChildren; retval++) {
 				if(_children[retval] == atm) {
 					break;
 				}
@@ -202,7 +237,7 @@ namespace jmb {
 			// no slashes and definitely no operators!
 			Atom* retval = NULL;
 			int idx = _GetChildIndex(name);
-			if(idx < MAXOBJS) retval = _children[idx];
+			if(idx < _maxChildren) retval = _children[idx];
 			return retval;
 		}
 		
@@ -216,13 +251,13 @@ namespace jmb {
 		
 		void FastNode::_MakeContiguous() {
 			_childCount = 0;
-			for(int i=0; i < MAXOBJS; i++) {
+			for(int i=0; i < _maxChildren; i++) {
 				if(_children[i] != NULL) {
 					_children[_childCount] = _children[i];
 					_childCount++;
 				}
 			}
-			for(int i=_childCount; i<MAXOBJS; i++) {
+			for(int i=_childCount; i<_maxChildren; i++) {
 				_children[i] = NULL;
 			}
 		}

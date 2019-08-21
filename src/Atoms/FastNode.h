@@ -12,7 +12,7 @@
 #include "NodeBase.h"
 #include "Atom.h"
 
-#define MAXOBJS 32
+#define DEFAULT_MAXCHILDREN 16
 
 namespace jmb {
 	
@@ -35,6 +35,8 @@ namespace jmb {
 			virtual int OperatorEqu(Atom* atm);
 			//virtual void* GetRawData();
 			virtual void Tick(int time);
+			int GetMaxChildren();
+			int SetMaxChildren(int count);
 		protected:
 			virtual int _Procedure();
 			virtual int _Declarate(std::string const& declarator,
@@ -46,9 +48,10 @@ namespace jmb {
 			void _DeleteByIndex(unsigned int idx);
 			void _MakeContiguous();
 			void _Purge();
-			Atom* _children[MAXOBJS];
+			Atom** _children;
 			int _childCount;
 			bool _mapThrough;
+			int _maxChildren;
 		};
 	
 	}
