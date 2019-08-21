@@ -142,6 +142,8 @@ namespace jmb {
 
 		int FastNode::SetMaxChildren(int count) {
 			int retval = 0;
+			if(_childCount >0) _MakeContiguous();
+
 			// if count is less than current number of children, it's a no-go
 			if(count < _childCount) return -1;
 
@@ -150,7 +152,12 @@ namespace jmb {
 
 			// back up the current contents of _children
 			Atom** bup = NULL;
-			if(_childCount >0) bup = (Atom**)malloc(_childCount*sizeof(Atom*));
+			if(_childCount >0) {
+				bup = (Atom**)malloc(_childCount*sizeof(Atom*));
+				for(int i=0; i<_childCount; i++) {
+					bup[i] = _children[i];
+				}
+			}
 
 			// if _children is not NULL, erase it
 			if(_children) {
@@ -163,6 +170,9 @@ namespace jmb {
 					_children[i] = bup[i];
 				}
 				free(bup);
+			}
+			for(int i=_childCount; i<_maxChildren; i++) {
+				_children[i] = NULL;
 			}
 			return retval;
 		}

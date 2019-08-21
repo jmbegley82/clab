@@ -533,6 +533,16 @@ void test12() {
         root2->Command("/root1/a3");
         *Log << "And again:" << endl;
         root2->Command("root1/a3");
+
+	*Log << "Testing dynamic resize of root2 to 12 children, which should succeed" << endl;
+	root2->SetMaxChildren(12);
+	root2->Command("");
+	*Log << "Testing dynamic resize of root2 to 2 children, which should fail" << endl;
+	if(root2->SetMaxChildren(2) == -1) {
+		*Log << "...it appears to have failed correctly." << endl;
+	}
+	root2->Command("");
+
         delete root2;
         *Log << endl << endl;
 }
