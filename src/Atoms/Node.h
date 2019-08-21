@@ -12,7 +12,7 @@
 
 #include <string>
 #include <map>
-#include "Atom.h"
+#include "NodeBase.h"
 
 namespace jmb {
 	
@@ -20,7 +20,7 @@ namespace jmb {
 		typedef std::map<std::string, Atom*> AtomMap;
 		typedef AtomMap::iterator AtomMapItr;
 
-		class Node : public Atom {
+		class Node : public NodeBase {
 		public:
 			Node();
 			Node(std::string const& name);

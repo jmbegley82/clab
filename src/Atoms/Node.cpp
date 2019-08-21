@@ -29,7 +29,7 @@ namespace jmb {
 			Node("");
 		}
 		
-		Node::Node(std::string const& name) : Atom(name) {
+		Node::Node(std::string const& name) : NodeBase(name) {
 			/*
 			for(int i=0; i<MAXOBJS; i++) {
 				_children[i] = NULL;
@@ -40,7 +40,7 @@ namespace jmb {
 			_type = type;
 		}
 
-		Node::Node(const Atom* atm) : Atom(atm) {
+		Node::Node(const Atom* atm) : NodeBase(atm) {
 			Node(atm->identity);
 			isEphemeral = true;
 			char t = ((Atom*)atm)->GetType();

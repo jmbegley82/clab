@@ -32,7 +32,7 @@ include_directories("${PROJECT_BINARY_DIR}/src;${PROJECT_SOURCE_DIR}/src/Atoms;$
 #TODO:  make this conditional upon detection of Windows platform!
 #set(CLAB_PLATFORM_SPECIFIC "src/Platform/msvs_dirent.cpp")
 
-add_library(Clab SHARED src/Atoms/Atom.cpp src/Atoms/Integer.cpp src/Atoms/Float.cpp src/Atoms/Node.cpp src/Atoms/Notype.cpp src/Atoms/ShadowInteger.cpp src/Atoms/String.cpp src/System/Clock.cpp src/System/StringManip.cpp src/System/Time.cpp src/System/Types.cpp src/System/FileOps.cpp ${CLAB_PLATFORM_SPECIFIC} src/System/Log.cpp src/Clab.cpp)
+add_library(Clab SHARED src/Atoms/Atom.cpp src/Atoms/Integer.cpp src/Atoms/Float.cpp src/Atoms/NodeBase.cpp src/Atoms/Node.cpp src/Atoms/Notype.cpp src/Atoms/ShadowInteger.cpp src/Atoms/String.cpp src/System/Clock.cpp src/System/StringManip.cpp src/System/Time.cpp src/System/Types.cpp src/System/FileOps.cpp ${CLAB_PLATFORM_SPECIFIC} src/System/Log.cpp src/Clab.cpp)
 set_target_properties(Clab PROPERTIES
 			   OUTPUT_NAME "${CMAKE_PROJECT_NAME}-${API_VERSION}"
 			   VERSION "${PACKAGE_VERSION}"
@@ -48,7 +48,7 @@ target_compile_definitions(clabtest PUBLIC ${SPECIAL_DEFS})
 install(TARGETS Clab
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib)
-install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atoms/Atom.h src/Atoms/Node.h src/Atoms/Notype.h src/Atoms/Integer.h src/Atoms/Float.h src/Atoms/String.h src/Atoms/ShadowInteger.h src/System/Types.h src/System/Time.h src/System/Clock.h src/System/StringManip.h src/System/FileOps.h src/System/Log.h
+install(FILES ${PROJECT_BINARY_DIR}/src/Clab.h src/Atoms/Atom.h src/Atoms/NodeBase.h src/Atoms/Node.h src/Atoms/Notype.h src/Atoms/Integer.h src/Atoms/Float.h src/Atoms/String.h src/Atoms/ShadowInteger.h src/System/Types.h src/System/Time.h src/System/Clock.h src/System/StringManip.h src/System/FileOps.h src/System/Log.h
 	DESTINATION include/Clab-${API_VERSION})
 install(FILES "${PROJECT_BINARY_DIR}/Clab-${API_VERSION}.pc"
 	DESTINATION lib/pkgconfig)
