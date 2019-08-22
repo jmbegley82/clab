@@ -87,6 +87,9 @@ namespace jmb {
 			std::string target = RemovePadding(s.target);
 			std::string subject = RemovePadding(s.subject);
 			_Declarate(declarator, subject);
+//			Atom* prnt = parent;
+//			if(!prnt) prnt = this;
+//			Atom* sub = prnt->Dereference(subject);
 			Atom* sub = Dereference(subject);
 			if(sub == NULL) return -1;
 			assert(sub->GetType() != Notype::type);

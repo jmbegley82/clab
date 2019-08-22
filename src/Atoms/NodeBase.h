@@ -31,6 +31,7 @@ namespace jmb {
 //			virtual int OperatorEqu(Atom* atm);
 			//virtual void* GetRawData();
 //			virtual void Tick(int time);
+			virtual int OperatorAdd(Atom* atm);
 		protected:
 //			virtual int _Procedure();
 			virtual int _Declarate(std::string const& declarator,

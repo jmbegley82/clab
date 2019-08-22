@@ -78,6 +78,13 @@ namespace jmb {
 		Atom* NodeBase::_GetChild(string const& name) {
 			return NULL;
 		}
+
+		int NodeBase::OperatorAdd(Atom* atm) {
+			// regardless of type, we will attempt to add this to _children
+			// wait, should we check for NoTypes?
+			return AddChild(atm);
+			//return Atom::OperatorAdd(atm);
+		}
 	
 		int NodeBase::_Declarate(string const& declarator, string const& subject) {
 			Atom* noob = NULL;
