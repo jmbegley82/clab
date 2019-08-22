@@ -62,41 +62,6 @@ namespace jmb {
 			return new FastNode(name);
 		}
 
-/*		
-		Atom* FastNode::Dereference(std::string const& name) {
-			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
-			if(retval->GetType() == Notype::type) {
-				delete retval;
-				retval = NULL;
-			}
-			if(_mapThrough) {
-				// in case we want to create a FastNode-derived object with private children
-				if(retval == NULL) {
-					std::string dname;
-					if(name[0] == '/') {
-						// absolute path
-						dname = name.substr(1);
-						retval = GetRoot()->Dereference(dname);
-					} else {
-						dname = name;
-						CommandSplit CSSlash(dname, "/");
-						if(CSSlash.left != "") {
-							Atom* nextUp = _GetChild(CSSlash.left);
-							if(nextUp != NULL) {
-								retval = nextUp->Dereference(CSSlash.right);
-							}
-						} else {
-							Atom* nextUp = _GetChild(dname);
-							retval = nextUp;
-						}
-					}
-				}
-			}
-			if(retval == NULL) retval = new Notype(name);
-			return retval;
-		}
-*/
-
 		int FastNode::AddChild(Atom* atm) {
 			if(_childCount >= _maxChildren)
 				return -1;  // we're full
@@ -187,26 +152,8 @@ namespace jmb {
 			return 0;
 		}
 
-/*
-		int FastNode::_Declarate(std::string const& declarator, std::string const& subject) {
-			Atom* noob = NULL;
-
-			noob = Types::CreateNew(declarator, subject);
-			if(noob == NULL) {
-				return -3; // invalid declarator
-			}
-			//else {
-				//if(AddChild(noob) != 0) return -2; // already exists or overflow
-			return AddChild(noob);
-				
-			//}
-			//return 0;
-		}
-*/
-
 		Atom* FastNode::_Interpret(Atom* atm) {
 			//*Log << "FastNode::_Interpret" << std::endl;
-			//return Atom::_Interpret(atm);
 			return new FastNode(atm);
 		}
 		
@@ -245,7 +192,6 @@ namespace jmb {
 			// unsafe!  assumes all critical checks have been performed
 			delete _children[idx];
 			_children[idx] = NULL;
-			//_childCount--;  // taken care of in next line
 			_MakeContiguous();
 		}
 		
@@ -267,18 +213,10 @@ namespace jmb {
 			_MakeContiguous();
 			for(int i=0; i<_childCount; i++) {
 				_DeleteByIndex(i);
-				//delete _children[i];
-				//_children[i] = NULL;
 			}
 		}
-		/*
-		void* GetRawData() {
-			return NULL;
-		}
-		*/
 
 		void FastNode::Tick(int time) {
-			//Atom::Tick(time);
 			for(int i=0; i<_childCount; i++) {
 				_children[i]->Tick(time);
 				if(_children[i]->wasUpdated)
@@ -288,6 +226,6 @@ namespace jmb {
 					*Log << "What the shit?" << std::endl;
 			}
 		}
+
 	}
-	
 }
