@@ -22,7 +22,7 @@ namespace jmb {
 //			virtual ~NodeBase();
 //			static Atom* CtorWrapper(std::string name);
 //			static const char type;
-//			virtual Atom* Dereference(std::string const& name);
+			Atom* Dereference(std::string const& name);
 			//virtual int Command(std::string const& cmd);
 			virtual int AddChild(Atom* atm);
 			virtual int DelChild(Atom* atm);
@@ -38,7 +38,7 @@ namespace jmb {
 //			virtual Atom* _Interpret(Atom* atm);
 			//unsigned int _GetChildIndex(std::string const& name);
 			//unsigned int _GetChildIndex(Atom* atm);
-//			Atom* _GetChild(std::string const& name);
+			virtual Atom* _GetChild(std::string const& name);
 //			AtomMapItr _GetChildItr(std::string const& name);
 //			AtomMapItr _GetChildItr(Atom* atm);
 			//void _DeleteByIndex(unsigned int idx);
@@ -48,7 +48,7 @@ namespace jmb {
 			//Atom* _children[MAXOBJS];
 //			AtomMap _children;
 			//int _childCount;
-//			bool _mapThrough;
+			bool _mapThrough;
 		};
 	
 	}

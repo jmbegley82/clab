@@ -26,7 +26,7 @@ namespace jmb {
 			virtual ~FastNode();
 			static Atom* CtorWrapper(std::string name);
 			static const char type;
-			virtual Atom* Dereference(std::string const& name);
+			//virtual Atom* Dereference(std::string const& name);
 			//virtual int Command(std::string const& cmd);
 			virtual int AddChild(Atom* atm);
 			virtual int DelChild(Atom* atm);
@@ -44,13 +44,13 @@ namespace jmb {
 			virtual Atom* _Interpret(Atom* atm);
 			unsigned int _GetChildIndex(std::string const& name);
 			unsigned int _GetChildIndex(Atom* atm);
-			Atom* _GetChild(std::string const& name);
+			virtual Atom* _GetChild(std::string const& name);
 			void _DeleteByIndex(unsigned int idx);
 			void _MakeContiguous();
 			void _Purge();
 			Atom** _children;
 			int _childCount;
-			bool _mapThrough;
+			//bool _mapThrough;
 			int _maxChildren;
 		};
 	

@@ -61,7 +61,8 @@ namespace jmb {
 		Atom* FastNode::CtorWrapper(std::string name) {
 			return new FastNode(name);
 		}
-		
+
+/*		
 		Atom* FastNode::Dereference(std::string const& name) {
 			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
 			if(retval->GetType() == Notype::type) {
@@ -94,7 +95,8 @@ namespace jmb {
 			if(retval == NULL) retval = new Notype(name);
 			return retval;
 		}
-		
+*/
+
 		int FastNode::AddChild(Atom* atm) {
 			if(_childCount >= _maxChildren)
 				return -1;  // we're full

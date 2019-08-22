@@ -67,7 +67,8 @@ namespace jmb {
 		Atom* Node::CtorWrapper(std::string name) {
 			return new Node(name);
 		}
-		
+
+/*
 		Atom* Node::Dereference(std::string const& name) {
 			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
 			if(retval->GetType() == Notype::type) {
@@ -100,7 +101,8 @@ namespace jmb {
 			if(retval == NULL) retval = new Notype(name);
 			return retval;
 		}
-		
+*/
+
 		int Node::AddChild(Atom* atm) {
 			/*
 			if(_childCount >= MAXOBJS)

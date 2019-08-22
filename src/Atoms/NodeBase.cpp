@@ -7,6 +7,7 @@
 
 #include <string>
 #include "NodeBase.h"
+#include "Notype.h"
 #include "StringManip.h"
 #include "Types.h"
 
@@ -25,6 +26,39 @@ namespace jmb {
 		NodeBase::NodeBase(const Atom* atm) : Atom(atm) {
 		}
 
+		Atom* NodeBase::Dereference(string const& name) {
+			Atom* retval = Atom::Dereference(name);  // checks if it's us; rules out name==""
+			if(retval->GetType() == Notype::type) {
+				delete retval;
+				retval = NULL;
+			}
+			if(_mapThrough) {
+				// in case we want to create a FastNode-derived object with private children
+				if(retval == NULL) {
+					std::string dname;
+					if(name[0] == '/') {
+						// absolute path
+						dname = name.substr(1);
+						retval = GetRoot()->Dereference(dname);
+					} else {
+						dname = name;
+						CommandSplit CSSlash(dname, "/");
+						if(CSSlash.left != "") {
+							Atom* nextUp = _GetChild(CSSlash.left);
+							if(nextUp != NULL) {
+								retval = nextUp->Dereference(CSSlash.right);
+							}
+						} else {
+							Atom* nextUp = _GetChild(dname);
+							retval = nextUp;
+						}
+					}
+				}
+			}
+			if(retval == NULL) retval = new Notype(name);
+			return retval;
+		}
+	
 		int NodeBase::AddChild(Atom* atm) {
 			return -1;
 		}
@@ -41,6 +75,10 @@ namespace jmb {
 			return -1;
 		}
 
+		Atom* NodeBase::_GetChild(string const& name) {
+			return NULL;
+		}
+	
 		int NodeBase::_Declarate(string const& declarator, string const& subject) {
 			Atom* noob = NULL;
 			// if subject contains any slashes, get a pointer to the NodeBase'd Atom
