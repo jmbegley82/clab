@@ -13,6 +13,12 @@ namespace jmb {
 			CommandSplit(std::string const &cmd, std::string const &token);
 			std::string left, right;
 		};
+
+		class CommandSplitRev {
+		public:
+			CommandSplitRev(std::string const& cmd, std::string const& token);
+			std::string left, right;
+		};
 		
 		class Sentence {
 		public:

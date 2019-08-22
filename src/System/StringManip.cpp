@@ -15,18 +15,27 @@ namespace jmb
 	
 	namespace common {
 		
-		CommandSplit::CommandSplit(string const& cmd, string const& token)
-		{
+		CommandSplit::CommandSplit(string const& cmd, string const& token) {
 			string ncmd = cmd;
 			size_t pos = ncmd.find(token,0);
-			if(pos != string::npos)
-			{
+			if(pos != string::npos) {
 				left = ncmd.substr(0,pos);
 				ncmd.erase(0, pos+token.length());
 				right = ncmd;
+			} else {
+				left = "";
+				right = "";
 			}
-			else
-			{
+		}
+
+		CommandSplitRev::CommandSplitRev(string const& cmd, string const& token) {
+			string ncmd = cmd;
+			size_t pos = ncmd.rfind(token);
+			if(pos != string::npos) {
+				left = ncmd.substr(0,pos);
+				ncmd.erase(0,pos+token.length());
+				right = ncmd;
+			} else {
 				left = "";
 				right = "";
 			}

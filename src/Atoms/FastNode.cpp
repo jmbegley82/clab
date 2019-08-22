@@ -21,7 +21,7 @@ namespace jmb {
 	
 	namespace common {
 		
-		const char FastNode::type = 0x04;
+		const char FastNode::type = 0x12;
 		
 		FastNode::FastNode() {
 			FastNode("");
@@ -185,24 +185,11 @@ namespace jmb {
 			return 0;
 		}
 
+/*
 		int FastNode::_Declarate(std::string const& declarator, std::string const& subject) {
 			Atom* noob = NULL;
-			/*
-			if(declarator == "FastNode") {
-				noob = new FastNode(subject);
-			} else if(declarator == "Integer") {
-				noob = new Integer(subject);
-			} else if(declarator == "Float") {
-				noob = new Float(subject);
-			} else if(declarator == "String") {
-				noob = new String(subject);
-			} else if(declarator == "Video") {
-				noob = new Video(subject);
-			}
-			*/
 
 			noob = Types::CreateNew(declarator, subject);
-
 			if(noob == NULL) {
 				return -3; // invalid declarator
 			}
@@ -213,7 +200,8 @@ namespace jmb {
 			//}
 			//return 0;
 		}
-		
+*/
+
 		Atom* FastNode::_Interpret(Atom* atm) {
 			//*Log << "FastNode::_Interpret" << std::endl;
 			//return Atom::_Interpret(atm);

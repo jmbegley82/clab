@@ -5,15 +5,17 @@ All objects (except Atom) are derived from Atom.
 
 Basic Types:
 ============
-Atom   - one does not typically use this class directly, but it is useful to
-           cast derived classes as Atoms to pass them around
-Node   - Atoms which store other Atoms; can be nested to create hierarchical
-           object trees
-Notype - this internal-use-only Atom is created in error conditions; when an
-           Atom attempts to Dereference another Atom that isn't accessible to
-           it, a Notype is created whose Identity (and only relevant data) is
-           the text string of the inaccessible Atom.  Notypes are also created
-           when a Atom can't be _Interpreted due to eg. incompatibility. 
+Atom     - one does not typically use this class directly, but it is useful to
+             cast derived classes as Atoms to pass them around
+Node     - Atoms which store other Atoms; can be nested to create hierarchical
+             object trees
+FastNode - Like Node, but use a C-style array of pointers to hold Atoms and
+             has a limited size (which can be adjusted dynamically)
+Notype   - this internal-use-only Atom is created in error conditions; when an
+             Atom attempts to Dereference another Atom that isn't accessible to
+             it, a Notype is created whose Identity (and only relevant data) is
+             the text string of the inaccessible Atom.  Notypes are also created
+             when a Atom can't be _Interpreted due to eg. incompatibility. 
 
 
 Standard Data Types:

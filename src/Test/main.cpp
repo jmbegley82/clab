@@ -53,6 +53,7 @@ using jmb::common::GetHexString;
 using jmb::common::GetFirstWord;
 using jmb::common::GetFirstWordEtc;
 using jmb::common::GetString;
+using jmb::common::CommandSplitRev;
 using std::string;
 using std::endl;
 using std::stringstream;
@@ -547,6 +548,47 @@ void test12() {
         *Log << endl << endl;
 }
 
+void test13() {
+	*Log << ":::Node/FastNode OperatorEqu tests:::" << endl;
+	// make a Node
+	Node root("root");
+	// make some nodes under it
+	root.Command("Node alpha");
+	root.Command("Node beta");
+	root.Command("Node gamma");
+	// make some nodes under alpha
+	root.Command("Node alpha/uno");
+	root.Command("Node alpha/dos");
+	root.Command("Node alpha/tres");
+	// and under beta
+	root.Command("Node beta/one");
+	root.Command("Node beta/two");
+	root.Command("Node beta/three");
+	// and uder alpha/dos
+	root.Command("Node alpha/dos/a");
+	root.Command("Node alpha/dos/b");
+	root.Command("Node alpha/dos/c");
+	// run root's Procedure to list its contents
+	root.Command("");
+	// let's get weird; this command should move alpha/uno into alpha/dos
+	root.Command("alpha/dos += alpha/uno");
+	root.Command("");
+	*Log << endl << endl;
+}
+
+void test14() {
+	*Log << ":::CommandSplitRev test:::" << endl;
+	*Log << "Function test..." << endl;
+	CommandSplitRev CSRa("How much wood would a woodchuck chuck if a woodchuck could chuck wood", " chuck ");
+	*Log << "Expectation:  Left=How much wood would a woodchuck chuck if a woodchuck could, Right=wood" << endl;
+	*Log << "Reality:      Left=" << CSRa.left << ", Right=" << CSRa.right << endl;
+	*Log << "Missing token test..." << endl;
+	CommandSplitRev CSRb("A quick brown random sample of text blah blah blah blah blaaaarg", "3.14159");
+	*Log << "Expectation:  Left=, Right=" << endl;
+	*Log << "Reality:      Left=" << CSRb.left << ", Right=" << CSRb.right << endl;
+	*Log << endl << endl;
+}
+
 void testX() {
 	*Log << ":::Hypothetical situations:::" << endl;
 	bool this_code_is_usable = false;
@@ -610,7 +652,9 @@ int main(int argc, char** argv) {
 	test8();
 	test9();
 	test10();
-	test11();
-	test12();
+	//test11();
+	//test12();
+	test13();
+	test14();
 	return 0;
 }

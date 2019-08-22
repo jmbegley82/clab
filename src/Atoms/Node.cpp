@@ -23,7 +23,7 @@ namespace jmb {
 	
 	namespace common {
 		
-		const char Node::type = 0x00;
+		const char Node::type = 0x11;
 		
 		Node::Node() {
 			Node("");
@@ -174,35 +174,22 @@ namespace jmb {
 			return 0;
 		}
 
+/*
 		int Node::_Declarate(std::string const& declarator, std::string const& subject) {
 			Atom* noob = NULL;
-			/*
-			if(declarator == "Node") {
-				noob = new Node(subject);
-			} else if(declarator == "Integer") {
-				noob = new Integer(subject);
-			} else if(declarator == "Float") {
-				noob = new Float(subject);
-			} else if(declarator == "String") {
-				noob = new String(subject);
-			} else if(declarator == "Video") {
-				noob = new Video(subject);
-			}
-			*/
+			// if subject contains any slashes, get a pointer to the NodeBase'd Atom
+			//   and pass declarator and everything after the rightmost slash to
+			//   its _Declarate function
 
+			
 			noob = Types::CreateNew(declarator, subject);
-
 			if(noob == NULL) {
 				return -3; // invalid declarator
 			}
-			//else {
-				//if(AddChild(noob) != 0) return -2; // already exists or overflow
 			return AddChild(noob);
-				
-			//}
-			//return 0;
 		}
-		
+*/
+
 		Atom* Node::_Interpret(Atom* atm) {
 			//*Log << "Node::_Interpret" << std::endl;
 			//return Atom::_Interpret(atm);
