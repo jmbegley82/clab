@@ -9,7 +9,7 @@
 #include <iostream>
 #include <fstream>
 
-#if defined __linux__ || defined __APPLE__ || defined __FREEBSD__ || defined CLAB_PS3
+#if defined __linux__ || defined __APPLE__ || defined __FreeBSD__ || defined CLAB_PS3
 #include <unistd.h>
 #include <libgen.h>
 #include <sys/types.h>
@@ -29,9 +29,9 @@
 #include <linux/limits.h>
 #endif //__LINUX__
 
-#if defined __FREEBSD__
+#if defined __FreeBSD__
 #include <limits.h>
-#endif //__FREEBSD
+#endif //__FreeBSD
 
 #include "FileOps.h"
 #include "StringManip.h"
@@ -88,7 +88,7 @@ namespace jmb {
 #error Apple platform support not added yet!
 #elif defined _MSC_VER
 #error Windows support not added yet!
-#elif (defined __linux__ && !defined __ANDROID__) || defined __FREEBSD__
+#elif (defined __linux__ && !defined __ANDROID__) || defined __FreeBSD__
 			passwd* pw = getpwuid(getuid());
 			retval = pw->pw_dir;
 #elif defined __ANDROID__
@@ -106,7 +106,7 @@ namespace jmb {
 #error Apple platform support not added yet!
 #elif defined _MSC_VER
 #error Windows support not added yet!
-#elif (defined __linux__ && !defined __ANDROID__) || defined __FREEBSD__
+#elif (defined __linux__ && !defined __ANDROID__) || defined __FreeBSD__
 			retval = string(PREFIX);
 #elif defined __ANDROID__
 #error Android support not added yet!
@@ -123,7 +123,7 @@ namespace jmb {
 #error Apple platform support not added yet!
 #elif defined _MSC_VER
 #error Windows support not added yet!
-#elif (defined __linux__ && !defined __ANDROID__) || defined __FREEBSD__
+#elif (defined __linux__ && !defined __ANDROID__) || defined __FreeBSD__
 			retval = "/tmp";
 #elif defined __ANDROID__
 #error Android support not added yet!
@@ -205,7 +205,7 @@ namespace jmb {
 				reName += (*itr) + "/";
 #if defined _MSC_VER
 				retval = _mkdir(reName.c_str());
-#elif defined __linux__ || defined __APPLE__ || defined __FREEBSD__
+#elif defined __linux__ || defined __APPLE__ || defined __FreeBSD__
 				mode_t dirMode = 0775;
 				retval = mkdir(reName.c_str(), dirMode);
 #endif // os-specific mkdir
@@ -226,7 +226,7 @@ namespace jmb {
 				assert(0);
 				return -2;
 			}
-#elif defined __linux__ || defined __APPLE__ || defined __FREEBSD__
+#elif defined __linux__ || defined __APPLE__ || defined __FreeBSD__
 			if (name[0] != '/') {
 				assert(0);
 				return -2;
